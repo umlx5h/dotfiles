@@ -1,10 +1,5 @@
-# tmuxを256色表示できるようにする
-set-option -g default-terminal tmux-256color
-set -g terminal-overrides 'xterm:colors=256'
-
-# 2重tmuxでもクリップボードコピーできるようにする OSC52
-set-option -g set-clipboard on
-
+# if local machine (Mac or WSL2)
+{{ if or (eq .chezmoi.os "darwin") (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 # prefixキーをC-qに変更
 set -g prefix C-q
 # C-q*2でC-qを送る
@@ -18,6 +13,20 @@ set-option -g status-bg "colour238"
 
 # status line の文字色を指定する
 set-option -g status-fg "colour255"
+
+{{ else }}
+# remote machine
+
+set-option -g status-bg "colour12"
+
+{{ end }}
+
+# tmuxを256色表示できるようにする
+set-option -g default-terminal tmux-256color
+set -g terminal-overrides 'xterm:colors=256'
+
+# 2重tmuxでもクリップボードコピーできるようにする OSC52
+set-option -g set-clipboard on
 
 # vimのキーバインドでペインを移動する
 bind h select-pane -L
