@@ -1,0 +1,8 @@
+source /home/wsl/pwndbg/gdbinit.py
+
+# pwndbg customize
+# set context-sections regs disasm code ghidra stack backtrace expressions
+set context-sections code ghidra backtrace expressions
+set context-code-lines 25
+set context-source-code-lines 25
+

@@ -2,3 +2,8 @@
     type = "git-repo"
     url = "https://github.com/amix/vimrc.git"
     refreshPeriod = "168h"
+
+["pwndbg"]
+    type = "git-repo"
+    url = "https://github.com/pwndbg/pwndbg"
+    refreshPeriod = "168h"
