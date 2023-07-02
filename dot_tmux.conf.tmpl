@@ -1,5 +1,5 @@
 # if local machine (Mac or WSL2)
-{{ if or (eq .chezmoi.os "darwin") (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+{{ if or (eq .chezmoi.os "darwin") (eq .chezmoi.username "wsl") }}
 # prefixキーをC-qに変更
 set -g prefix C-q
 # C-q*2でC-qを送る

@@ -1,0 +1,4 @@
+[".vim_runtime"]
+    type = "git-repo"
+    url = "https://github.com/amix/vimrc.git"
+    refreshPeriod = "168h"
