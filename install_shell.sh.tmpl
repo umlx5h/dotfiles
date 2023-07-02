@@ -4,12 +4,20 @@ set -eu
 
 cd "$HOME"
 
+### fzf ###
+if [[ ! -e ".fzf.zsh" ]]; then
+    ./.fzf/install --all --no-update-rc
+fi
+
 {{ if eq .chezmoi.os "linux" -}}
 
 ### pwndbg ###
 # https://github.com/pwndbg/pwndbg
-pushd pwndbg
-./setup.sh
-popd
+if [[ ! -e ".gdbinit.pwndbg.installed" ]]; then
+    pushd pwndbg
+    ./setup.sh
+    popd
+    touch .gdbinit.pwndbg.installed
+fi
 
 {{ end -}}
