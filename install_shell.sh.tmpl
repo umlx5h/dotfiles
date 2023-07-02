@@ -4,8 +4,12 @@ set -eu
 
 cd "$HOME"
 
+{{ if eq .chezmoi.os "linux" -}}
+
 ### pwndbg ###
 # https://github.com/pwndbg/pwndbg
 pushd pwndbg
 ./setup.sh
 popd
+
+{{ end -}}
