@@ -1,0 +1,33 @@
+[[ -v ZPROF ]] && zmodload zsh/zprof # profile start
+
+# tmux autostart
+# TODO: windows or mac
+if [ -n "$WT_SESSION" -a -z "$TMUX" ]
+then
+    [[ $TERM_PROGRAM != "vscode" ]] && tmux attach -t 0 || tmux new -s 0
+fi
+
+# Set the list of directories that Zsh searches for programs.
+fpath=(
+    $HOME/.local/lib/python3.8/site-packages/argcomplete/bash_completion.d
+    $HOME/.zsh/my_completions/cmds
+    $fpath
+    $HOME/.local/share/zsh/generated_man_completions
+)
+
+# Import all zsh settings
+ZSHHOME="${HOME}/.zshrc.d"
+
+source $ZSHHOME/zim.zsh
+source $ZSHHOME/path.zsh
+source $ZSHHOME/environment.zsh
+source $ZSHHOME/alias.zsh
+source $ZSHHOME/function.zsh
+source $ZSHHOME/linux.zsh
+source $ZSHHOME/windows.zsh
+source $ZSHHOME/theme.zsh
+
+# key
+[[ -f $HOME/.env ]] && source $HOME/.env
+
+[[ -v ZPROF ]] && zprof # profile end
