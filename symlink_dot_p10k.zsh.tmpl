@@ -1,0 +1,5 @@
+{{ if or (eq .chezmoi.os "darwin") (eq .chezmoi.username "wsl") }}
+.p10k.zsh_main
+{{ else }}
+.p10k.zsh_sub
+{{ end }}

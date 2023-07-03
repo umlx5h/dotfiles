@@ -6,3 +6,9 @@ README.md
 {{- if ne .chezmoi.os "linux" }}
 .zshrc.d/linux.zsh
 {{- end }}
+
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.username "wsl") }}
+.p10k.zsh_sub
+{{- else }}
+.p10k.zsh_main
+{{- end }}
