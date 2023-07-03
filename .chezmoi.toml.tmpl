@@ -1,13 +1,17 @@
 {{- $git_user := promptString "git_user" -}}
 {{- $git_email := promptString "git_email" -}}
 
-{{/* TODO: only prompt Windows */}}
-{{- $win_user := promptString "win_user" -}}
+{{- $isWSL := eq .chezmoi.username "wsl" }}
+{{- $win_user := "" -}}
+
+{{- if $isWSL }}
+    {{- $win_user = promptString "win_user" -}}
+{{- end -}}
 
 [data]
     git_user = "{{ $git_user }}"
     git_email = "{{ $git_email }}"
 
-{{- if eq .chezmoi.username "wsl" }}
+{{- if $isWSL }}
     win_user = "{{ $win_user }}"
 {{- end }}
