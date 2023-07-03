@@ -11,4 +11,5 @@ README.md
 .p10k.zsh_sub
 {{- else }}
 .p10k.zsh_main
+install-cargo.sh
 {{- end }}
