@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -eux
 
 packages=(
 "github.com/tkuchiki/alp/cmd/alp@main"
@@ -66,6 +66,11 @@ packages=(
 "github.com/tsenart/vegeta"
 "github.com/umlx5h/zsh-manpage-completion-generator"
 )
+
+if ! command -v go &> /dev/null; then
+    echo "go could not be found"
+    exit
+fi
 
 for package in "${packages[@]}"; do
     if [[ $package =~ "@" ]]; then
