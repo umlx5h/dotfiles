@@ -15,7 +15,12 @@ fi
 # https://github.com/pwndbg/pwndbg
 if [[ ! -e ".installed.pwndbg" ]]; then
     pushd pwndbg
-    ./setup.sh
+    # disable editing .gdbinit
+    perl -pe 's/^(if \[ -z "\$UPDATE_MODE" \]; then)/exit 0 ; \1/' -i setup.sh
+
+    # dnf debuginfo
+    perl -pe "s/(sudo dnf -y debuginfo-install glibc)$/\1 '--disablerepo=*' '--enablerepo=baseos-debug'/" -i setup.sh
+    yes | ./setup.sh
     popd
     touch .installed.pwndbg
 fi
