@@ -6,4 +6,4 @@ alias la="ll"
 
 alias cz="chezmoi"
 alias k="kubectl"
-alias gm="/usr/local/bin/gomi"
+alias gm="gomi"

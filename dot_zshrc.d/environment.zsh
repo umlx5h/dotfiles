@@ -61,7 +61,7 @@ TIMEFMT=$'%J\n%U user\n%S system\n%P cpu\n%*E total'
 #
 
 # Color less
-LESS=-R
+export LESS=-R
 
 #
 # Third party tools
@@ -75,5 +75,3 @@ export FZF_DEFAULT_OPTS='--height 80% --reverse'
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:4:hidden:wrap --bind 'ctrl-space:toggle-preview'"
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-

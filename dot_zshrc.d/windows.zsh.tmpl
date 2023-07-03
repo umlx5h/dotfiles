@@ -31,4 +31,3 @@ function fork() {
   [ "$#" -ne 1 ] && { echo "Usage: fork /path/to/repo"; return 1; }
   /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe start-process "C:\Users\\$WINUSER\AppData\Local\Fork\fork.exe" "$(wslpath -w $1)"
 }
-

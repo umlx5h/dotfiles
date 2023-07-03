@@ -47,4 +47,3 @@ function c() {
     local cmd=$(compgen -c | grep -v '^_' | sort | uniq | fzf)
     [ -n "$cmd" ] && print -z -- "$cmd"
 }
-
