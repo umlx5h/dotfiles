@@ -23,8 +23,12 @@ source $ZSHHOME/path.zsh
 source $ZSHHOME/environment.zsh
 source $ZSHHOME/alias.zsh
 source $ZSHHOME/function.zsh
+{{- if eq .chezmoi.os "linux" }}
 source $ZSHHOME/linux.zsh
+{{- end }}
+{{- if eq .chezmoi.username "wsl" }}
 source $ZSHHOME/wsl.zsh
+{{- end }}
 source $ZSHHOME/theme.zsh
 
 # key
