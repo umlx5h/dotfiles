@@ -13,11 +13,11 @@ fi
 
 ### pwndbg ###
 # https://github.com/pwndbg/pwndbg
-if [[ ! -e ".gdbinit.pwndbg.installed" ]]; then
+if [[ ! -e ".installed.pwndbg" ]]; then
     pushd pwndbg
     ./setup.sh
     popd
-    touch .gdbinit.pwndbg.installed
+    touch .installed.pwndbg
 fi
 
 {{ end -}}
