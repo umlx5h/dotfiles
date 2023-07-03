@@ -10,6 +10,7 @@ typeset -U path PATH
 path=(
     /usr/share/bcc/tools
     /usr/local/zig
+    $HOME/.cargo/bin
     $GOPATH/bin
     $GOROOT/bin
     $VOLTA_HOME/bin
