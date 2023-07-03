@@ -1,1 +1,8 @@
 README.md
+{{- if ne .chezmoi.username "wsl" }}
+.zshrc.d/wsl.zsh
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+.zshrc.d/linux.zsh
+{{- end }}

@@ -24,7 +24,7 @@ source $ZSHHOME/environment.zsh
 source $ZSHHOME/alias.zsh
 source $ZSHHOME/function.zsh
 source $ZSHHOME/linux.zsh
-source $ZSHHOME/windows.zsh
+source $ZSHHOME/wsl.zsh
 source $ZSHHOME/theme.zsh
 
 # key
