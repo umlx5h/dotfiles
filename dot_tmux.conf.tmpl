@@ -20,7 +20,12 @@ set-option -g status-bg "colour12"
 {{- end }}
 
 # tmuxを256色表示できるようにする
+{{- if .isMac }}
+set-option -g default-terminal screen-256color
+{{- else }}
 set-option -g default-terminal tmux-256color
+{{- end }}
+
 set -g terminal-overrides 'xterm:colors=256'
 
 # 2重tmuxでもクリップボードコピーできるようにする OSC52
