@@ -16,3 +16,9 @@ function bcc() {
     local cmd=$(cat <(find /usr/sbin/ -type f -name '*-bpfcc' -executable) <(find /usr/share/bcc/tools/ /usr/local/share/bpftrace/tools/ -maxdepth 1 -type f -executable) | awk -F/ '{print $NF}' | sort | fzf)
     [ -n "$cmd" ] && print -z -- "sudo $cmd"
 }
+
+#
+# Alias
+#
+
+alias gm="gomi"

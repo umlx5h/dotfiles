@@ -1,16 +1,21 @@
 function zsh_update_completions() {
     /bin/rm -f $HOME/.zcompdump
-    /bin/rm -rf $HOME/.zsh/my_completions
-    mkdir -p $HOME/.zsh/my_completions/cmds
+    /bin/rm -rf $HOME/.local/share/zsh/cmd_completions
+    mkdir -p $HOME/.local/share/zsh/cmd_completions
 
     fish -c 'fish_update_completions'
     zsh-manpage-completion-generator -clean
+    generate_cmd_completions_common
+    type generate_cmd_completions_work &>/dev/null && generate_cmd_completions_work
 
-    kubectl completion zsh > $HOME/.zsh/my_completions/cmds/_kubectl
-    helm completion zsh > $HOME/.zsh/my_completions/cmds/_helm
-    chezmoi completion zsh > $HOME/.zsh/my_completions/cmds/_chezmoi
-    register-python-argcomplete my-python-app > $HOME/.zsh/my_completions/cmds/_ansible
     exec zsh
+}
+
+function generate_cmd_completions_common() {
+    chezmoi completion zsh > $HOME/.local/share/zsh/cmd_completions/_chezmoi
+    kubectl completion zsh > $HOME/.local/share/zsh/cmd_completions/_kubectl
+    helm completion zsh > $HOME/.local/share/zsh/cmd_completions/_helm
+    register-python-argcomplete my-python-app > $HOME/.local/share/zsh/cmd_completions/_ansible
 }
 
 function fif() {

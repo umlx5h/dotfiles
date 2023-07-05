@@ -9,7 +9,7 @@ if [[ ! -e ".fzf.zsh" ]]; then
     ./.fzf/install --all --no-update-rc
 fi
 
-{{ if eq .chezmoi.os "linux" -}}
+{{- if .isLinux }}
 
 ### pwndbg ###
 # https://github.com/pwndbg/pwndbg
@@ -25,4 +25,4 @@ if [[ ! -e ".installed.pwndbg" ]]; then
     touch .installed.pwndbg
 fi
 
-{{ end -}}
+{{- end }}

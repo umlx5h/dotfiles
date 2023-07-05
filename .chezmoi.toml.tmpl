@@ -2,6 +2,11 @@
 {{- $git_email := promptString "git_email" -}}
 
 {{- $isWSL := eq .chezmoi.username "wsl" }}
+{{- $isMac := eq .chezmoi.os "darwin" }}
+{{- $isLinux := eq .chezmoi.os "linux" }}
+{{- $isLocal := or $isMac $isWSL }}
+{{- $isWork := eq .chezmoi.username $git_user }}
+
 {{- $win_user := "" -}}
 
 {{- if $isWSL }}
@@ -9,6 +14,12 @@
 {{- end -}}
 
 [data]
+    isWSL = {{ $isWSL }}
+    isLinux = {{ $isLinux }}
+    isMac = {{ $isMac }}
+    isLocal = {{ $isLocal }}
+    isWork = {{ $isWork }}
+
     git_user = "{{ $git_user }}"
     git_email = "{{ $git_email }}"
 

@@ -1,6 +1,5 @@
 # dotfiles
 
 ## TODO
-* zshrc
-* cargo install
-* go install
+* gomi with ansible
+

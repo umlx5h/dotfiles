@@ -1,15 +1,24 @@
 README.md
-{{- if ne .chezmoi.username "wsl" }}
+{{- if not .isWSL }}
 .zshrc.d/wsl.zsh
 {{- end }}
 
-{{- if ne .chezmoi.os "linux" }}
+{{- if not .isLinux }}
 .zshrc.d/linux.zsh
+.gdbinit
 {{- end }}
 
-{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.username "wsl") }}
-.p10k.zsh_sub
-{{- else }}
+{{- if not .isMac }}
+.zshrc.d/mac.zsh
+{{- end }}
+
+{{- if not .isLocal }}
 .p10k.zsh_main
 install-cargo.sh
+{{- else }}
+.p10k.zsh_sub
+{{- end }}
+
+{{- if not .isWork }}
+.zshrc.d/work.zsh
 {{- end }}

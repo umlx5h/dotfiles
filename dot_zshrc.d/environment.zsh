@@ -64,10 +64,8 @@ TIMEFMT=$'%J\n%U user\n%S system\n%P cpu\n%*E total'
 export LESS=-R
 
 #
-# Third party tools
+# Third party
 #
-
-# TODO: 配置
 
 # fzf
 [ -f ~/.fzf.zsh  ] && source ~/.fzf.zsh

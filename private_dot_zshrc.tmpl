@@ -10,7 +10,7 @@ fi
 # Set the list of directories that Zsh searches for programs.
 fpath=(
     $HOME/.local/lib/python3.8/site-packages/argcomplete/bash_completion.d
-    $HOME/.zsh/my_completions/cmds
+    $HOME/.local/share/zsh/cmd_completions
     $fpath
     $HOME/.local/share/zsh/generated_man_completions
 )
@@ -23,11 +23,17 @@ source $ZSHHOME/path.zsh
 source $ZSHHOME/environment.zsh
 source $ZSHHOME/alias.zsh
 source $ZSHHOME/function.zsh
-{{- if eq .chezmoi.os "linux" }}
+{{- if .isLinux }}
 source $ZSHHOME/linux.zsh
 {{- end }}
-{{- if eq .chezmoi.username "wsl" }}
+{{- if .isMac }}
+source $ZSHHOME/mac.zsh
+{{- end }}
+{{- if .isWSL }}
 source $ZSHHOME/wsl.zsh
+{{- end }}
+{{- if .isWork }}
+source $ZSHHOME/work.zsh
 {{- end }}
 source $ZSHHOME/theme.zsh
 

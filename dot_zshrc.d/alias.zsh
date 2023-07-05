@@ -4,6 +4,11 @@ alias la="ll"
 # sudoでもaliasを使う
 #alias sudo='sudo '
 
+#
+# Third party
+#
+
 alias cz="chezmoi"
 alias k="kubectl"
-alias gm="gomi"
+alias kc="kubectx"
+alias kn="kubens"
