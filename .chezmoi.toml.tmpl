@@ -1,9 +1,9 @@
 {{- $git_user := promptString "git_user" -}}
 {{- $git_email := promptString "git_email" -}}
 
-{{- $isWSL := eq .chezmoi.username "wsl" }}
-{{- $isMac := eq .chezmoi.os "darwin" }}
 {{- $isLinux := eq .chezmoi.os "linux" }}
+{{- $isWSL := and $isLinux (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+{{- $isMac := eq .chezmoi.os "darwin" }}
 {{- $isLocal := or $isMac $isWSL }}
 {{- $isWork := eq .chezmoi.username $git_user }}
 
