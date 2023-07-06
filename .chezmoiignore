@@ -19,6 +19,7 @@ TODO.md
 
 {{- if not .isLocal }}
 install-cargo.sh
+install-goinstall.sh
 {{- end }}
 
 {{- if not .isWork }}

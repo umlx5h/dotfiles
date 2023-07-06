@@ -6,6 +6,7 @@
 {{- $isMac := eq .chezmoi.os "darwin" }}
 {{- $isLocal := or $isMac $isWSL }}
 {{- $isWork := eq .chezmoi.username $git_user }}
+{{- $isCentOS := eq .chezmoi.osRelease.id "centos" }}
 
 {{- $win_user := "" -}}
 
@@ -19,6 +20,7 @@
     isMac = {{ $isMac }}
     isLocal = {{ $isLocal }}
     isWork = {{ $isWork }}
+    isCentOS = {{ $isCentOS }}
 
     git_user = "{{ $git_user }}"
     git_email = "{{ $git_email }}"
