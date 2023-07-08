@@ -22,3 +22,16 @@ function bcc() {
 #
 
 alias gm="gomi"
+
+#
+# Path
+#
+
+# PATH
+path=(
+    /usr/share/bcc/tools
+    /usr/local/share/bpftrace/tools
+    /usr/local/zig
+    $path
+)
+export PATH

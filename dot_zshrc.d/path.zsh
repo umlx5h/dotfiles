@@ -8,8 +8,6 @@ export VOLTA_HOME="$HOME/.volta"
 # Set PATH
 typeset -U path PATH
 path=(
-    /usr/share/bcc/tools
-    /usr/local/zig
     $HOME/.cargo/bin
     $GOPATH/bin
     $GOROOT/bin
