@@ -40,6 +40,9 @@ bind l select-pane -R
 ## ペインの順次移動をCtr + o に設定
 bind -n C-o select-pane -t :.+
 
+# 前のウィンドウにlで切り替え
+bind-key l last-window
+
 # vimのキーバインドでペインをリサイズする
 bind -r H resize-pane -L 5
 bind -r J resize-pane -D 5
@@ -92,3 +95,21 @@ bind -T copy-mode-vi Y send -X copy-line
 bind-key C-p paste-buffer
 
 set-option -g renumber-windows on
+
+{{- if .isLocal }}
+
+# tmux plugin
+set -g @plugin 'tmux-plugins/tpm'
+# fix startup prompt
+set-option -s escape-time 50
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+#set -g @plugin 'wfxr/tmux-power'
+set -g @tmux_power_theme 'sky'
+run-shell "./.tmux/plugins/my_tmux-power/tmux-power.tmux"
+
+set -g @plugin 'soyuka/tmux-current-pane-hostname'
+
+run '~/.tmux/plugins/tpm/tpm'
+
+{{- end }}
