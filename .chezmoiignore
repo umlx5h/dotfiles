@@ -1,4 +1,9 @@
 README.md
+TODO.md
+
+.p10k.zsh_main
+.p10k.zsh_sub
+
 {{- if not .isWSL }}
 .zshrc.d/wsl.zsh
 {{- end }}
@@ -13,10 +18,7 @@ README.md
 {{- end }}
 
 {{- if not .isLocal }}
-.p10k.zsh_main
 install-cargo.sh
-{{- else }}
-.p10k.zsh_sub
 {{- end }}
 
 {{- if not .isWork }}

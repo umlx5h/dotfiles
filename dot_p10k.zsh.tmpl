@@ -1,0 +1,5 @@
+{{- if .isLocal -}}
+{{   include "dot_p10k.zsh_main" }}
+{{- else -}}
+{{   include "dot_p10k.zsh_sub" }}
+{{- end -}}
