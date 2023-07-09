@@ -1,5 +1,7 @@
+.vscode
 README.md
 TODO.md
+ansible
 
 .p10k.zsh_main
 .p10k.zsh_sub
@@ -17,11 +19,10 @@ TODO.md
 .zshrc.d/mac.zsh
 {{- end }}
 
-{{- if not .isLocal }}
-install-cargo.sh
-install-goinstall.sh
-{{- end }}
-
 {{- if not .isWork }}
 .zshrc.d/work.zsh
+{{- end }}
+
+{{- if not (and (.isLinux) (not .isCentOS)) }}
+.gdbinit
 {{- end }}

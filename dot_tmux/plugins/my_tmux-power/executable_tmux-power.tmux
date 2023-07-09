@@ -121,7 +121,7 @@ fi
 tmux_set status-left "$LS"
 tmux_set status-right-fg "G12"
 tmux_set status-right-length 150
-RS="#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] $host_icon #U@#H"
+RS="#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] $host_icon #U@#H "
 if "$show_download_speed"; then
     RS="#[fg=$G05,bg=$BG]$left_arrow_icon#[fg=$TC,bg=$G05] $download_speed_icon #{download_speed} $RS"
 fi
@@ -142,7 +142,7 @@ tmux_set window-status-current-format "#[fg=$BG,bg=$G06]$right_arrow_icon#[fg=$T
 tmux_set window-status-separator ""
 
 # Window status alignment
-tmux_set status-justify left
+tmux_set status-justify centre
 
 # Current window status
 tmux_set window-status-current-statys "fg=$TC,bg=$BG"
