@@ -12,7 +12,6 @@ ansible
 
 {{- if not .isLinux }}
 .zshrc.d/linux.zsh
-.gdbinit
 {{- end }}
 
 {{- if not .isMac }}

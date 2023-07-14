@@ -41,6 +41,7 @@ zmodule archive
 
 zmodule romkatv/powerlevel10k --use degit
 zmodule https://github.com/agkozak/zsh-z
+#zmodule mroth/evalcache
 
 
 #

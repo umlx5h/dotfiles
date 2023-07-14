@@ -2,7 +2,7 @@
 {{- $git_email := promptString "git_email" -}}
 
 {{- $isLinux := eq .chezmoi.os "linux" }}
-{{- $isWSL := and $isLinux (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+{{- $isWSL := and $isLinux (.chezmoi.kernel.osrelease | lower | contains "microsoft") (ne .chezmoi.fqdnHostname .chezmoi.hostname) }}
 {{- $isMac := eq .chezmoi.os "darwin" }}
 {{- $isLocal := or $isMac $isWSL }}
 {{- $isWork := eq .chezmoi.username $git_user }}

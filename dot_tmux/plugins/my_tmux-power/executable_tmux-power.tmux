@@ -28,8 +28,7 @@ user_icon="$(tmux_get '@tmux_power_user_icon' '')"
 time_icon="$(tmux_get '@tmux_power_time_icon' '')"
 date_icon="$(tmux_get '@tmux_power_date_icon' '')"
 
-# TODO: not working in item2
-host_icon="$(tmux_get '@tmux_power_host_icon' '')"
+host_icon="$(tmux_get '@tmux_power_host_icon' '@')"
 
 show_upload_speed="$(tmux_get @tmux_power_show_upload_speed false)"
 show_download_speed="$(tmux_get @tmux_power_show_download_speed false)"
@@ -122,6 +121,7 @@ fi
 tmux_set status-left "$LS"
 tmux_set status-right-fg "G12"
 tmux_set status-right-length 150
+#RS="#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] $host_icon #H "
 RS="#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] #H "
 if "$show_download_speed"; then
     RS="#[fg=$G05,bg=$BG]$left_arrow_icon#[fg=$TC,bg=$G05] $download_speed_icon #{download_speed} $RS"
