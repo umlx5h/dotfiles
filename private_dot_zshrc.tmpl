@@ -7,6 +7,7 @@ fi
 
 # Set the list of directories that Zsh searches for programs.
 fpath=(
+    $HOME/.asdf/completions
     $HOME/.local/lib/python3.8/site-packages/argcomplete/bash_completion.d
     $HOME/.local/share/zsh/cmd_completions
     $fpath
@@ -15,6 +16,8 @@ fpath=(
 
 # Import all zsh settings
 ZSHHOME="${HOME}/.zshrc.d"
+
+[[ -f $HOME/.asdf/asdf.sh ]] && source "$HOME/.asdf/asdf.sh"
 
 source $ZSHHOME/path.zsh
 source $ZSHHOME/zim.zsh
