@@ -16,6 +16,7 @@ fpath=(
 
 # Import all zsh settings
 ZSHHOME="${HOME}/.zshrc.d"
+BASHHOME="${HOME}/.bashrc.d"
 
 [[ -f $HOME/.asdf/asdf.sh ]] && source "$HOME/.asdf/asdf.sh"
 
@@ -34,6 +35,7 @@ source $ZSHHOME/mac.zsh
 source $ZSHHOME/wsl.zsh
 {{- end }}
 {{- if .isWork }}
+source $BASHHOME/work.bash
 source $ZSHHOME/work.zsh
 {{- end }}
 source $ZSHHOME/theme.zsh
