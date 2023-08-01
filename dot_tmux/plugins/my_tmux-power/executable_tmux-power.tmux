@@ -122,7 +122,8 @@ tmux_set status-left "$LS"
 tmux_set status-right-fg "G12"
 tmux_set status-right-length 150
 #RS="#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] $host_icon #H "
-RS="#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] #H "
+#RS="#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] #H "
+RS=""
 if "$show_download_speed"; then
     RS="#[fg=$G05,bg=$BG]$left_arrow_icon#[fg=$TC,bg=$G05] $download_speed_icon #{download_speed} $RS"
 fi
