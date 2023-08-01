@@ -10,7 +10,7 @@ function s() {
         echo "No supported"
         return
     fi
-    local host="$(cat ~/.servers | fzf)"
+    local host="$(cat ~/.serverlist | fzf)"
     [ -n "$host" ] && print -z -- "ssh $host"
 }
 
