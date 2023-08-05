@@ -22,7 +22,10 @@ function bcc() {
 #
 
 alias gm="gomi"
-alias rm="gomi"
+function rm() {
+    echo "WARNING: Do not use rm directly\n"
+    gomi "$@"
+}
 
 #
 # Path
