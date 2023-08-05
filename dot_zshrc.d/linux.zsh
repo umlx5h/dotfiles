@@ -22,6 +22,7 @@ function bcc() {
 #
 
 alias gm="gomi"
+alias rm="gomi"
 
 #
 # Path

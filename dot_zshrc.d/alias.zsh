@@ -2,7 +2,7 @@
 alias watch="watch "
 alias la="ll"
 # sudoでもaliasを使う
-#alias sudo='sudo '
+alias sudo='sudo '
 
 #
 # Third party
