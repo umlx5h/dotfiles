@@ -4,16 +4,6 @@
 
 {{- if .isLocal }}
 
-function s() {
-    local update_flag=$1
-    if [[ $update_flag == "u" ]]; then
-        echo "No supported"
-        return
-    fi
-    local host="$(cat ~/.serverlist | fzf)"
-    [ -n "$host" ] && print -z -- "ssh $host"
-}
-
 function generate_cmd_completions_work() {
 }
 

@@ -20,7 +20,6 @@ ansible
 
 {{- if not .isWork }}
 .zshrc.d/work.zsh
-.bashrc.d/work.bash
 {{- end }}
 
 {{- if not (and (.isLinux) (not .isCentOS)) }}

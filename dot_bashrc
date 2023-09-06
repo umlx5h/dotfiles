@@ -120,11 +120,5 @@ fi
 # My
 #
 
-BASHHOME="${HOME}/.bashrc.d"
-
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f $HOME/.asdf/asdf.sh ] && source "$HOME/.asdf/asdf.sh"
-
-{{- if .isWork }}
-source $BASHHOME/work.bash
-{{- end }}
