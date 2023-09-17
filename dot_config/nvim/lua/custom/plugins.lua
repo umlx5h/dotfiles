@@ -17,6 +17,10 @@ local plugins = {
         -- web dev stuff
         "css-lsp",
         "html-lsp",
+
+        -- javascript
+        "eslint-lsp",
+        "js-debug-adapter",
         "typescript-language-server",
         "prettier",
 
@@ -67,7 +71,8 @@ local plugins = {
   {
     "mfussenegger/nvim-dap",
     config = function(_, _)
-      require("core.utils").load_mappings("dap")
+      require "custom.configs.dap" -- load setting
+      require("core.utils").load_mappings("dap") -- load keymap
     end
   },
   {

@@ -17,7 +17,7 @@ M.dap = {
         local sidebar = widgets.sidebar(widgets.scopes);
         sidebar.open();
       end,
-      "Open debugging sidebar"
+      "Open debugging UI sidebar"
     }
   }
 }

@@ -12,11 +12,21 @@ local opts = {
 
     -- C, C++
     null_ls.builtins.formatting.clang_format,
+
+    -- Typescript, Javascript
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.formatting.prettier,
   },
   -- setting auto formatter
   on_attach = function(client, bufnr)
     -- only Go autoformat
-    if client.supports_method("textDocument/formatting") and vim.bo.filetype == "go" then
+    local autoFormatLangs = {
+      ["go"] = true,
+      ["typescript"] = true,
+      ["javascript"] = true,
+    }
+
+    if client.supports_method("textDocument/formatting") and autoFormatLangs[vim.bo.filetype] then
       vim.api.nvim_clear_autocmds({
         group = augroup,
         buffer = bufnr,
@@ -24,7 +34,6 @@ local opts = {
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = augroup,
         buffer = bufnr,
-        -- pattern = { "*.go" },
         callback = function()
           vim.lsp.buf.format({ bufnr = bufnr })
         end,

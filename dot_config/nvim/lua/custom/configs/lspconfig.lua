@@ -23,7 +23,6 @@ lspconfig.gopls.setup {
   }
 }
 
-
 -- C, C++
 
 lspconfig.clangd.setup {
