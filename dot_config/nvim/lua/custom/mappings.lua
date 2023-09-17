@@ -7,6 +7,9 @@ M.disabled = {
       ["<A-h>"] = "",
   },
   n = {
+      -- telescope
+      ["<leader>fz"] = "",
+
       -- Toggle horizontal term 
       ["<A-h>"] = "",
       ["<leader>pt"] = "",
@@ -105,7 +108,10 @@ M.telescope = {
     -- find
     ["<C-p>"] = { "<cmd> Telescope find_files <CR>", "Find Project files" },
     ["<leader><space>"] = { "<cmd> Telescope buffers <CR>", "Find buffers" },
-
+    
+    ["<leader>f/"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" }, -- from <leader>fz
+    ["<leader>fc"] = { "<cmd> Telescope commands <CR>", "Find commands" }, -- copy from astronvim
+    ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Find keymaps" }, -- copy from astronvim
     ["<leader>fs"] = { "<cmd> Telescope lsp_document_symbols <CR>", "Find symbol" },
     ["<leader>fS"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Find workspace Symbol" },
   }
