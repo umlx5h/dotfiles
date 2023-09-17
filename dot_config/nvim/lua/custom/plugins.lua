@@ -126,6 +126,13 @@ local plugins = {
       vim.cmd [[silent! GoInstallDeps]]
     end,
   },
+  {
+    "mbbill/undotree",
+    cmd = "UndotreeToggle",
+    config = function(_, _)
+      require("core.utils").load_mappings("undotree") -- load keymap
+    end
+  },
 }
 
 return plugins

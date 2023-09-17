@@ -94,7 +94,13 @@ M.gopher = {
   }
 }
 
-M.a_my = {
+M.undotree = {
+  n = {
+    ["<leader>u"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
+  }
+}
+
+M.telescope = {
   n = {
     -- find
     ["<C-p>"] = { "<cmd> Telescope find_files <CR>", "Find Project files" },
