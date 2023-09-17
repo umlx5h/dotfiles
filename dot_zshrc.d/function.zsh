@@ -15,6 +15,7 @@ function generate_cmd_completions_common() {
     chezmoi completion zsh > $HOME/.local/share/zsh/cmd_completions/_chezmoi
     kubectl completion zsh > $HOME/.local/share/zsh/cmd_completions/_kubectl
     helm completion zsh > $HOME/.local/share/zsh/cmd_completions/_helm
+    alp completion zsh > $HOME/.local/share/zsh/cmd_completions/_alp
     register-python-argcomplete my-python-app > $HOME/.local/share/zsh/cmd_completions/_ansible
 }
 
@@ -36,8 +37,20 @@ function show() {
 # z のパスをfzfで選択
 function zz() {
     local path=$(z -t | tac | awk '{print $2}' | fzf)
-    [ -n "$path" ] && print -z -- "cd $path"
+    [ -n "$path" ] && cd -- "$path"
 }
+
+function jmp-project() {
+    local path=$(find ~/projects/* -mindepth 1 -maxdepth 1 -type d | fzf)
+    [ -n "$path" ] && cd -- "$path"
+    zle accept-line
+    zle reset-prompt
+}
+
+zle -N jmp-project
+
+bindkey '\ef' jmp-project
+
 
 # パイプからfzfを使い選択
 function f() {
