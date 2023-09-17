@@ -1,5 +1,45 @@
 local M = {}
 
+-- In order to disable a default keymap, use
+M.disabled = {
+  t = {
+      -- Toggle horizontal term 
+      ["<A-h>"] = "",
+  },
+  n = {
+      -- Toggle horizontal term 
+      ["<A-h>"] = "",
+      ["<leader>pt"] = "",
+  }
+}
+
+
+M.nvterm = {
+  plugin = true,
+
+  t = {
+    -- toggle in terminal mode
+    ["<A-b>"] = { -- From <A-h>
+      function()
+        require("nvterm.terminal").toggle "horizontal"
+      end,
+      "Toggle bottom term",
+    },
+  },
+
+  n = {
+    -- toggle in normal mode
+    ["<A-b>"] = { -- From <A-h>
+      function()
+        require("nvterm.terminal").toggle "horizontal"
+      end,
+      "Toggle bottom term",
+    },
+  },
+}
+
+--------------------- My -----------------------
+
 M.dap = {
   plugin = true,
   n = {
