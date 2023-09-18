@@ -43,7 +43,7 @@ vim.keymap.set('i', '<C-a>', '<Home>')
 vim.keymap.set('i', '<C-e>', '<End>')
 -- vim.keymap.set('i', '<C-k>', '<C-r>=<SID>kill()<CR>')
 
--- F14-F20 custom map
+-- F13-F20 custom map
 local mode = { 'n', 'v', 'x', 's', 'o', 'i', 'l', 'c', 't' }
 local opts = { silent = true, nowait = true, noremap = false, remap = true }
 
@@ -51,17 +51,20 @@ local opts = { silent = true, nowait = true, noremap = false, remap = true }
 -- https://aperiodic.net/phil/archives/Geekery/term-function-keys/
 
 if vim.fn.expand('$TERM'):match("^screen|tmux") then
-  vim.keymap.set(mode, "<esc>[1;2Q", '<F14>', opts)
+  vim.keymap.set(mode, "<esc>[1;2P", '<F13>', opts)
 elseif vim.fn.expand('$TERM'):match("^xterm") then
-  vim.keymap.set(mode, '<esc>O2Q', '<F14>', opts)
+  vim.keymap.set(mode, '<esc>O2P', '<F13>', opts)
 end
 
 if vim.fn.expand('$TERM'):match("^screen") then
-  vim.keymap.set(mode, "<S-F2>", '<F14>', opts) -- Shift
+  vim.keymap.set(mode, "<S-F1>", '<F13>', opts) -- Shift
 end
 
+-- コマンドモードでShift+Enter押したときにEnterを押すようにする
+vim.keymap.set('c', "<F13>", '<CR>')
+
 -- auto insert semicolon (shift+Enter)
-vim.keymap.set('i', '<F14>', function ()
+vim.keymap.set('i', '<F13>', function ()
   local line = vim.fn.getline(".")
   if not line:match(";$") then
     return vim.api.nvim_replace_termcodes("<C-o>A;", true, true, true);
@@ -69,7 +72,7 @@ vim.keymap.set('i', '<F14>', function ()
     return vim.api.nvim_replace_termcodes("<C-o>A", true, true, true)
   end
 end, { noremap=true, expr=true })
-vim.keymap.set('n', '<F14>', function ()
+vim.keymap.set('n', '<F13>', function ()
   local line = vim.fn.getline(".")
   if not line:match(";$") then
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("A;<ESC>", true, false, true), 'n', true)
