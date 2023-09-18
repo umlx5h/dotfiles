@@ -133,6 +133,22 @@ local plugins = {
       require("core.utils").load_mappings("undotree") -- load keymap
     end
   },
+  {
+    "hrsh7th/nvim-cmp",
+    opts = function ()
+      -- TODO: where do I put this?
+      local cmp = require "cmp"
+      cmp_opts = require "plugins.configs.cmp"
+      -- Goなどで勝手に補完が選択されるので、されないようにする
+      cmp_opts.preselect = cmp.PreselectMode.None
+      -- Tabで補完を確定させる
+      cmp_opts.mapping["<Tab>"] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      }
+      return cmp_opts
+    end
+  },
 }
 
 return plugins
