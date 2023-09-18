@@ -12,7 +12,7 @@ M.disabled = {
 
       -- Toggle horizontal term 
       ["<A-h>"] = "",
-      ["<leader>pt"] = "",
+      -- ["<leader>pt"] = "",
   }
 }
 

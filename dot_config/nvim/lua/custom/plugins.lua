@@ -134,7 +134,7 @@ local plugins = {
     end
   },
   {
-    "hrsh7th/nvim-cmp",
+    "hrsh7th/nvim-cmp", -- override
     opts = function ()
       -- TODO: where do I put this?
       local cmp = require "cmp"
@@ -148,6 +148,23 @@ local plugins = {
       }
       return cmp_opts
     end
+  },
+  {
+    "NvChad/nvterm", -- override
+    opts = {
+      terminals = {
+        type_opts = {
+          float = {
+            relative = "editor",
+            row = 0.07,
+            col = 0.05,
+            width = 0.9,
+            height = 0.8,
+            border = "single",
+          },
+        },
+      },
+    },
   },
 }
 

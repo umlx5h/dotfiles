@@ -17,7 +17,7 @@ vim.keymap.set({"n", "v", "i"}, "<A-Left>", "<C-o>", { desc = "Go back (C-O)"})
 vim.keymap.set({"n", "v", "i"}, "<A-Right>", "<C-i>", { desc = "Go forward (C-I)"})
 
 vim.keymap.set("x", "<leader>pp", [["_dP]], { desc = "Paste without yank"})
-vim.keymap.set("n", "<leader>p", [["0p]], { desc = "Paste from yank register"})
+vim.keymap.set("n", "<leader>P", [["0p]], { desc = "Paste from yank register"})
 
 -- JとKでまとめて上下に移動
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
