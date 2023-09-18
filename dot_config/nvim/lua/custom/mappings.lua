@@ -13,6 +13,10 @@ M.disabled = {
       -- Toggle horizontal term 
       ["<A-h>"] = "",
       -- ["<leader>pt"] = "",
+
+      -- LSP
+      ["gi"] = "",
+      ["<leader>ls"] = ""
   }
 }
 
@@ -114,6 +118,23 @@ M.telescope = {
     ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Find keymaps" }, -- copy from astronvim
     ["<leader>fs"] = { "<cmd> Telescope lsp_document_symbols <CR>", "Find symbol" },
     ["<leader>fS"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Find workspace Symbol" },
+  }
+}
+
+M.lspconfig = {
+  n = {
+    ["gI"] = {
+      function()
+        vim.lsp.buf.implementation()
+      end,
+      "LSP implementation",
+    },
+    ["gK"] = {
+      function()
+        vim.lsp.buf.signature_help()
+      end,
+      "LSP signature help",
+    },
   }
 }
 
