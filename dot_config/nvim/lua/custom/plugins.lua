@@ -58,6 +58,7 @@ local plugins = {
         "gosum",
         "gowork",
       },
+      indent = { enable = false }, -- Cでswitchのcaseの部分などで勝手にインデントを変えられてしまうため無効にする
       incremental_selection = {
         enable = true,
         keymaps = {

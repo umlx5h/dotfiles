@@ -9,6 +9,7 @@ M.disabled = {
   n = {
       -- telescope
       ["<leader>fz"] = "",
+      ["<leader>pt"] = "",
 
       -- Toggle horizontal term 
       ["<A-h>"] = "",
@@ -118,6 +119,7 @@ M.telescope = {
     ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Find keymaps" }, -- copy from astronvim
     ["<leader>fs"] = { "<cmd> Telescope lsp_document_symbols <CR>", "Find symbol" },
     ["<leader>fS"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Find workspace Symbol" },
+    ["<leader>ft"] = { "<cmd> Telescope terms <CR>", "Find hidden term" },
   }
 }
 
