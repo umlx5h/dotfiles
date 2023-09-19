@@ -1,3 +1,4 @@
+-- TODO: move override
 local plugins = {
   {
     "neovim/nvim-lspconfig",
@@ -150,6 +151,9 @@ local plugins = {
       local cmp = require "cmp"
       cmp_opts = require "plugins.configs.cmp"
       -- Goなどで勝手に補完が選択されるので、されないようにする
+      -- @see https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt
+      -- Why does cmp automatically select a particular item? ~
+      -- How to disable the preselect feature? ~
       cmp_opts.preselect = cmp.PreselectMode.None
       -- Tabで補完を確定させる
       cmp_opts.mapping["<Tab>"] = cmp.mapping.confirm {

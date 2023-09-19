@@ -7,6 +7,11 @@
   "if err != nil { panic (err) } ": {
     "prefix": "iferrp",
     "body": "if err != nil {\n\tpanic(err)\n}\n${1}",
-    "description": "Snippet for if err != nil { panic (err) }"
+    "description": "Snippet for if err != nil { panic(err) }"
+  },
+  "if err != nil { log.Fatal (err) } ": {
+    "prefix": "iferrf",
+    "body": "if err != nil {\n\tlog.Fatal(err)\n}\n${1}",
+    "description": "Snippet for if err != nil { log.Fatal(err) }"
   }
 }
