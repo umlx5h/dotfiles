@@ -11,8 +11,10 @@ M.disabled = {
       ["<leader>fz"] = "",
       ["<leader>pt"] = "",
 
-      -- Toggle horizontal term 
+      -- nvterm
       ["<A-h>"] = "",
+      ["<leader>h"] = "",
+      ["<leader>v"] = "",
       -- ["<leader>pt"] = "",
 
       -- LSP
@@ -27,7 +29,7 @@ M.nvterm = {
 
   t = {
     -- toggle in terminal mode
-    ["<A-b>"] = { -- From <A-h>
+    ["<A-m>"] = { -- From <A-h>
       function()
         require("nvterm.terminal").toggle "horizontal"
       end,
@@ -37,7 +39,7 @@ M.nvterm = {
 
   n = {
     -- toggle in normal mode
-    ["<A-b>"] = { -- From <A-h>
+    ["<A-m>"] = { -- From <A-h>
       function()
         require("nvterm.terminal").toggle "horizontal"
       end,
@@ -106,6 +108,15 @@ M.undotree = {
   n = {
     ["<leader>u"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
   }
+}
+
+M.nvimtree = {
+  n = {
+    -- トグル時にツリーにフォーカスが移らないようにする
+    ["<C-n>"] = { function()
+      require("nvim-tree.api").tree.toggle(false, true)
+    end, "Toggle nvimtree" },
+  },
 }
 
 M.telescope = {

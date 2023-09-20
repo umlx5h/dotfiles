@@ -27,6 +27,12 @@ local plugins = {
 
         -- go
         "gopls",
+        "goimports",
+        "goimports-reviser",
+        "golangci-lint",
+        "golines",
+        "gotests",
+        "gofumpt",
 
         -- C, C++
         "clangd",

@@ -8,15 +8,23 @@ opt.pumheight = 12 -- set completion max rows
 vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 
 -------------------------------------- remaps ------------------------------------------
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Go back to [pr]evious directory"})
-vim.keymap.set('n', '<leader>l', '<C-^>', { desc = "Toggle [l]ast buffer"})
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = "[y]ank system clipboard"})
-vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "[Y]ank system clipboard"})
+
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Go back to previous directory"})
+vim.keymap.set('n', '<leader>l', '<C-^>', { desc = "Toggle last buffer"})
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = "yank system clipboard"})
+vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard"})
+
+-- TODO: これなんだっけ？
+-- vim.keymap.set({"n", "v"}, "<leader>dd", [["_d]])
+vim.keymap.set("v", "<leader>d", [["+d]], { desc = "Delete with clipboard" } )
 
 -- ALT+<- or -> でジャンプ
 vim.keymap.set({"n", "v", "i"}, "<A-Left>", "<C-o>", { desc = "Go back (C-O)"})
 vim.keymap.set({"n", "v", "i"}, "<A-Right>", "<C-i>", { desc = "Go forward (C-I)"})
+vim.keymap.set({"n", "v", "i"}, "<esc>b", "<C-o>", { desc = "Go back (C-O)"}) -- Alt+<->をワード移動に設定しているのでそれも上書き
+vim.keymap.set({"n", "v", "i"}, "<esc>f", "<C-i>", { desc = "Go forward (C-I)"})
 
+-- TODO: ショートカット考える
 vim.keymap.set("x", "<leader>pp", [["_dP]], { desc = "Paste without yank"})
 vim.keymap.set("n", "<leader>P", [["0p]], { desc = "Paste from yank register"})
 
@@ -42,24 +50,31 @@ vim.keymap.set('i', '<C-b>', '<Left>')
 vim.keymap.set('i', '<C-f>', '<Right>')
 vim.keymap.set('i', '<C-a>', '<Home>')
 vim.keymap.set('i', '<C-e>', '<End>')
+vim.keymap.set('i', '<C-d>', '<Delete>')
+vim.keymap.set('i', '<C-h>', '<BS>')
+-- TODO: add more
 -- vim.keymap.set('i', '<C-k>', '<C-r>=<SID>kill()<CR>')
 
--- F13-F20 custom map
-local mode = { 'n', 'v', 'x', 's', 'o', 'i', 'l', 'c', 't' }
-local opts = { silent = true, nowait = true, noremap = false, remap = true }
 
--- https://unix.stackexchange.com/questions/154501/can-i-get-my-iterm-key-combos-working-in-tmux
--- https://aperiodic.net/phil/archives/Geekery/term-function-keys/
 
-if vim.fn.expand('$TERM'):match("^screen|tmux") then
-  vim.keymap.set(mode, "<esc>[1;2P", '<F13>', opts)
-elseif vim.fn.expand('$TERM'):match("^xterm") then
-  vim.keymap.set(mode, '<esc>O2P', '<F13>', opts)
-end
+-- vim.keymap.set({"n", "t", "i"}, "<C-u>", "<Nop>", { desc = "Go forward (C-I)"})
 
-if vim.fn.expand('$TERM'):match("^screen") then
-  vim.keymap.set(mode, "<S-F1>", '<F13>', opts) -- Shift
-end
+-- -- F13-F20 custom map
+-- local mode = { 'n', 'v', 'x', 's', 'o', 'i', 'l', 'c', 't' }
+-- local opts = { silent = true, nowait = true, noremap = false, remap = true }
+
+-- -- https://unix.stackexchange.com/questions/154501/can-i-get-my-iterm-key-combos-working-in-tmux
+-- -- https://aperiodic.net/phil/archives/Geekery/term-function-keys/
+
+-- if vim.fn.expand('$TERM'):match("^screen|tmux") then
+--   vim.keymap.set(mode, "<esc>[1;2P", '<F13>', opts)
+-- elseif vim.fn.expand('$TERM'):match("^xterm") then
+--   vim.keymap.set(mode, '<esc>O2P', '<F13>', opts)
+-- end
+
+-- if vim.fn.expand('$TERM'):match("^screen") then
+--   vim.keymap.set(mode, "<S-F1>", '<F13>', opts) -- Shift
+-- end
 
 -- コマンドモードでShift+Enter押したときにEnterを押すようにする
 vim.keymap.set('c', "<F13>", '<CR>')
