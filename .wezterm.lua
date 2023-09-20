@@ -18,6 +18,9 @@ config.font = wezterm.font 'DejaVuSansM Nerd Font Mono'
 config.enable_scroll_bar = true
 config.window_close_confirmation = 'NeverPrompt'
 
+config.colors = {
+  compose_cursor = '#111111', -- 日本語入力時に背景色とカーソルが同じになり見づらい問題の対策 */
+}
 ------------------------------ Keybinding ------------------------------------
 local act = wezterm.action
 config.keys = {
@@ -28,7 +31,6 @@ config.keys = {
   -- { key = 'Enter', mods = 'SHIFT', action = act.SendString '\x1bO2P' }, -- <ESC>O2P - F13
   { key = 'Enter', mods = 'SHIFT', action = act.SendKey { key = 'F13' } },
 
-  ----------------- win ------------------
   -- vim likeにタブ移動
   { key = 'j', mods = 'CTRL|SHIFT',  action = wezterm.action({ ActivateTab = 0 }) },
   { key = 'k', mods = 'CTRL|SHIFT',  action = wezterm.action({ ActivateTab = 1 }) },
@@ -42,12 +44,7 @@ config.keys = {
 }
 
 ---------------------------------- WSL config --------------------------------------
-local wsl_domains = wezterm.default_wsl_domains()
-for _, dom in ipairs(wsl_domains) do
-    dom.default_cwd = "~"
-end
-config.wsl_domains = wsl_domains
-config.default_prog = { "wsl.exe" }
+config.default_prog = { "wsl.exe", "--cd", "~" }
 
 -- WSL経由の時にタブ閉じるようにする
 -- TODO: WSL経由でtmuxを使っている場合は問題ないが、使ってない場合に確認が出ずに終了してしまう
