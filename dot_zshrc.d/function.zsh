@@ -49,7 +49,7 @@ function jmp-project() {
 
 zle -N jmp-project
 
-bindkey '\ef' jmp-project
+bindkey '\ep' jmp-project
 
 
 # パイプからfzfを使い選択

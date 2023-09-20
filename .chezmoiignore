@@ -6,8 +6,11 @@ ansible
 .p10k.zsh_main
 .p10k.zsh_sub
 
+win/
+
 {{- if not .isWSL }}
 .zshrc.d/wsl.zsh
+win-wezterm.sh
 {{- end }}
 
 {{- if not .isLinux }}
@@ -16,6 +19,7 @@ ansible
 
 {{- if not .isMac }}
 .zshrc.d/mac.zsh
+.wezterm.lua
 {{- end }}
 
 {{- if not .isWork }}
