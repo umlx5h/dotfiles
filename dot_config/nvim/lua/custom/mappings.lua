@@ -20,6 +20,23 @@ M.disabled = {
       -- LSP
       ["gi"] = "",
       ["<leader>ls"] = ""
+  },
+  i = {
+    -- /* Disable .general */
+    -- go to  beginning and end
+    ["<C-b>"] = "",
+    ["<C-e>"] = "",
+    -- navigate within insert mode
+    ["<C-h>"] = "",
+    ["<C-l>"] = "",
+    ["<C-j>"] = "",
+    ["<C-k>"] = "",
+  }
+}
+
+M.general = {
+  i = {
+    ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
   }
 }
 
@@ -104,13 +121,15 @@ M.gopher = {
   }
 }
 
-M.undotree = {
+M.undotree = { 
+  plugin = true,
   n = {
     ["<leader>u"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
   }
 }
 
 M.nvimtree = {
+  plugin = true,
   n = {
     -- トグル時にツリーにフォーカスが移らないようにする
     ["<C-n>"] = { function()
@@ -120,6 +139,7 @@ M.nvimtree = {
 }
 
 M.telescope = {
+  plugin = true,
   n = {
     -- find
     ["<C-p>"] = { "<cmd> Telescope find_files <CR>", "Find Project files" },
@@ -131,10 +151,12 @@ M.telescope = {
     ["<leader>fs"] = { "<cmd> Telescope lsp_document_symbols <CR>", "Find symbol" },
     ["<leader>fS"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Find workspace Symbol" },
     ["<leader>ft"] = { "<cmd> Telescope terms <CR>", "Find hidden term" },
+    ["<leader>fp"] = { "<cmd> Telescope projects <CR>", "Find projects" }, -- ahmedkhalf/project.nvim
   }
 }
 
 M.lspconfig = {
+  plugin = true,
   n = {
     ["gI"] = {
       function()
@@ -150,6 +172,5 @@ M.lspconfig = {
     },
   }
 }
-
 
 return M

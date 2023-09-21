@@ -166,6 +166,9 @@ local plugins = {
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       }
+      cmp_opts.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
+      cmp_opts.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
+      cmp_opts.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
       return cmp_opts
     end
   },
@@ -185,6 +188,19 @@ local plugins = {
         },
       },
     },
+  },
+  {
+    'ahmedkhalf/project.nvim',
+    init = function()
+      require('telescope').load_extension 'projects'
+    end,
+    config = function()
+      require('project_nvim').setup({
+        manual_mode = true,
+        patterns = { ".git", "package.json" },
+        datapath = vim.fn.stdpath("config") .. '/lua/custom/data', -- configフォルダ以下に保存する
+      })
+    end,
   },
 }
 

@@ -11,10 +11,11 @@ M.lazy_nvim = {
   },
 }
 M.ui = {
+  theme_toggle = { "catppuccin" },
   -- https://github.com/NvChad/base46/blob/v2.0/lua/base46/themes/catppuccin.lua
   theme = 'catppuccin',
   changed_themes = {
-    catppuccin = {
+    ["catppuccin"] = {
        base_30 = {
         grey_fg = "#817e99", -- comment out color (from: #4e4d5d)
         -- grey_fg2 = "#555464",
@@ -23,6 +24,10 @@ M.ui = {
        },
     },
   },
+
+  statusline = {
+    theme = "default",
+  }
 }
 M.plugins = "custom.plugins"
 M.mappings = require "custom.mappings"

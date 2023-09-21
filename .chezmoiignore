@@ -6,6 +6,8 @@ ansible
 .p10k.zsh_main
 .p10k.zsh_sub
 
+.config/nvim/lua/custom/data/
+
 win/
 
 {{- if not .isWSL }}

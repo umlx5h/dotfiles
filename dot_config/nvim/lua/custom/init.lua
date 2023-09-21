@@ -29,8 +29,8 @@ vim.keymap.set("x", "<leader>pp", [["_dP]], { desc = "Paste without yank"})
 vim.keymap.set("n", "<leader>P", [["0p]], { desc = "Paste from yank register"})
 
 -- JとKでまとめて上下に移動
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "chunk moving up"})
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "chunk moving down"})
 
 -- window split remap (tmux like)
 vim.keymap.set('n', '<C-w>/', '<C-w>v', { desc = "Split window vertically", noremap = true})
@@ -41,17 +41,17 @@ vim.keymap.set('n', '<C-w>s', '<C-w>x', { desc = "Swap window", noremap = true }
 -- vim.keymap.set('n', '<C-w>v', '<Nop>')
 -- vim.keymap.set('n', '<C-w>s', '<Nop>')
 
-vim.keymap.set('i', 'jk', '<ESC>')
+vim.keymap.set('i', 'jk', '<ESC>', { desc = "Another ESC"} )
 
 -- emacs keybiding in insert mode
-vim.keymap.set('i', '<C-p>', '<Up>')
-vim.keymap.set('i', '<C-n>', '<Down>')
-vim.keymap.set('i', '<C-b>', '<Left>')
-vim.keymap.set('i', '<C-f>', '<Right>')
-vim.keymap.set('i', '<C-a>', '<Home>')
-vim.keymap.set('i', '<C-e>', '<End>')
-vim.keymap.set('i', '<C-d>', '<Delete>')
-vim.keymap.set('i', '<C-h>', '<BS>')
+vim.keymap.set('i', '<C-p>', '<Up>', { desc = "Emacs Up"} )
+vim.keymap.set('i', '<C-n>', '<Down>', { desc = "Emacs Down"} )
+vim.keymap.set('i', '<C-b>', '<Left>', { desc = "Emacs Left"} )
+vim.keymap.set('i', '<C-f>', '<Right>', { desc = "Emacs Right"} )
+vim.keymap.set('i', '<C-a>', '<Home>', { desc = "Emacs Home"} )
+vim.keymap.set('i', '<C-e>', '<End>', { desc = "Emacs End"} )
+vim.keymap.set('i', '<C-d>', '<Delete>', { desc = "Emacs Delete"} )
+vim.keymap.set('i', '<C-h>', '<BS>', { desc = "Emacs Backspace"} )
 -- TODO: add more
 -- vim.keymap.set('i', '<C-k>', '<C-r>=<SID>kill()<CR>')
 
