@@ -33,6 +33,8 @@ local plugins = {
         "golines",
         "gotests",
         "gofumpt",
+        "gomodifytags",
+        "impl",
 
         -- C, C++
         "clangd",
@@ -223,6 +225,11 @@ local plugins = {
 
     end,
   },
+  {
+    "nvim-pack/nvim-spectre",
+    cmd = "Spectre",
+    opts = { open_cmd = "noswapfile vnew" },
+  }
 }
 
 return plugins

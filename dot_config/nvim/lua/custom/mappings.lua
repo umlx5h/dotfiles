@@ -150,12 +150,15 @@ M.gopher = {
   }
 }
 
-M.undotree = { 
-  -- plugin = true,
+M.tool = {
   n = {
+    -- undotree
     ["<leader>ut"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
+    -- spectre
+    ["<leader>us"] = { function() require("spectre").open() end, "Toggle spectre (replace tool)" },
   }
 }
+
 
 M.nvimtree = {
   plugin = true,
