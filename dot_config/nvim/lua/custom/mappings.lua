@@ -18,7 +18,6 @@ M.disabled = {
     ["<leader>fz"] = "",
     ["<leader>ma"] = "",
     ["<leader>pt"] = "",
-    ["<leader>th"] = "", -- to <leader>ut (Nvchad themes)
 
     --------------------- nvterm -----------------------
     ["<A-h>"] = "",
@@ -152,9 +151,9 @@ M.gopher = {
 }
 
 M.undotree = { 
-  plugin = true,
+  -- plugin = true,
   n = {
-    ["<leader>u"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
+    ["<leader>ut"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
   }
 }
 
@@ -249,19 +248,11 @@ M.gitsigns = {
       end,
       "Reset hunk",
     },
-
     ["<leader>gp"] = {
       function()
         require("gitsigns").preview_hunk()
       end,
       "Preview hunk",
-    },
-
-    ["<leader>td"] = {
-      function()
-        require("gitsigns").toggle_deleted()
-      end,
-      "Toggle deleted",
     },
   },
 }
@@ -270,7 +261,6 @@ M.ui = {
   n = {
     -- line numbers
     ["<leader>ul"] = { "<cmd> set nu! <CR>", "Toggle line number" },
-    ["<leader>ut"] = { "<cmd> Telescope themes <CR>", "Nvchad themes" },
   },
 }
 

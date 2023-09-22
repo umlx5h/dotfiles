@@ -30,7 +30,9 @@ lspconfig.clangd.setup {
     client.server_capabilities.signatureHelpProvider = false
     on_attach(client, bufnr)
   end,
-  capabilities = capabilities,
+  capabilities = vim.tbl_deep_extend("force", capabilities, {
+    offsetEncoding = { "utf-16" }, -- FIX: warning: multiple different client offset_encodings detected for buffer, this is not supported yet
+  })
 }
 
 -- Other
