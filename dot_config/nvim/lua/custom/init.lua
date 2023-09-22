@@ -41,7 +41,11 @@ vim.keymap.set('n', '<C-w>s', '<C-w>x', { desc = "Swap window", noremap = true }
 -- vim.keymap.set('n', '<C-w>v', '<Nop>')
 -- vim.keymap.set('n', '<C-w>s', '<Nop>')
 
-vim.keymap.set('i', 'jk', '<ESC>', { desc = "Another ESC"} )
+-- Alternative to VSCode Ctrl+D
+vim.keymap.set("x", "sr", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under cursor" })
+vim.keymap.set("n", "sr", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]], { desc = "Replace word under cursor" })
+vim.keymap.set("x", "sg", [[y:%s/\<<c-r>"\>//g<left><left>]], { desc = "Replace word under cursor globally" })
+
 
 -- emacs keybiding in insert mode
 vim.keymap.set('i', '<C-p>', '<Up>', { desc = "Emacs Up"} )
@@ -52,7 +56,9 @@ vim.keymap.set('i', '<C-a>', '<Home>', { desc = "Emacs Home"} )
 vim.keymap.set('i', '<C-e>', '<End>', { desc = "Emacs End"} )
 vim.keymap.set('i', '<C-d>', '<Delete>', { desc = "Emacs Delete"} )
 vim.keymap.set('i', '<C-h>', '<BS>', { desc = "Emacs Backspace"} )
--- TODO: add more
+vim.keymap.set("i", "<C-k>", function()
+	return "<C-o>D"
+end, { desc = "Emacs Cut line", silent = true, expr = true })
 -- vim.keymap.set('i', '<C-k>', '<C-r>=<SID>kill()<CR>')
 
 

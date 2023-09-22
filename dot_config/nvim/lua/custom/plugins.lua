@@ -71,8 +71,8 @@ local plugins = {
         keymaps = {
           init_selection = '<c-space>',
           node_incremental = '<c-space>',
-          -- scope_incremental = '<c-s>',
-          node_decremental = '<BS>'
+          scope_incremental = false,
+          node_decremental = '<bs>'
         },
       },
     },
@@ -200,6 +200,27 @@ local plugins = {
         patterns = { ".git", "package.json" },
         datapath = vim.fn.stdpath("config") .. '/lua/custom/data', -- configフォルダ以下に保存する
       })
+    end,
+  },
+
+  {
+    "folke/which-key.nvim", -- override
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "whichkey")
+      require("which-key").setup(opts)
+
+      -- prefixに名前を付ける
+      local wk = require "which-key"
+      wk.register {
+        ["<leader>"] = {
+          c = { name = "+code" },
+          d = { name = "+debug" },
+          f = { name = "+find" },
+          g = { name = "+git" },
+          u = { name = "+ui" },
+        },
+      }
+
     end,
   },
 }

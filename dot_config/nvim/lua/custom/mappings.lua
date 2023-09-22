@@ -3,23 +3,39 @@ local M = {}
 -- In order to disable a default keymap, use
 M.disabled = {
   t = {
-      -- Toggle horizontal term 
-      ["<A-h>"] = "",
+    -- Toggle horizontal term 
+    ["<A-h>"] = "",
   },
   n = {
-      -- telescope
-      ["<leader>fz"] = "",
-      ["<leader>pt"] = "",
+    --------------------- General -----------------------
+    -- disable
+    ["<C-c>"] = "", -- for ESC (Copy all)
+    ["<leader>b"] = "", -- to <leader>n (New buffer)
+    ["<leader>n"] = "", -- to <leader>un (line numbers)
+    ["<leader>rn"] = "", -- disable
+    
+    --------------------- telescope -----------------------
+    ["<leader>fz"] = "",
+    ["<leader>ma"] = "",
+    ["<leader>pt"] = "",
+    ["<leader>th"] = "", -- to <leader>ut (Nvchad themes)
 
-      -- nvterm
-      ["<A-h>"] = "",
-      ["<leader>h"] = "",
-      ["<leader>v"] = "",
-      -- ["<leader>pt"] = "",
+    --------------------- nvterm -----------------------
+    ["<A-h>"] = "",
+    ["<leader>h"] = "",
+    ["<leader>v"] = "",
 
-      -- LSP
-      ["gi"] = "",
-      ["<leader>ls"] = ""
+    --------------------- gitsigns -----------------------
+    ["<leader>td"] = "", -- disable (Toggle deleted)
+    ["]c"] = "", -- to <leader>]g (Jump to next hunk)
+    ["[c"] = "", -- to <leader>[g (Jump to prev hunk)
+    ["<leader>rh"] = "", -- to <leader>gr (Reset hunk)
+    ["<leader>ph"] = "", -- to <leader>gp (Preview hunk)
+
+    --------------------- LSP -----------------------
+    ["gi"] = "",
+    ["<leader>ls"] = "", -- remap to gK (LSP signature help)
+    ["<leader>ra"] = "", -- remap to <leader>cr (LSP rename)
   },
   i = {
     -- /* Disable .general */
@@ -37,7 +53,10 @@ M.disabled = {
 M.general = {
   i = {
     ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
-  }
+  },
+  n = {
+    ["<leader>n"] = { "<cmd> enew <CR>", "New buffer" },
+},
 }
 
 
@@ -62,6 +81,17 @@ M.nvterm = {
       end,
       "Toggle bottom term",
     },
+    ["<leader>gg"] = {
+      function()
+        local nvterm = require "nvterm.terminal"
+        nvterm.send("tig && exit", "float")
+        -- フォーカスを合わせるために無理やり2回トグル
+        -- https://github.com/NvChad/nvterm/issues/43
+        nvterm.toggle "float"
+        nvterm.toggle "float"
+      end,
+      "Open tig",
+    },
   },
 }
 
@@ -80,9 +110,9 @@ M.dap = {
     },
     ["<leader>dus"] = {
       function ()
-        local widgets = require('dap.ui.widgets');
-        local sidebar = widgets.sidebar(widgets.scopes);
-        sidebar.open();
+        local widgets = require('dap.ui.widgets')
+        local sidebar = widgets.sidebar(widgets.scopes)
+        sidebar.open()
       end,
       "Open debugging UI sidebar"
     }
@@ -170,7 +200,78 @@ M.lspconfig = {
       end,
       "LSP signature help",
     },
+    ["<leader>cr"] = {
+      function()
+        require("nvchad.renamer").open()
+      end,
+      "LSP rename",
+    },
   }
+}
+
+
+M.gitsigns = {
+  plugin = true,
+
+  n = {
+    ["]g"] = {
+      function()
+        if vim.wo.diff then
+          return "]g"
+        end
+        vim.schedule(function()
+          require("gitsigns").next_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Jump to next hunk",
+      opts = { expr = true },
+    },
+
+    ["[g"] = {
+      function()
+        if vim.wo.diff then
+          return "[g"
+        end
+        vim.schedule(function()
+          require("gitsigns").prev_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Jump to prev hunk",
+      opts = { expr = true },
+    },
+
+    -- Actions
+    ["<leader>gr"] = {
+      function()
+        require("gitsigns").reset_hunk()
+      end,
+      "Reset hunk",
+    },
+
+    ["<leader>gp"] = {
+      function()
+        require("gitsigns").preview_hunk()
+      end,
+      "Preview hunk",
+    },
+
+    ["<leader>td"] = {
+      function()
+        require("gitsigns").toggle_deleted()
+      end,
+      "Toggle deleted",
+    },
+  },
+}
+
+M.ui = {
+  n = {
+    -- line numbers
+    ["<leader>ul"] = { "<cmd> set nu! <CR>", "Toggle line number" },
+    ["<leader>ut"] = { "<cmd> Telescope themes <CR>", "Nvchad themes" },
+  },
 }
 
 return M
