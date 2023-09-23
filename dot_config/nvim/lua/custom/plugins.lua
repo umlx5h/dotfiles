@@ -1,6 +1,21 @@
 -- TODO: move override
 local plugins = {
   {
+    "nvim-telescope/telescope.nvim", -- override
+    opts = {
+      pickers = {
+        buffers = {
+          mappings = {
+            i = {
+              ["<c-d>"] = "delete_buffer", -- バッファ一覧画面でCtrl+Dで消せるようにする
+            }
+          },
+        },
+      }
+    },
+  },
+  {
+
     "neovim/nvim-lspconfig",
     config = function()
       require "plugins.configs.lspconfig"

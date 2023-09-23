@@ -9,7 +9,7 @@ vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 
 -------------------------------------- remaps ------------------------------------------
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Go back to previous directory"})
+vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory"})
 vim.keymap.set('n', '<leader>l', '<C-^>', { desc = "Toggle last buffer"})
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = "yank system clipboard"})
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard"})
@@ -24,9 +24,10 @@ vim.keymap.set({"n", "v", "i"}, "<A-Right>", "<C-i>", { desc = "Go forward (C-I)
 vim.keymap.set({"n", "v", "i"}, "<esc>b", "<C-o>", { desc = "Go back (C-O)"}) -- Alt+<->をワード移動に設定しているのでそれも上書き
 vim.keymap.set({"n", "v", "i"}, "<esc>f", "<C-i>", { desc = "Go forward (C-I)"})
 
--- TODO: ショートカット考える
-vim.keymap.set("x", "<leader>pp", [["_dP]], { desc = "Paste without yank"})
-vim.keymap.set("n", "<leader>P", [["0p]], { desc = "Paste from yank register"})
+-- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
+-- vim.keymap.set("x", "p", [[p:let @"=@0<CR>]], { desc = "Paste without yank", silent = true })
+-- vim.keymap.set("x", "p", [[p:let @+=@0<CR>:let @"=@0<CR>]], { desc = "Paste without yank", silent = true})
+vim.keymap.set("n", "<leader>p", [["0p]], { desc = "Paste from yank register"})
 
 -- JとKでまとめて上下に移動
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "chunk moving up"})
