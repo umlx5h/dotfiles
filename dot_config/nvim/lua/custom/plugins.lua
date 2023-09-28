@@ -15,7 +15,6 @@ local plugins = {
     },
   },
   {
-
     "neovim/nvim-lspconfig",
     config = function()
       require "plugins.configs.lspconfig"
@@ -169,6 +168,9 @@ local plugins = {
   },
   {
     "hrsh7th/nvim-cmp", -- override
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp-signature-help"
+    },
     opts = function ()
       -- TODO: where do I put this?
       local cmp = require "cmp"
@@ -186,6 +188,7 @@ local plugins = {
       cmp_opts.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
       cmp_opts.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
       cmp_opts.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
+      cmp_opts.sources[#cmp_opts.sources+1] = { name = "nvim_lsp_signature_help" } -- lspデフォルトはカーソルと被る問題があるため変更する
       return cmp_opts
     end
   },

@@ -16,6 +16,7 @@ lspconfig.gopls.setup {
     gopls = {
       completeUnimported = true,
       -- usePlaceholders = true,
+      staticcheck = true,
       analyses = {
         unusedparams = true,
       },
@@ -53,6 +54,7 @@ local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   opts = opts or {}
   opts.border = opts.border or 'single'
+  -- 画面の大きさに対して%指定でサイズを調整
   opts.max_height = opts.max_height or math.floor(vim.api.nvim_win_get_height(0) * 0.5)
   opts.max_width = opts.max_width or math.floor(vim.api.nvim_win_get_width(0) * 0.7)
 

@@ -10,7 +10,8 @@ vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 -------------------------------------- remaps ------------------------------------------
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory"})
-vim.keymap.set('n', '<leader>l', '<C-^>', { desc = "Toggle last buffer"})
+-- きもいがtmuxと合わせる
+vim.keymap.set('n', '<leader>i', '<C-^>', { desc = "Toggle last buffer"})
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], { desc = "yank system clipboard"})
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard"})
 
