@@ -35,6 +35,7 @@ M.disabled = {
     ["gi"] = "",
     ["<leader>ls"] = "", -- remap to gK (LSP signature help)
     ["<leader>ra"] = "", -- remap to <leader>cr (LSP rename)
+    ["<leader>f"] = "",  -- remap to <leader>fd (Floating diagnostic)
   },
   i = {
     -- /* Disable .general */
@@ -182,8 +183,10 @@ M.telescope = {
     ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Find keymaps" }, -- copy from astronvim
     ["<leader>fs"] = { "<cmd> Telescope lsp_document_symbols <CR>", "Find symbol" },
     ["<leader>fS"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Find workspace Symbol" },
-    ["<leader>ft"] = { "<cmd> Telescope terms <CR>", "Find hidden term" },
+    ["<leader>fH"] = { "<cmd> Telescope terms <CR>", "Find Hidden term" },
     ["<leader>fp"] = { "<cmd> Telescope projects <CR>", "Find projects" }, -- ahmedkhalf/project.nvim
+    ["<leader>ft"] = { "<cmd> TodoTelescope <CR>", "Find TODO" },
+    ["<leader>Q"] = { "<cmd> TodoLocList <CR>", "TODO List" },
   }
 }
 
@@ -208,6 +211,13 @@ M.lspconfig = {
       end,
       "LSP rename",
     },
+    ["<leader>fd"] = { -- remap from <leader>f
+      function()
+        vim.diagnostic.open_float { border = "rounded" }
+      end,
+      "Floating diagnostic",
+    },
+
   }
 }
 

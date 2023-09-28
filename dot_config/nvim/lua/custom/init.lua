@@ -5,6 +5,7 @@ opt.pumheight = 12 -- set completion max rows
 
 -------------------------------------- snippets ------------------------------------------
 
+-- TODO: vscodeと共有したい
 vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 
 -------------------------------------- remaps ------------------------------------------

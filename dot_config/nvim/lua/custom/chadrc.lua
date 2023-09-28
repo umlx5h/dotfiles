@@ -53,6 +53,10 @@ M.ui = {
       
         return "%#St_file_info#" .. icon .. filename .. "%#St_file_sep#" .. sep_r
       end)()
+      -- Disable .git
+      modules[3] = (function()
+        return ""
+      end)()
     end,
   },
 

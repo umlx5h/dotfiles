@@ -247,7 +247,18 @@ local plugins = {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
     opts = { open_cmd = "noswapfile vnew" },
-  }
+  },
+  {
+    "folke/todo-comments.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      keywords = {
+        MEMO = { icon = " ", color = "hint", alt = { "INFO" } }, -- same as NOTE
+      }
+    }
+  },
+
 }
 
 return plugins
