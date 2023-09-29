@@ -12,15 +12,25 @@ end
 
 config.hide_tab_bar_if_only_one_tab = true
 config.color_scheme = 'Snazzy'
-config.font_size = 11
+config.font_size = 12
 -- config.font = wezterm.font 'JetBrainsMonoNL Nerd Font Mono'
-config.font = wezterm.font 'DejaVuSansM Nerd Font Mono'
-config.enable_scroll_bar = true
-config.window_close_confirmation = 'NeverPrompt'
+config.font = wezterm.font 'FiraMono Nerd Font Mono'
 
+config.window_close_confirmation = 'NeverPrompt'
+config.audible_bell = 'Disabled'
+--config.window_decorations = "RESIZE"
+
+--local gpus = wezterm.gui.enumerate_gpus()
+--config.webgpu_preferred_adapter = gpus[0]
+--config.front_end = "WebGpu"
+--config.front_end = "OpenGL"
+--config.front_end = "Software"
+--config.max_fps = 60
 config.colors = {
   compose_cursor = '#111111', -- 日本語入力時に背景色とカーソルが同じになり見づらい問題の対策 */
 }
+config.adjust_window_size_when_changing_font_size = false -- 拡大縮小時にウィンドウサイズを維持
+
 ------------------------------ Keybinding ------------------------------------
 local act = wezterm.action
 config.keys = {
@@ -29,9 +39,10 @@ config.keys = {
   { key = 'LeftArrow', mods = 'ALT', action = act.SendString '\x1bb' }, -- word backword
   { key = 'RightArrow', mods = 'ALT', action = act.SendString '\x1bf' }, -- word forward
   -- { key = 'Enter', mods = 'SHIFT', action = act.SendString '\x1bO2P' }, -- <ESC>O2P - F13
-  { key = 'Enter', mods = 'SHIFT', action = act.SendKey { key = 'F13' } },
+  -- { key = 'Enter', mods = 'SHIFT', action = act.SendKey { key = 'F13' } },
+  { key = 'Enter', mods = 'SHIFT', action = act.SendKey { key = 'F1', mods = 'SHIFT' } }, -- なぜかVimではこれがF13として扱われる, F13直接送るよりtmuxのバージョンによってエスケープシーケンスが変わったりしないのでこれにする
 
-  -- vim likeにタブ移動
+  ----------------- win ------------------
   { key = 'j', mods = 'CTRL|SHIFT',  action = wezterm.action({ ActivateTab = 0 }) },
   { key = 'k', mods = 'CTRL|SHIFT',  action = wezterm.action({ ActivateTab = 1 }) },
   { key = 'l', mods = 'CTRL|SHIFT',  action = wezterm.action({ ActivateTab = 2 }) },
@@ -64,3 +75,4 @@ config.skip_close_confirmation_for_processes_named = {
 }
 
 return config
+
