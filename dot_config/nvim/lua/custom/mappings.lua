@@ -3,7 +3,7 @@ local M = {}
 -- In order to disable a default keymap, use
 M.disabled = {
   t = {
-    -- Toggle horizontal term 
+    -- Toggle horizontal term
     ["<A-h>"] = "",
   },
   n = {
@@ -13,7 +13,7 @@ M.disabled = {
     ["<leader>b"] = "", -- to <leader>n (New buffer)
     ["<leader>n"] = "", -- to <leader>un (line numbers)
     ["<leader>rn"] = "", -- disable
-    
+
     --------------------- telescope -----------------------
     ["<leader>fz"] = "",
     ["<leader>ma"] = "",
@@ -35,7 +35,7 @@ M.disabled = {
     ["gi"] = "",
     ["<leader>ls"] = "", -- remap to gK (LSP signature help)
     ["<leader>ra"] = "", -- remap to <leader>cr (LSP rename)
-    ["<leader>f"] = "",  -- remap to <leader>fd (Floating diagnostic)
+    ["<leader>f"] = "", -- remap to <leader>fd (Floating diagnostic)
   },
   i = {
     -- /* Disable .general */
@@ -47,7 +47,7 @@ M.disabled = {
     ["<C-l>"] = "",
     ["<C-j>"] = "",
     ["<C-k>"] = "",
-  }
+  },
 }
 
 M.general = {
@@ -56,9 +56,8 @@ M.general = {
   },
   n = {
     ["<leader>n"] = { "<cmd> enew <CR>", "New buffer" },
-},
+  },
 }
-
 
 M.nvterm = {
   plugin = true,
@@ -102,21 +101,21 @@ M.dap = {
   n = {
     ["<leader>db"] = {
       "<cmd> DapToggleBreakpoint <CR>",
-      "Add breakpoint at line"
+      "Add breakpoint at line",
     },
     ["<leader>dr"] = {
       "<cmd> DapContinue <CR>",
-      "Start or continue the debugging"
+      "Start or continue the debugging",
     },
     ["<leader>dus"] = {
-      function ()
-        local widgets = require('dap.ui.widgets')
+      function()
+        local widgets = require "dap.ui.widgets"
         local sidebar = widgets.sidebar(widgets.scopes)
         sidebar.open()
       end,
-      "Open debugging UI sidebar"
-    }
-  }
+      "Open debugging UI sidebar",
+    },
+  },
 }
 
 M.dap_go = {
@@ -124,17 +123,17 @@ M.dap_go = {
   n = {
     ["<leader>dgt"] = {
       function()
-        require('dap-go').debug_test()
+        require("dap-go").debug_test()
       end,
-      "Debug go test"
+      "Debug go test",
     },
     ["<leader>dgl"] = {
       function()
-        require('dap-go').debug_last()
+        require("dap-go").debug_last()
       end,
-      "Debug last go test"
-    }
-  }
+      "Debug last go test",
+    },
+  },
 }
 
 M.gopher = {
@@ -142,13 +141,13 @@ M.gopher = {
   n = {
     ["<leader>gsj"] = {
       "<cmd> GoTagAdd json <CR>",
-      "Add json struct tags"
+      "Add json struct tags",
     },
     ["<leader>gsy"] = {
       "<cmd> GoTagAdd yaml <CR>",
-      "Add yaml struct tags"
-    }
-  }
+      "Add yaml struct tags",
+    },
+  },
 }
 
 M.tool = {
@@ -156,18 +155,25 @@ M.tool = {
     -- undotree
     ["<leader>ut"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
     -- spectre
-    ["<leader>us"] = { function() require("spectre").open() end, "Toggle spectre (replace tool)" },
-  }
+    ["<leader>us"] = {
+      function()
+        require("spectre").open()
+      end,
+      "Toggle spectre (replace tool)",
+    },
+  },
 }
-
 
 M.nvimtree = {
   plugin = true,
   n = {
     -- トグル時にツリーにフォーカスが移らないようにする
-    ["<C-n>"] = { function()
-      require("nvim-tree.api").tree.toggle(false, true)
-    end, "Toggle nvimtree" },
+    ["<C-n>"] = {
+      function()
+        require("nvim-tree.api").tree.toggle(false, true)
+      end,
+      "Toggle nvimtree",
+    },
   },
 }
 
@@ -177,7 +183,6 @@ M.telescope = {
     -- find
     ["<C-p>"] = { "<cmd> Telescope find_files <CR>", "Find Project files" },
     ["<leader><space>"] = { "<cmd> Telescope buffers <CR>", "Find buffers" },
-    
     ["<leader>f/"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" }, -- from <leader>fz
     ["<leader>fc"] = { "<cmd> Telescope commands <CR>", "Find commands" }, -- copy from astronvim
     ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Find keymaps" }, -- copy from astronvim
@@ -187,7 +192,7 @@ M.telescope = {
     ["<leader>fp"] = { "<cmd> Telescope projects <CR>", "Find projects" }, -- ahmedkhalf/project.nvim
     ["<leader>ft"] = { "<cmd> TodoTelescope <CR>", "Find TODO" },
     ["<leader>Q"] = { "<cmd> TodoLocList <CR>", "TODO List" },
-  }
+  },
 }
 
 M.lspconfig = {
@@ -217,10 +222,8 @@ M.lspconfig = {
       end,
       "Floating diagnostic",
     },
-
-  }
+  },
 }
-
 
 M.gitsigns = {
   plugin = true,
@@ -266,6 +269,75 @@ M.gitsigns = {
         require("gitsigns").preview_hunk()
       end,
       "Preview hunk",
+    },
+  },
+}
+
+M.tabufline = { -- override
+  plugin = true,
+
+  n = {
+    ["<leader>j"] = {
+      function()
+        local bufs = require("nvchad.tabufline").bufilter()
+        local i = 1
+        for bi, _ in ipairs(bufs) do
+          if i == 1 then
+            vim.cmd("b" .. bufs[bi])
+            break
+          end
+          i = i + 1
+        end
+      end,
+      "Buffer 1",
+    },
+    ["<leader>k"] = {
+      function()
+        local bufs = require("nvchad.tabufline").bufilter()
+        local i = 1
+        for bi, _ in ipairs(bufs) do
+          if i == 2 then
+            vim.cmd("b" .. bufs[bi])
+            break
+          end
+          i = i + 1
+        end
+      end,
+      "Buffer 2",
+    },
+    ["<leader>l"] = {
+      function()
+        local bufs = require("nvchad.tabufline").bufilter()
+        local i = 1
+        for bi, _ in ipairs(bufs) do
+          if i == 3 then
+            vim.cmd("b" .. bufs[bi])
+            break
+          end
+          i = i + 1
+        end
+      end,
+      "Buffer 3",
+    },
+    ["<leader>;"] = {
+      function()
+        local bufs = require("nvchad.tabufline").bufilter()
+        local i = 1
+        for bi, _ in ipairs(bufs) do
+          if i == 4 then
+            vim.cmd("b" .. bufs[bi])
+            break
+          end
+          i = i + 1
+        end
+      end,
+      "Buffer 4",
+    },
+    ["<leader>X"] = {
+      function()
+        require("nvchad.tabufline").closeOtherBufs()
+      end,
+      "Close other buffers",
     },
   },
 }

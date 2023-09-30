@@ -1,7 +1,7 @@
 local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
-local lspconfig = require("lspconfig")
+local lspconfig = require "lspconfig"
 local util = require "lspconfig/util"
 
 -- Go
@@ -9,7 +9,7 @@ local util = require "lspconfig/util"
 lspconfig.gopls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  cmd = {"gopls"},
+  cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
   settings = {
@@ -20,20 +20,20 @@ lspconfig.gopls.setup {
       analyses = {
         unusedparams = true,
       },
-    }
-  }
+    },
+  },
 }
 
 -- C, C++
 
 lspconfig.clangd.setup {
   on_attach = function(client, bufnr)
-    client.server_capabilities.signatureHelpProvider = false
+    -- client.server_capabilities.signatureHelpProvider = false
     on_attach(client, bufnr)
   end,
   capabilities = vim.tbl_deep_extend("force", capabilities, {
     offsetEncoding = { "utf-16" }, -- FIX: warning: multiple different client offset_encodings detected for buffer, this is not supported yet
-  })
+  }),
 }
 
 -- Other
@@ -53,7 +53,7 @@ end
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   opts = opts or {}
-  opts.border = opts.border or 'single'
+  opts.border = opts.border or "single"
   -- 画面の大きさに対して%指定でサイズを調整
   opts.max_height = opts.max_height or math.floor(vim.api.nvim_win_get_height(0) * 0.5)
   opts.max_width = opts.max_width or math.floor(vim.api.nvim_win_get_width(0) * 0.7)

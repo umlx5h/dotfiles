@@ -1,8 +1,10 @@
-local null_ls = require("null-ls")
+local null_ls = require "null-ls"
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local opts = {
   sources = {
+    -- Lua
+    null_ls.builtins.formatting.stylua,
     -- Go
     null_ls.builtins.code_actions.impl,
     null_ls.builtins.code_actions.gomodifytags,
@@ -28,16 +30,16 @@ local opts = {
       ["javascript"] = true,
     }
 
-    if client.supports_method("textDocument/formatting") and autoFormatLangs[vim.bo.filetype] then
-      vim.api.nvim_clear_autocmds({
+    if client.supports_method "textDocument/formatting" and autoFormatLangs[vim.bo.filetype] then
+      vim.api.nvim_clear_autocmds {
         group = augroup,
         buffer = bufnr,
-      })
+      }
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = augroup,
         buffer = bufnr,
         callback = function()
-          vim.lsp.buf.format({ bufnr = bufnr })
+          vim.lsp.buf.format { bufnr = bufnr }
         end,
       })
     end

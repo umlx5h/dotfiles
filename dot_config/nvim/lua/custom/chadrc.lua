@@ -19,8 +19,9 @@ M.ui = {
       base_30 = {
         -- grey_fg = "#8d8ba8", -- comment out color (from: #4e4d5d)
         grey_fg = "#8d8ba8", -- comment out color (from: #4e4d5d)
-        -- grey_fg2 = "#555464",
-        -- light_grey = "#605f6f"
+        grey = "#5e5c72", -- line number (#474656)
+        white = "#e3eaf9", -- focus buffer color, etc (from: #D9E0EE)
+        light_grey = "#858399", -- buffer tab backgroud (from: #605f6f)
         line = "#504e66", -- for lines like vertsplit (from: #383747)
       },
     },
@@ -37,20 +38,20 @@ M.ui = {
 
         local icon = " 󰈚 "
         local filename = (fn.expand "%" == "" and "Empty ") or fn.expand "%:t"
-      
+
         if filename ~= "Empty " then
           -- filenameにカレントディレクトリからのパスを付加する (差分)
-          filename = fn.fnamemodify(fn.expand('%:h'), ':p:~:.') .. filename
+          filename = fn.fnamemodify(fn.expand "%:h", ":p:~:.") .. filename
           local devicons_present, devicons = pcall(require, "nvim-web-devicons")
-      
+
           if devicons_present then
             local ft_icon = devicons.get_icon(filename)
             icon = (ft_icon ~= nil and " " .. ft_icon) or ""
           end
-      
+
           filename = " " .. filename .. " "
         end
-      
+
         return "%#St_file_info#" .. icon .. filename .. "%#St_file_sep#" .. sep_r
       end)()
       -- Disable .git

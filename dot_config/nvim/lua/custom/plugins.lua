@@ -7,11 +7,11 @@ local plugins = {
         buffers = {
           mappings = {
             i = {
-              ["<c-d>"] = "delete_buffer", -- バッファ一覧画面でCtrl+Dで消せるようにする
-            }
+              ["<C-d>"] = "delete_buffer", -- バッファ一覧画面でCtrl+Dで消せるようにする
+            },
           },
         },
-      }
+      },
     },
   },
   {
@@ -72,7 +72,7 @@ local plugins = {
         "cpp",
         "markdown",
         "markdown_inline",
-    
+
         "make",
         "gitignore",
         "bash",
@@ -85,10 +85,10 @@ local plugins = {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = '<c-space>',
-          node_incremental = '<c-space>',
+          init_selection = "<c-space>",
+          node_incremental = "<c-space>",
           scope_incremental = false,
-          node_decremental = '<bs>'
+          node_decremental = "<bs>",
         },
       },
     },
@@ -105,16 +105,16 @@ local plugins = {
     "mfussenegger/nvim-dap",
     config = function(_, _)
       require "custom.configs.dap" -- load setting
-      require("core.utils").load_mappings("dap") -- load keymap
-    end
+      require("core.utils").load_mappings "dap" -- load keymap
+    end,
   },
   {
     "rcarriga/nvim-dap-ui",
     event = "VeryLazy",
     dependencies = "mfussenegger/nvim-dap",
     config = function()
-      local dap = require("dap")
-      local dapui = require("dapui")
+      local dap = require "dap"
+      local dapui = require "dapui"
       dapui.setup()
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
@@ -125,7 +125,7 @@ local plugins = {
       dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
       end
-    end
+    end,
   },
   {
     "jay-babu/mason-nvim-dap.nvim", -- for C++?
@@ -135,7 +135,7 @@ local plugins = {
       "mfussenegger/nvim-dap",
     },
     opts = {
-      handlers = {}
+      handlers = {},
     },
   },
   {
@@ -144,8 +144,8 @@ local plugins = {
     dependencies = "mfussenegger/nvim-dap",
     config = function(_, opts)
       require("dap-go").setup(opts)
-      require("core.utils").load_mappings("dap_go")
-    end
+      require("core.utils").load_mappings "dap_go"
+    end,
   },
 
   {
@@ -153,7 +153,7 @@ local plugins = {
     ft = "go",
     config = function(_, opts)
       require("gopher").setup(opts)
-      require("core.utils").load_mappings("gopher")
+      require("core.utils").load_mappings "gopher"
     end,
     build = function()
       vim.cmd [[silent! GoInstallDeps]]
@@ -163,15 +163,15 @@ local plugins = {
     "mbbill/undotree",
     cmd = "UndotreeToggle",
     config = function(_, _)
-      require("core.utils").load_mappings("undotree") -- load keymap
-    end
+      require("core.utils").load_mappings "undotree" -- load keymap
+    end,
   },
   {
     "hrsh7th/nvim-cmp", -- override
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp-signature-help"
+      "hrsh7th/cmp-nvim-lsp-signature-help",
     },
-    opts = function ()
+    opts = function()
       -- TODO: where do I put this?
       local cmp = require "cmp"
       cmp_opts = require "plugins.configs.cmp"
@@ -180,17 +180,26 @@ local plugins = {
       -- Why does cmp automatically select a particular item? ~
       -- How to disable the preselect feature? ~
       cmp_opts.preselect = cmp.PreselectMode.None
-      -- Tabで補完を確定させる
-      cmp_opts.mapping["<Tab>"] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Insert,
-        select = true,
-      }
+      -- -- Tabで補完を確定させる
+      cmp_opts.mapping["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.confirm { select = false }
+        elseif require("luasnip").expand_or_jumpable() then
+          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+        else
+          fallback()
+        end
+      end, {
+        "i",
+        "s",
+      })
+
       cmp_opts.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
       cmp_opts.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
       cmp_opts.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
-      cmp_opts.sources[#cmp_opts.sources+1] = { name = "nvim_lsp_signature_help" } -- lspデフォルトはカーソルと被る問題があるため変更する
+      cmp_opts.sources[#cmp_opts.sources + 1] = { name = "nvim_lsp_signature_help" } -- lspデフォルトはカーソルと被る問題があるため変更する
       return cmp_opts
-    end
+    end,
   },
   {
     "NvChad/nvterm", -- override
@@ -210,16 +219,16 @@ local plugins = {
     },
   },
   {
-    'ahmedkhalf/project.nvim',
+    "ahmedkhalf/project.nvim",
     init = function()
-      require('telescope').load_extension 'projects'
+      require("telescope").load_extension "projects"
     end,
     config = function()
-      require('project_nvim').setup({
+      require("project_nvim").setup {
         manual_mode = true,
         patterns = { ".git", "package.json" },
-        datapath = vim.fn.stdpath("config") .. '/lua/custom/data', -- configフォルダ以下に保存する
-      })
+        datapath = vim.fn.stdpath "config" .. "/lua/custom/data", -- configフォルダ以下に保存する
+      }
     end,
   },
 
@@ -240,7 +249,6 @@ local plugins = {
           u = { name = "+ui" },
         },
       }
-
     end,
   },
   {
@@ -255,8 +263,8 @@ local plugins = {
     opts = {
       keywords = {
         MEMO = { icon = " ", color = "hint", alt = { "INFO" } }, -- same as NOTE
-      }
-    }
+      },
+    },
   },
 
 }
