@@ -54,6 +54,13 @@ local plugins = {
         "clangd",
         "clang-format",
         "codelldb",
+
+        -- YAML
+        "yaml-language-server",
+        "ansible-language-server",
+
+        -- JSON
+        "json-lsp",
       },
     },
   },
@@ -80,6 +87,11 @@ local plugins = {
         "gomod",
         "gosum",
         "gowork",
+
+        "yaml",
+        "json",
+        "json5",
+        "jsonc",
       },
       indent = { enable = false }, -- Cでswitchのcaseの部分などで勝手にインデントを変えられてしまうため無効にする
       incremental_selection = {
@@ -94,8 +106,7 @@ local plugins = {
     },
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    -- ft = "go",
+    "nvimtools/none-ls.nvim",
     event = "VeryLazy",
     opts = function()
       return require "custom.configs.null-ls"
@@ -266,7 +277,18 @@ local plugins = {
       },
     },
   },
-
+  {
+    "someone-stole-my-name/yaml-companion.nvim", -- YAML LSP
+    lazy = true,
+    init = function()
+      require("telescope").load_extension "yaml_schema"
+    end,
+  },
+  {
+    "b0o/schemastore.nvim", -- YAML/JSON LSP
+    lazy = true,
+    version = false,
+  },
 }
 
 return plugins

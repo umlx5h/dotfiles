@@ -2,6 +2,7 @@
 local opt = vim.opt
 opt.clipboard = "" -- disable yank to clipboard by default
 opt.pumheight = 12 -- set completion max rows
+opt.relativenumber = true
 
 -------------------------------------- snippets ------------------------------------------
 

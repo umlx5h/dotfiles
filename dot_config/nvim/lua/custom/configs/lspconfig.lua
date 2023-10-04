@@ -36,6 +36,44 @@ lspconfig.clangd.setup {
   }),
 }
 
+-- YAML (ansible)
+lspconfig.ansiblels.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_dir = util.root_pattern("ansible.cfg", "roles"), -- ansibleのプロジェクトを検知した場合のみ有効にする
+  filetypes = { "yaml", "yaml.ansible" },
+  single_file_support = false,
+}
+
+-- YAML (kubernetes + etc)
+local cfg = require("yaml-companion").setup {
+  schemas = {
+    {
+      -- TODO: Telescrope yaml_schema でKubernetesを選択しないと古いk8sの情報が参照されてしまう
+      name = "Kubernetes v1.25",
+      uri = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.25.7-standalone-strict/all.json",
+    },
+  },
+}
+lspconfig.yamlls.setup(cfg)
+
+-- JSON
+lspconfig.jsonls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  -- lazy-load schemastore when needed
+  on_new_config = function(new_config)
+    new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+    vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+  end,
+  settings = {
+    json = {
+      -- schemas = require("schemastore").json.schemas(),
+      validate = { enable = true },
+    },
+  },
+}
+
 -- Other
 
 local servers = { "html", "cssls", "tsserver" }

@@ -192,6 +192,7 @@ M.telescope = {
     ["<leader>fp"] = { "<cmd> Telescope projects <CR>", "Find projects" }, -- ahmedkhalf/project.nvim
     ["<leader>ft"] = { "<cmd> TodoTelescope <CR>", "Find TODO" },
     ["<leader>Q"] = { "<cmd> TodoLocList <CR>", "TODO List" },
+    ["<leader>fy"] = { "<cmd> Telescope yaml_schema <CR>", "Find json schema" }, -- someone-stole-my-name/yaml-companion.nvim
   },
 }
 
