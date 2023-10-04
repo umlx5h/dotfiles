@@ -61,6 +61,10 @@ local plugins = {
 
         -- JSON
         "json-lsp",
+
+        -- Docker
+        "dockerfile-language-server",
+        "docker-compose-language-service",
       },
     },
   },
@@ -79,6 +83,7 @@ local plugins = {
         "cpp",
         "markdown",
         "markdown_inline",
+        "dockerfile",
 
         "make",
         "gitignore",

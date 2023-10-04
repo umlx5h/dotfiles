@@ -4,6 +4,14 @@ opt.clipboard = "" -- disable yank to clipboard by default
 opt.pumheight = 12 -- set completion max rows
 opt.relativenumber = true
 
+-------------------------------------- filetypes ------------------------------------------
+
+vim.filetype.add {
+  pattern = {
+    ["docker.compose.*%.ya?ml"] = "yaml.docker-compose",
+  },
+}
+
 -------------------------------------- snippets ------------------------------------------
 
 -- TODO: vscodeと共有したい

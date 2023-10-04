@@ -76,7 +76,7 @@ lspconfig.jsonls.setup {
 
 -- Other
 
-local servers = { "html", "cssls", "tsserver" }
+local servers = { "html", "cssls", "tsserver", "dockerls", "docker_compose_language_service" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
