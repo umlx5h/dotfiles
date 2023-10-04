@@ -16,7 +16,7 @@ lspconfig.gopls.setup {
     gopls = {
       completeUnimported = true,
       -- usePlaceholders = true,
-      staticcheck = true,
+      -- staticcheck = false,
       analyses = {
         unusedparams = true,
       },
@@ -76,7 +76,7 @@ lspconfig.jsonls.setup {
 
 -- Other
 
-local servers = { "html", "cssls", "tsserver", "dockerls", "docker_compose_language_service" }
+local servers = { "html", "cssls", "tsserver", "dockerls", "docker_compose_language_service", "bashls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {

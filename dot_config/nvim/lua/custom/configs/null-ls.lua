@@ -5,12 +5,18 @@ local opts = {
   sources = {
     -- Lua
     null_ls.builtins.formatting.stylua,
+
+    -- Shell
+    null_ls.builtins.formatting.shfmt,
+    null_ls.builtins.code_actions.shellcheck,
+
     -- Go
     null_ls.builtins.code_actions.impl,
     null_ls.builtins.code_actions.gomodifytags,
     null_ls.builtins.formatting.goimports,
     -- null_ls.builtins.formatting.gofumpt,
     null_ls.builtins.formatting.gofmt,
+    null_ls.builtins.diagnostics.golangci_lint,
     -- null_ls.builtins.formatting.goimports_reviser,
     -- null_ls.builtins.formatting.golines,
 
@@ -19,15 +25,16 @@ local opts = {
 
     -- Typescript, Javascript
     null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.prettierd,
   },
   -- setting auto formatter
   on_attach = function(client, bufnr)
-    -- only Go autoformat
     local autoFormatLangs = {
+      -- set auto format for specific filetype
       ["go"] = true,
       ["typescript"] = true,
       ["javascript"] = true,
+      ["lua"] = true,
     }
 
     if client.supports_method "textDocument/formatting" and autoFormatLangs[vim.bo.filetype] then

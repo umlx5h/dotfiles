@@ -29,6 +29,12 @@ local plugins = {
         "lua-language-server",
         "stylua",
 
+        -- shell
+        "shfmt",
+        "shellcheck",
+        "bash-language-server",
+        "bash-debug-adapter",
+
         -- web dev stuff
         "css-lsp",
         "html-lsp",
@@ -37,16 +43,15 @@ local plugins = {
         "eslint-lsp",
         "js-debug-adapter",
         "typescript-language-server",
-        "prettier",
+        "prettierd",
 
         -- go
         "gopls",
         "goimports",
-        "goimports-reviser",
         "golangci-lint",
         "golines",
-        "gotests",
-        "gofumpt",
+        "gotests", -- not null-ls, for olexsmir/gopher.nvim
+        "iferr", -- not null-ls, for olexsmir/gopher.nvim
         "gomodifytags",
         "impl",
 
@@ -144,7 +149,7 @@ local plugins = {
     end,
   },
   {
-    "jay-babu/mason-nvim-dap.nvim", -- for C++?
+    "jay-babu/mason-nvim-dap.nvim", -- for DAP (C++, Bash)
     event = "VeryLazy",
     dependencies = {
       "williamboman/mason.nvim",
@@ -155,7 +160,7 @@ local plugins = {
     },
   },
   {
-    "dreamsofcode-io/nvim-dap-go",
+    "leoluz/nvim-dap-go",
     ft = "go",
     dependencies = "mfussenegger/nvim-dap",
     config = function(_, opts)
