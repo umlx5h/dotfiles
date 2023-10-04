@@ -45,18 +45,6 @@ lspconfig.ansiblels.setup {
   single_file_support = false,
 }
 
--- YAML (kubernetes + etc)
-local cfg = require("yaml-companion").setup {
-  schemas = {
-    {
-      -- TODO: Telescrope yaml_schema でKubernetesを選択しないと古いk8sの情報が参照されてしまう
-      name = "Kubernetes v1.25",
-      uri = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.25.7-standalone-strict/all.json",
-    },
-  },
-}
-lspconfig.yamlls.setup(cfg)
-
 -- JSON
 lspconfig.jsonls.setup {
   on_attach = on_attach,

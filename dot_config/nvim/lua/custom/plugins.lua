@@ -150,7 +150,7 @@ local plugins = {
   },
   {
     "jay-babu/mason-nvim-dap.nvim", -- for DAP (C++, Bash)
-    event = "VeryLazy",
+    ft = { "c", "cpp", "sh" },
     dependencies = {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
@@ -183,9 +183,9 @@ local plugins = {
   {
     "mbbill/undotree",
     cmd = "UndotreeToggle",
-    config = function(_, _)
-      require("core.utils").load_mappings "undotree" -- load keymap
-    end,
+    -- config = function(_, _)
+    --   require("core.utils").load_mappings "undotree" -- load keymap
+    -- end,
   },
   {
     "hrsh7th/nvim-cmp", -- override
@@ -241,15 +241,14 @@ local plugins = {
   },
   {
     "ahmedkhalf/project.nvim",
-    init = function()
-      require("telescope").load_extension "projects"
-    end,
+    event = "VeryLazy",
     config = function()
       require("project_nvim").setup {
         manual_mode = true,
         patterns = { ".git", "package.json" },
         datapath = vim.fn.stdpath "config" .. "/lua/custom/data", -- configフォルダ以下に保存する
       }
+      require("telescope").load_extension "projects"
     end,
   },
 
@@ -289,15 +288,49 @@ local plugins = {
   },
   {
     "someone-stole-my-name/yaml-companion.nvim", -- YAML LSP
-    lazy = true,
-    init = function()
+    ft = {
+      "yaml",
+      "yaml.docker-compose", -- pattern match not supported?
+    },
+    dependencies = {
+      { "neovim/nvim-lspconfig" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
+    },
+    config = function()
       require("telescope").load_extension "yaml_schema"
+
+      -- MEMO: ここでLSP configを設定することで yamlファイルのみlazy loadするようにしている
+      local cfg = require("yaml-companion").setup {
+        schemas = {
+          {
+            name = "Kubernetes 1.25.9",
+            uri = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.25.9-standalone-strict/all.json",
+          },
+        },
+      }
+      require("lspconfig")["yamlls"].setup(cfg)
     end,
   },
   {
     "b0o/schemastore.nvim", -- YAML/JSON LSP
     lazy = true,
     version = false,
+  },
+  {
+    "anuvyklack/windows.nvim", -- Ctrl+W Z to zoom like tmux
+    event = "WinNew",
+    dependencies = {
+      { "anuvyklack/middleclass" },
+    },
+    keys = { { "<C-w>z", "<cmd>WindowsMaximize<cr>", desc = "Zoom" } },
+    config = function()
+      require("windows").setup {
+        autowidth = {
+          enable = false,
+        },
+      }
+    end,
   },
 }
 

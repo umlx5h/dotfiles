@@ -58,6 +58,12 @@ vim.keymap.set("x", "sr", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under
 vim.keymap.set("n", "sr", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]], { desc = "Replace word under cursor" })
 vim.keymap.set("x", "sg", [[y:%s/\<<c-r>"\>//g<left><left>]], { desc = "Replace word under cursor globally" })
 
+-- Resize window using <ctrl> arrow keys (copy from lazyvim)
+vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+
 -- emacs keybiding in insert mode
 vim.keymap.set("i", "<C-p>", "<Up>", { desc = "Emacs Up" })
 vim.keymap.set("i", "<C-n>", "<Down>", { desc = "Emacs Down" })
@@ -70,6 +76,7 @@ vim.keymap.set("i", "<C-h>", "<BS>", { desc = "Emacs Backspace" })
 vim.keymap.set("i", "<C-k>", function()
   return "<C-o>D"
 end, { desc = "Emacs Cut line", silent = true, expr = true })
+
 -- vim.keymap.set('i', '<C-k>', '<C-r>=<SID>kill()<CR>')
 
 -- vim.keymap.set({"n", "t", "i"}, "<C-u>", "<Nop>", { desc = "Go forward (C-I)"})

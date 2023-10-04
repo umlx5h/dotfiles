@@ -150,20 +150,6 @@ M.gopher = {
   },
 }
 
-M.tool = {
-  n = {
-    -- undotree
-    ["<leader>ut"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
-    -- spectre
-    ["<leader>us"] = {
-      function()
-        require("spectre").open()
-      end,
-      "Toggle spectre (replace tool)",
-    },
-  },
-}
-
 M.nvimtree = {
   plugin = true,
   n = {
@@ -345,8 +331,18 @@ M.tabufline = { -- override
 
 M.ui = {
   n = {
+    -- undotree
+    ["<leader>ut"] = { "<cmd> UndotreeToggle <CR>", "Toggle Undotree" },
+    -- spectre
+    ["<leader>us"] = {
+      function()
+        require("spectre").open()
+      end,
+      "Toggle spectre (replace tool)",
+    },
     -- line numbers
-    ["<leader>ul"] = { "<cmd> set nu! <CR>", "Toggle line number" },
+    ["<leader>un"] = { "<cmd> set nonumber! norelativenumber! <CR>", "Toggle line number" },
+    ["<leader>ul"] = { "<cmd> Lazy <CR>", "Toggle line number" },
   },
 }
 
