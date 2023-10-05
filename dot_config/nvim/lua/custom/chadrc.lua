@@ -62,6 +62,18 @@ M.ui = {
     end,
   },
 
+  tabufline = {
+    overriden_modules = function(modules)
+      -- override M.buttons
+      -- https://github.com/NvChad/ui/blob/3c41d007bdcc6dbfe87b66dffa55d9a57fcd0559/lua/nvchad/tabufline/modules.lua#L195
+      modules[4] = (function()
+        -- disable theme switch toggle
+        local CloseAllBufsBtn = "%@TbCloseAllBufs@%#TbLineCloseAllBufsBtn#" .. " 󰅖 " .. "%X"
+        return CloseAllBufsBtn
+      end)()
+    end,
+  },
+
   lsp = {
     signature = {
       disabled = true, -- 関数の引数入力時の補完を無効化、カーソルと被るため cmp-nvim-lsp-signature-help に変更
