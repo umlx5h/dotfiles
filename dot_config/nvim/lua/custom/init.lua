@@ -24,7 +24,7 @@ vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
 -- きもいがtmuxと合わせる
-vim.keymap.set("n", "<leader>i", "<C-^>", { desc = "Toggle last buffer" })
+vim.keymap.set("n", "<leader><TAB>", "<C-^>", { desc = "Toggle last buffer" })
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard" })
 

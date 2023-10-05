@@ -131,6 +131,12 @@ M.nvimtree = {
   disable_netrw = false,
   hijack_netrw = false,
 
+  diagnostics = {
+    enable = true,
+  },
+  modified = {
+    enable = true,
+  },
   git = {
     enable = true,
   },
