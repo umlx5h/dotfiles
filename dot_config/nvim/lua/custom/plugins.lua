@@ -33,19 +33,19 @@ local plugins = {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lsp-signature-help", -- 関数入力時の補完
     },
     opts = function()
-      -- TODO: where do I put this?
       local cmp = require "cmp"
-      cmp_opts = require "plugins.configs.cmp"
+      local conf = require "plugins.configs.cmp"
       -- Goなどで勝手に補完が選択されるので、されないようにする
       -- @see https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt
       -- Why does cmp automatically select a particular item? ~
       -- How to disable the preselect feature? ~
-      cmp_opts.preselect = cmp.PreselectMode.None
-      -- -- Tabで補完を確定させる
-      cmp_opts.mapping["<Tab>"] = cmp.mapping(function(fallback)
+      conf.preselect = cmp.PreselectMode.None
+
+      -- Tabで補完を確定させる
+      conf.mapping["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.confirm { select = false }
         elseif require("luasnip").expand_or_jumpable() then
@@ -58,11 +58,16 @@ local plugins = {
         "s",
       })
 
-      cmp_opts.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
-      cmp_opts.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
-      cmp_opts.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
-      cmp_opts.sources[#cmp_opts.sources + 1] = { name = "nvim_lsp_signature_help" } -- lspデフォルトはカーソルと被る問題があるため変更する
-      return cmp_opts
+      conf.mapping["<PageUp>"] = cmp.mapping.select_prev_item { count = 11 }
+      conf.mapping["<PageDown>"] = cmp.mapping.select_next_item { count = 11 }
+      conf.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
+      conf.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
+      conf.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
+
+      -- 関数入力時の補完を設定 lspデフォルトはカーソルと被る問題があるため変更する
+      conf.sources[#conf.sources + 1] = { name = "nvim_lsp_signature_help" }
+
+      return conf
     end,
   },
   {
