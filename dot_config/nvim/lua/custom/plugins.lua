@@ -1,18 +1,15 @@
+local overrides = require "custom.configs.overrides"
+
 -- TODO: move override
 local plugins = {
+  -------------------------- override plugins -----------------------------------
   {
-    "nvim-telescope/telescope.nvim", -- override
-    opts = {
-      pickers = {
-        buffers = {
-          mappings = {
-            i = {
-              ["<C-d>"] = "delete_buffer", -- バッファ一覧画面でCtrl+Dで消せるようにする
-            },
-          },
-        },
-      },
-    },
+    "nvim-telescope/telescope.nvim",
+    opts = overrides.telescope,
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = overrides.nvimtree,
   },
   {
     "neovim/nvim-lspconfig",
@@ -23,98 +20,72 @@ local plugins = {
   },
   {
     "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        -- lua stuff
-        "lua-language-server",
-        "stylua",
-
-        -- shell
-        "shfmt",
-        "shellcheck",
-        "bash-language-server",
-        "bash-debug-adapter",
-
-        -- web dev stuff
-        "css-lsp",
-        "html-lsp",
-
-        -- javascript
-        "eslint-lsp",
-        "js-debug-adapter",
-        "typescript-language-server",
-        "prettierd",
-
-        -- go
-        "gopls",
-        "goimports",
-        "golangci-lint",
-        "golines",
-        "gotests", -- not null-ls, for olexsmir/gopher.nvim
-        "iferr", -- not null-ls, for olexsmir/gopher.nvim
-        "gomodifytags",
-        "impl",
-
-        -- C, C++
-        "clangd",
-        "clang-format",
-        "codelldb",
-
-        -- YAML
-        "yaml-language-server",
-        "ansible-language-server",
-
-        -- JSON
-        "json-lsp",
-
-        -- Docker
-        "dockerfile-language-server",
-        "docker-compose-language-service",
-      },
-    },
+    opts = overrides.mason,
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "lua",
-        "html",
-        "css",
-        "javascript",
-        "typescript",
-        "tsx",
-        "c",
-        "cpp",
-        "markdown",
-        "markdown_inline",
-        "dockerfile",
-
-        "make",
-        "gitignore",
-        "bash",
-        "go",
-        "gomod",
-        "gosum",
-        "gowork",
-
-        "yaml",
-        "json",
-        "json5",
-        "jsonc",
-      },
-      indent = { enable = false }, -- Cでswitchのcaseの部分などで勝手にインデントを変えられてしまうため無効にする
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<c-space>",
-          node_incremental = "<c-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-    },
+    opts = overrides.treesitter,
   },
+  {
+    "NvChad/nvterm",
+    opts = overrides.nvterm,
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+    },
+    opts = function()
+      -- TODO: where do I put this?
+      local cmp = require "cmp"
+      cmp_opts = require "plugins.configs.cmp"
+      -- Goなどで勝手に補完が選択されるので、されないようにする
+      -- @see https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt
+      -- Why does cmp automatically select a particular item? ~
+      -- How to disable the preselect feature? ~
+      cmp_opts.preselect = cmp.PreselectMode.None
+      -- -- Tabで補完を確定させる
+      cmp_opts.mapping["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.confirm { select = false }
+        elseif require("luasnip").expand_or_jumpable() then
+          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+        else
+          fallback()
+        end
+      end, {
+        "i",
+        "s",
+      })
+
+      cmp_opts.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
+      cmp_opts.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
+      cmp_opts.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
+      cmp_opts.sources[#cmp_opts.sources + 1] = { name = "nvim_lsp_signature_help" } -- lspデフォルトはカーソルと被る問題があるため変更する
+      return cmp_opts
+    end,
+  },
+  {
+    "folke/which-key.nvim",
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "whichkey")
+      require("which-key").setup(opts)
+
+      -- prefixに名前を付ける
+      local wk = require "which-key"
+      wk.register {
+        ["<leader>"] = {
+          c = { name = "+code" },
+          d = { name = "+debug" },
+          f = { name = "+find" },
+          g = { name = "+git" },
+          u = { name = "+ui" },
+        },
+      }
+    end,
+  },
+
+  -------------------------- my plugins -----------------------------------
   {
     "nvimtools/none-ls.nvim",
     event = "VeryLazy",
@@ -183,61 +154,6 @@ local plugins = {
   {
     "mbbill/undotree",
     cmd = "UndotreeToggle",
-    -- config = function(_, _)
-    --   require("core.utils").load_mappings "undotree" -- load keymap
-    -- end,
-  },
-  {
-    "hrsh7th/nvim-cmp", -- override
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-    },
-    opts = function()
-      -- TODO: where do I put this?
-      local cmp = require "cmp"
-      cmp_opts = require "plugins.configs.cmp"
-      -- Goなどで勝手に補完が選択されるので、されないようにする
-      -- @see https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt
-      -- Why does cmp automatically select a particular item? ~
-      -- How to disable the preselect feature? ~
-      cmp_opts.preselect = cmp.PreselectMode.None
-      -- -- Tabで補完を確定させる
-      cmp_opts.mapping["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.confirm { select = false }
-        elseif require("luasnip").expand_or_jumpable() then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-        else
-          fallback()
-        end
-      end, {
-        "i",
-        "s",
-      })
-
-      cmp_opts.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
-      cmp_opts.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
-      cmp_opts.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
-      cmp_opts.sources[#cmp_opts.sources + 1] = { name = "nvim_lsp_signature_help" } -- lspデフォルトはカーソルと被る問題があるため変更する
-      return cmp_opts
-    end,
-  },
-  {
-    "NvChad/nvterm", -- override
-    opts = {
-      terminals = {
-        type_opts = {
-          float = {
-            relative = "editor",
-            row = 0.07,
-            col = 0.05,
-            width = 0.9,
-            height = 0.8,
-            border = "single",
-          },
-        },
-      },
-    },
   },
   {
     "ahmedkhalf/project.nvim",
@@ -252,25 +168,6 @@ local plugins = {
     end,
   },
 
-  {
-    "folke/which-key.nvim", -- override
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "whichkey")
-      require("which-key").setup(opts)
-
-      -- prefixに名前を付ける
-      local wk = require "which-key"
-      wk.register {
-        ["<leader>"] = {
-          c = { name = "+code" },
-          d = { name = "+debug" },
-          f = { name = "+find" },
-          g = { name = "+git" },
-          u = { name = "+ui" },
-        },
-      }
-    end,
-  },
   {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",

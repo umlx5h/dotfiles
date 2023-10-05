@@ -10,6 +10,7 @@ M.lazy_nvim = {
     },
   },
 }
+
 M.ui = {
   theme_toggle = { "catppuccin" },
   -- https://github.com/NvChad/base46/blob/v2.0/lua/base46/themes/catppuccin.lua
