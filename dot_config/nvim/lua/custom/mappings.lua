@@ -266,56 +266,32 @@ M.tabufline = { -- override
   n = {
     ["<leader>j"] = {
       function()
-        local bufs = require("nvchad.tabufline").bufilter()
-        local i = 1
-        for bi, _ in ipairs(bufs) do
-          if i == 1 then
-            vim.cmd("b" .. bufs[bi])
-            break
-          end
-          i = i + 1
+        if #vim.t.bufs >= 1 then
+          vim.api.nvim_set_current_buf(vim.t.bufs[1])
         end
       end,
       "Buffer 1",
     },
     ["<leader>k"] = {
       function()
-        local bufs = require("nvchad.tabufline").bufilter()
-        local i = 1
-        for bi, _ in ipairs(bufs) do
-          if i == 2 then
-            vim.cmd("b" .. bufs[bi])
-            break
-          end
-          i = i + 1
+        if #vim.t.bufs >= 2 then
+          vim.api.nvim_set_current_buf(vim.t.bufs[2])
         end
       end,
       "Buffer 2",
     },
     ["<leader>l"] = {
       function()
-        local bufs = require("nvchad.tabufline").bufilter()
-        local i = 1
-        for bi, _ in ipairs(bufs) do
-          if i == 3 then
-            vim.cmd("b" .. bufs[bi])
-            break
-          end
-          i = i + 1
+        if #vim.t.bufs >= 3 then
+          vim.api.nvim_set_current_buf(vim.t.bufs[3])
         end
       end,
       "Buffer 3",
     },
     ["<leader>;"] = {
       function()
-        local bufs = require("nvchad.tabufline").bufilter()
-        local i = 1
-        for bi, _ in ipairs(bufs) do
-          if i == 4 then
-            vim.cmd("b" .. bufs[bi])
-            break
-          end
-          i = i + 1
+        if #vim.t.bufs >= 4 then
+          vim.api.nvim_set_current_buf(vim.t.bufs[4])
         end
       end,
       "Buffer 4",
