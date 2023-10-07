@@ -20,6 +20,24 @@ vim.filetype.add {
 -- TODO: vscodeと共有したい
 vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 
+-------------------------------------- custom functions ------------------------------------------
+
+local toggle_enabled = true
+function toggle_diagnostics()
+  toggle_enabled = not toggle_enabled
+  if toggle_enabled then
+    vim.api.nvim_echo({ { "Enabled diagnostics" } }, false, {})
+    vim.schedule(function()
+      vim.diagnostic.enable()
+    end)
+  else
+    vim.api.nvim_echo({ { "Disabled diagnostic" } }, false, {})
+    vim.schedule(function()
+      vim.diagnostic.disable()
+    end)
+  end
+end
+
 -------------------------------------- remaps ------------------------------------------
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })

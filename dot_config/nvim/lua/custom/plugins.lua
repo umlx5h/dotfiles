@@ -84,7 +84,7 @@ local plugins = {
           d = { name = "+debug" },
           f = { name = "+find" },
           g = { name = "+git" },
-          u = { name = "+ui" },
+          u = { name = "+ui/toggle" },
         },
       }
     end,

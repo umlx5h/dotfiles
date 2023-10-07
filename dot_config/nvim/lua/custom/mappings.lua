@@ -318,7 +318,13 @@ M.ui = {
     },
     -- line numbers
     ["<leader>un"] = { "<cmd> set nonumber! norelativenumber! <CR>", "Toggle line number" },
-    ["<leader>ul"] = { "<cmd> Lazy <CR>", "Toggle line number" },
+    ["<leader>ul"] = { "<cmd> Lazy <CR>", "Open Lazy" },
+
+    -- Toggle diagnostic (linter)
+    ["<leader>ud"] = {
+      ":lua toggle_diagnostics() <CR>",
+      "Toggle diagnostic (linter)",
+    },
   },
 }
 
