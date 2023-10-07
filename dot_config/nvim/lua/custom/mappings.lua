@@ -322,4 +322,10 @@ M.ui = {
   },
 }
 
+M.openingh = {
+  n = {
+    ["<leader>go"] = { "<cmd> OpenInGHFileLines <CR>", "Open file in GitHub" },
+  },
+}
+
 return M

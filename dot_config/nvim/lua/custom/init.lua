@@ -47,15 +47,6 @@ vim.keymap.set("n", "<leader>p", [["0p]], { desc = "Paste from yank register" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "chunk moving up" })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "chunk moving down" })
 
--- window split remap (tmux like)
-vim.keymap.set("n", "<C-w>/", "<C-w>v", { desc = "Split window vertically", noremap = true })
-vim.keymap.set("n", "<C-w>-", "<C-w>s", { desc = "Split window horizontally", noremap = true })
-vim.keymap.set("n", "<C-w>x", "<C-w>q", { desc = "Quit a window", noremap = true })
-vim.keymap.set("n", "<C-w>s", "<C-w>x", { desc = "Swap window", noremap = true })
--- could not delete
--- vim.keymap.set('n', '<C-w>v', '<Nop>')
--- vim.keymap.set('n', '<C-w>s', '<Nop>')
-
 -- Alternative to VSCode Ctrl+D
 vim.keymap.set("x", "sr", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under cursor" })
 vim.keymap.set("n", "sr", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]], { desc = "Replace word under cursor" })
@@ -102,7 +93,7 @@ end, { desc = "Emacs Cut line", silent = true, expr = true })
 -- end
 
 -- コマンドモードでShift+Enter押したときにEnterを押すようにする
-vim.keymap.set("c", "<F13>", "<CR>")
+vim.keymap.set({ "c", "v", "s", "t" }, "<F13>", "<CR>")
 
 -- auto insert semicolon (shift+Enter)
 vim.keymap.set("i", "<F13>", function()
@@ -112,7 +103,7 @@ vim.keymap.set("i", "<F13>", function()
   else
     return vim.api.nvim_replace_termcodes("<C-o>A", true, true, true)
   end
-end, { noremap = true, expr = true })
+end, { expr = true, desc = "Insert semicolon at end of line" })
 vim.keymap.set("n", "<F13>", function()
   local line = vim.fn.getline "."
   if not line:match ";$" then
@@ -120,4 +111,4 @@ vim.keymap.set("n", "<F13>", function()
   else
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("$", true, false, true), "n", true)
   end
-end, { noremap = true })
+end, { noremap = true, desc = "Insert semicolon at end of line" })
