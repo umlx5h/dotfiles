@@ -159,6 +159,22 @@ local plugins = {
     end,
   },
   {
+    "rafaelsq/nvim-goc.lua",
+    ft = "go",
+    config = function()
+      local goc = require "nvim-goc"
+      goc.setup {
+        verticalSplit = false,
+      }
+      vim.api.nvim_create_user_command("GoCov", function()
+        require("nvim-goc").Coverage()
+      end, {})
+      vim.api.nvim_create_user_command("GoCovClear", function()
+        require("nvim-goc").ClearCoverage()
+      end, {})
+    end,
+  },
+  {
     "mbbill/undotree",
     cmd = "UndotreeToggle",
   },
