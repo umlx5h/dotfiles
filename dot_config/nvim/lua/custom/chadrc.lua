@@ -25,6 +25,9 @@ M.ui = {
         light_grey = "#858399", -- buffer tab backgroud (from: #605f6f)
         line = "#504e66", -- for lines like vertsplit (from: #383747)
       },
+      base_16 = {
+        base02 = "#2D3F76", -- text selection bg color (from: #2f2e3e)
+      },
     },
   },
 
