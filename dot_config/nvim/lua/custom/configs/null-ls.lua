@@ -2,6 +2,7 @@ local null_ls = require "null-ls"
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local opts = {
+  -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
   sources = {
     -- Lua
     null_ls.builtins.formatting.stylua,
@@ -25,6 +26,7 @@ local opts = {
 
     -- Typescript, Javascript
     null_ls.builtins.diagnostics.eslint,
+    -- { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html", "json", "jsonc", "yaml", "markdown", "markdown.mdx", "graphql", "handlebars" }
     null_ls.builtins.formatting.prettierd,
   },
   -- setting auto formatter

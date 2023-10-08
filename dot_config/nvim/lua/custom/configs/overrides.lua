@@ -132,7 +132,7 @@ M.nvimtree = {
   hijack_netrw = false,
 
   diagnostics = {
-    enable = true,
+    enable = false,
   },
   modified = {
     enable = true,

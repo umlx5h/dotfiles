@@ -1,6 +1,6 @@
 local overrides = require "custom.configs.overrides"
 
--- TODO: move override
+---@type NvPluginSpec[]
 local plugins = {
   -------------------------- override plugins -----------------------------------
   {
@@ -63,6 +63,8 @@ local plugins = {
       conf.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
       conf.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
       conf.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
+      conf.mapping["<C-e>"] = nil -- emacsのEnd of cursorと被るのでC-gにremap
+      conf.mapping["<C-g>"] = cmp.mapping.close()
 
       -- 関数入力時の補完を設定 lspデフォルトはカーソルと被る問題があるため変更する
       conf.sources[#conf.sources + 1] = { name = "nvim_lsp_signature_help" }

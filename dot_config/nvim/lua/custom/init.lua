@@ -111,10 +111,10 @@ end, { desc = "Emacs Cut line", silent = true, expr = true })
 -- end
 
 -- コマンドモードでShift+Enter押したときにEnterを押すようにする
-vim.keymap.set({ "c", "v", "s", "t" }, "<F13>", "<CR>")
+-- vim.keymap.set({ "c", "v", "s", "t" }, "<F13>", "<CR>")
 
 -- auto insert semicolon (shift+Enter)
-vim.keymap.set("i", "<F13>", function()
+vim.keymap.set("i", "<S-CR>", function()
   local line = vim.fn.getline "."
   if not line:match ";$" then
     return vim.api.nvim_replace_termcodes("<C-o>A;", true, true, true)
@@ -122,7 +122,8 @@ vim.keymap.set("i", "<F13>", function()
     return vim.api.nvim_replace_termcodes("<C-o>A", true, true, true)
   end
 end, { expr = true, desc = "Insert semicolon at end of line" })
-vim.keymap.set("n", "<F13>", function()
+
+vim.keymap.set("n", "<S-CR>", function()
   local line = vim.fn.getline "."
   if not line:match ";$" then
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("A;<ESC>", true, false, true), "n", true)

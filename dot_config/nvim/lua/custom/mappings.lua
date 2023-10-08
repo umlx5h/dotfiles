@@ -1,3 +1,4 @@
+---@type MappingsTable
 local M = {}
 
 -- In order to disable a default keymap, use
@@ -13,6 +14,10 @@ M.disabled = {
     ["<leader>b"] = "", -- to <leader>n (New buffer)
     ["<leader>n"] = "", -- to <leader>un (line numbers)
     ["<leader>rn"] = "", -- disable
+
+    --------------------- tabufline -----------------------
+    ["<tab>"] = "", -- TODO: Ctrl+Iと被ってしまう問題があるため一旦]bにremap
+    ["<S-tab>"] = "",
 
     --------------------- telescope -----------------------
     ["<leader>fz"] = "",
@@ -50,6 +55,7 @@ M.disabled = {
   },
 }
 
+--------------------- Override -----------------------
 M.general = {
   i = {
     ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
@@ -94,62 +100,6 @@ M.nvterm = {
   },
 }
 
---------------------- My -----------------------
-
-M.dap = {
-  plugin = true,
-  n = {
-    ["<leader>db"] = {
-      "<cmd> DapToggleBreakpoint <CR>",
-      "Add breakpoint at line",
-    },
-    ["<leader>dr"] = {
-      "<cmd> DapContinue <CR>",
-      "Start or continue the debugging",
-    },
-    ["<leader>dus"] = {
-      function()
-        local widgets = require "dap.ui.widgets"
-        local sidebar = widgets.sidebar(widgets.scopes)
-        sidebar.open()
-      end,
-      "Open debugging UI sidebar",
-    },
-  },
-}
-
-M.dap_go = {
-  plugin = true,
-  n = {
-    ["<leader>dgt"] = {
-      function()
-        require("dap-go").debug_test()
-      end,
-      "Debug go test",
-    },
-    ["<leader>dgl"] = {
-      function()
-        require("dap-go").debug_last()
-      end,
-      "Debug last go test",
-    },
-  },
-}
-
-M.gopher = {
-  plugin = true,
-  n = {
-    ["<leader>gsj"] = {
-      "<cmd> GoTagAdd json <CR>",
-      "Add json struct tags",
-    },
-    ["<leader>gsy"] = {
-      "<cmd> GoTagAdd yaml <CR>",
-      "Add yaml struct tags",
-    },
-  },
-}
-
 M.nvimtree = {
   plugin = true,
   n = {
@@ -175,10 +125,10 @@ M.telescope = {
     ["<leader>fs"] = { "<cmd> Telescope lsp_document_symbols <CR>", "Find symbol" },
     ["<leader>fS"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Find workspace Symbol" },
     ["<leader>fH"] = { "<cmd> Telescope terms <CR>", "Find Hidden term" },
-    ["<leader>fp"] = { "<cmd> Telescope projects <CR>", "Find projects" }, -- ahmedkhalf/project.nvim
     ["<leader>ft"] = { "<cmd> TodoTelescope <CR>", "Find TODO" },
     ["<leader>Q"] = { "<cmd> TodoLocList <CR>", "TODO List" },
     ["<leader>fy"] = { "<cmd> Telescope yaml_schema <CR>", "Find json schema" }, -- someone-stole-my-name/yaml-companion.nvim
+    ["<leader>fq"] = { "<cmd> Telescope diagnostics <CR>", "Find diagnostics" },
   },
 }
 
@@ -260,10 +210,26 @@ M.gitsigns = {
   },
 }
 
-M.tabufline = { -- override
+M.tabufline = {
   plugin = true,
 
   n = {
+    ---------------- Remap ----------
+    ["]b"] = {
+      function()
+        require("nvchad.tabufline").tabuflineNext()
+      end,
+      "Goto next buffer",
+    },
+
+    ["[b"] = {
+      function()
+        require("nvchad.tabufline").tabuflinePrev()
+      end,
+      "Goto prev buffer",
+    },
+
+    ------------------ My -------------
     ["<leader>j"] = {
       function()
         if #vim.t.bufs >= 1 then
@@ -302,8 +268,24 @@ M.tabufline = { -- override
       end,
       "Close other buffers",
     },
+
+    [">b"] = {
+      function()
+        require("nvchad.tabufline").move_buf(1)
+      end,
+      "Move buffer right",
+    },
+
+    ["<b"] = {
+      function()
+        require("nvchad.tabufline").move_buf(-1)
+      end,
+      "Move buffer left",
+    },
   },
 }
+
+--------------------- My -----------------------
 
 M.ui = {
   n = {
@@ -328,6 +310,69 @@ M.ui = {
   },
 }
 
+M.dap = {
+  plugin = true,
+  n = {
+    ["<leader>db"] = {
+      "<cmd> DapToggleBreakpoint <CR>",
+      "Add breakpoint at line",
+    },
+    ["<leader>dr"] = {
+      "<cmd> DapContinue <CR>",
+      "Start or continue the debugging",
+    },
+    ["<leader>dus"] = {
+      function()
+        local widgets = require "dap.ui.widgets"
+        local sidebar = widgets.sidebar(widgets.scopes)
+        sidebar.open()
+      end,
+      "Open debugging UI sidebar",
+    },
+  },
+}
+
+M.dap_go = {
+  plugin = true,
+  n = {
+    ["<leader>dgt"] = {
+      function()
+        require("dap-go").debug_test()
+      end,
+      "Debug go test",
+    },
+    ["<leader>dgl"] = {
+      function()
+        require("dap-go").debug_last()
+      end,
+      "Debug last go test",
+    },
+  },
+}
+
+M.gopher = {
+  plugin = true,
+  n = {
+    ["<leader>gsj"] = {
+      "<cmd> GoTagAdd json <CR>",
+      "Add json struct tags",
+    },
+    ["<leader>gsy"] = {
+      "<cmd> GoTagAdd yaml <CR>",
+      "Add yaml struct tags",
+    },
+  },
+}
+
+-- ahmedkhalf/project.nvim
+M.projects = {
+  n = {
+    ["<leader>fp"] = { "<cmd> Telescope projects <CR>", "Find projects" },
+    ["<leader>ap"] = { "<cmd> ProjectRoot <CR>", "Add cwd to project" },
+  },
+}
+
+-- "almo7aya/openingh.nvim"
 M.openingh = {
   n = {
     ["<leader>go"] = { "<cmd> OpenInGHFileLines <CR>", "Open file in GitHub" },

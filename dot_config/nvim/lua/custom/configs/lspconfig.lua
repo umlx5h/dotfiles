@@ -64,6 +64,7 @@ lspconfig.jsonls.setup {
 
 -- Other
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local servers = { "html", "cssls", "tsserver", "dockerls", "docker_compose_language_service", "bashls" }
 
 for _, lsp in ipairs(servers) do
