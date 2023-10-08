@@ -85,4 +85,8 @@ function vims() {
     NVIM_APPNAME=$config nvim $@
 }
 
-
+# vimでファイルを開く
+function v() {
+    local file=$(fd --type f --exclude .git -X grep -Il . | cut -c 3- | fzf)
+    [ -n "$file" ] && print -z -- "vim $file"
+}

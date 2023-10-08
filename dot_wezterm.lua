@@ -12,24 +12,27 @@ end
 
 config.hide_tab_bar_if_only_one_tab = true
 config.color_scheme = 'Snazzy'
-config.font_size = 12
--- config.font = wezterm.font 'JetBrainsMonoNL Nerd Font Mono'
-config.font = wezterm.font 'FiraMono Nerd Font Mono'
+config.font_size = 11
+--config.font = wezterm.font 'JetBrainsMonoNL Nerd Font'
+config.font = wezterm.font 'Hack Nerd Font'
+
+config.initial_rows = 30
+config.initial_cols = 115
+config.term = 'wezterm'
 
 config.window_close_confirmation = 'NeverPrompt'
 config.audible_bell = 'Disabled'
 --config.window_decorations = "RESIZE"
 
---local gpus = wezterm.gui.enumerate_gpus()
---config.webgpu_preferred_adapter = gpus[0]
---config.front_end = "WebGpu"
---config.front_end = "OpenGL"
---config.front_end = "Software"
---config.max_fps = 60
 config.colors = {
-  compose_cursor = '#111111', -- 日本語入力時に背景色とカーソルが同じになり見づらい問題の対策 */
+  compose_cursor = '#111111', -- 日本語入力時に背景色とカーソルが同じになり見づらい問題の対策
 }
 config.adjust_window_size_when_changing_font_size = false -- 拡大縮小時にウィンドウサイズを維持
+
+-- 現在無効化: 任意の修飾キーを送れるようにする設定
+config.allow_win32_input_mode = false
+--config.enable_csi_u_key_encoding = true
+--config.enable_kitty_keyboard = true
 
 ------------------------------ Keybinding ------------------------------------
 local act = wezterm.action
@@ -38,9 +41,21 @@ config.keys = {
   { key = 'v', mods = 'CTRL', action = act.PasteFrom 'Clipboard' }, -- Ctrl+v to pase
   { key = 'LeftArrow', mods = 'ALT', action = act.SendString '\x1bb' }, -- word backword
   { key = 'RightArrow', mods = 'ALT', action = act.SendString '\x1bf' }, -- word forward
-  -- { key = 'Enter', mods = 'SHIFT', action = act.SendString '\x1bO2P' }, -- <ESC>O2P - F13
-  -- { key = 'Enter', mods = 'SHIFT', action = act.SendKey { key = 'F13' } },
-  { key = 'Enter', mods = 'SHIFT', action = act.SendKey { key = 'F1', mods = 'SHIFT' } }, -- なぜかVimではこれがF13として扱われる, F13直接送るよりtmuxのバージョンによってエスケープシーケンスが変わったりしないのでこれにする
+  
+  -- CSI uコードを送る、 neovimなど対応しているプログラムは Shift+Enterと認識してくれる
+  -- ESC           U+000D 13 CR/Ctrl-M     Shift modifier
+  -- \x1b      [              13       ;        2u
+  -- 13: https://en.wikipedia.org/wiki/List_of_Unicode_characters
+  -- 2u: http://www.leonerd.org.uk/hacks/fixterms/
+  { key = 'Enter', mods = 'SHIFT', action = wezterm.action { SendString = '\x1b[13;2u' } },
+
+  -- F12+Tabを送りtmuxで\x1b[105;6uを送るように設定し結果的にVim側にCTRL-Iを入力させるようにしている
+  -- TABとCTRL+Iの区別がつかないためわざわざこんなことをしている
+  -- '\x1b[105;6u' をそのまま書いてもtmuxに送ってくれない
+  -- 現在使ってないので無効化
+  -- @see: https://github.com/tmux/tmux/issues/2705#issuecomment-1518520942
+  --{ key = 'i', mods = 'CTRL', action = wezterm.action { SendString = '\x1b[24~\x09' } },
+  --{ key = 'i', mods = 'CTRL', action = wezterm.action { SendString = '\x1b[105;6u' } }, -- not working in tmux
 
   ----------------- win ------------------
   { key = 'j', mods = 'CTRL|SHIFT',  action = wezterm.action({ ActivateTab = 0 }) },
@@ -75,4 +90,3 @@ config.skip_close_confirmation_for_processes_named = {
 }
 
 return config
-
