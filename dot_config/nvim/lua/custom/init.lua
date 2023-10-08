@@ -51,10 +51,10 @@ vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard" })
 vim.keymap.set("v", "<leader>d", [["+d]], { desc = "Delete with clipboard" })
 
 -- ALT+<- or -> でジャンプ
-vim.keymap.set({ "n", "v", "i" }, "<A-Left>", "<C-o>", { desc = "Go back (C-O)" })
-vim.keymap.set({ "n", "v", "i" }, "<A-Right>", "<C-i>", { desc = "Go forward (C-I)" })
-vim.keymap.set({ "n", "v", "i" }, "<esc>b", "<C-o>", { desc = "Go back (C-O)" }) -- Alt+<->をワード移動に設定しているのでそれも上書き
-vim.keymap.set({ "n", "v", "i" }, "<esc>f", "<C-i>", { desc = "Go forward (C-I)" })
+vim.keymap.set("n", "<A-Left>", "<C-o>", { desc = "Go back (C-O)" })
+vim.keymap.set("n", "<A-Right>", "<C-i>", { desc = "Go forward (C-I)" })
+vim.keymap.set("n", "<esc>b", "<C-o>", { desc = "Go back (C-O)" }) -- Alt+<->をワード移動に設定しているのでそれも上書き
+vim.keymap.set("n", "<esc>f", "<C-i>", { desc = "Go forward (C-I)" })
 
 -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
 -- vim.keymap.set("x", "p", [[p:let @"=@0<CR>]], { desc = "Paste without yank", silent = true })
