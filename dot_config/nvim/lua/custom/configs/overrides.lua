@@ -147,7 +147,8 @@ M.nvimtree = {
 
   -- Enable Netrw to make the 'gx' shortcut work
   disable_netrw = false,
-  hijack_netrw = false,
+  -- netrwとnvtreeを共存されるのに必要な設定
+  hijack_netrw = false, -- vim . で開いた時にnetrwを開いた状態でnvimtreeを開ける
 
   diagnostics = {
     enable = false,

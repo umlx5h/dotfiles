@@ -40,18 +40,6 @@ function zz() {
     [ -n "$path" ] && cd -- "$path"
 }
 
-function jmp-project() {
-    local path=$(find ~/projects/* -mindepth 1 -maxdepth 1 -type d | fzf)
-    [ -n "$path" ] && cd -- "$path"
-    zle accept-line
-    zle reset-prompt
-}
-
-zle -N jmp-project
-
-bindkey '\ep' jmp-project
-
-
 # パイプからfzfを使い選択
 function f() {
     local output=$(cat -)
@@ -90,3 +78,29 @@ function v() {
     local file=$(fd --type f --exclude .git -X grep -Il . | cut -c 3- | fzf)
     [ -n "$file" ] && print -z -- "vim $file"
 }
+
+# vimでプロジェクトを開く
+function open-recent-project() {
+  local dir=$(z | tac | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf)
+  dir="${dir/#\~/$HOME}"
+  if [[ -z $dir ]]; then
+    zle accept-line
+    zle reset-prompt
+    return 0
+  fi
+
+  local project_name="$(basename "$dir" | tr . _)"
+  if [[ "$project_name" == "nvim" ]]; then
+    project_name="${project_name}_config"
+  fi
+  
+  tmux rename-window "$project_name"
+  cd "$dir"
+  z --add "$dir"
+  vim .
+  zle accept-line
+  zle reset-prompt
+}
+
+zle -N open-recent-project
+bindkey '\ep' open-recent-project
