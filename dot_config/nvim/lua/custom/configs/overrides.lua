@@ -27,6 +27,15 @@ M.treesitter = {
     "json",
     "json5",
     "jsonc",
+
+    "python",
+
+    "php",
+    "phpdoc",
+
+    "toml",
+    "tsv",
+    "csv",
   },
   indent = {
     enable = true,
@@ -93,6 +102,15 @@ M.mason = {
     -- Docker
     "dockerfile-language-server",
     "docker-compose-language-service",
+
+    -- Python
+    "pyright",
+
+    -- PHP
+    "intelephense",
+
+    -- Rust
+    "rust-analyzer",
   },
 }
 
