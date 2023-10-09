@@ -372,6 +372,10 @@ M.projects = {
     -- my
     -- open project in tmux window
     ["<A-p>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
+    ["<A-P>"] = {
+      "<cmd>silent !tmux neww zsh -ic 'open-recent-project-session; exec zsh' <CR>",
+      "Open project in tmux session",
+    },
     ["<leader>at"] = {
       function()
         local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")

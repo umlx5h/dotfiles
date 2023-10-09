@@ -63,7 +63,7 @@ alias vim-default="NVIM_APPNAME=nvim_default nvim"
 
 function vims() {
     items=("my" "default" "nvim_astro" "nvim_lazy" "nvim_kickstart" "nvim_nvchad" "nvim_tiny")
-    config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
+    config=$(printf "%s\n" "${items[@]}" | fzf --prompt="Neovim Config > " --height=~50% --layout=reverse --border --exit-0)
     if [[ -z $config ]]; then
         echo "Nothing selected"
         return 0
@@ -81,7 +81,35 @@ function v() {
 
 # vimでプロジェクトを開く
 function open-recent-project() {
-  local dir=$(z | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf --tac)
+  local dir=$(z | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf --prompt="Open project > " --tac)
+  dir="${dir/#\~/$HOME}"
+  if [[ -z $dir ]]; then
+    zle && { zle accept-line; zle reset-prompt }
+    return 0
+  fi
+
+  local project_name="$(basename "$dir")"
+  if [[ "$project_name" == "nvim" ]]; then
+    project_name="${project_name}_config"
+  fi
+
+  if [[ -n "$TMUX" ]]; then
+    tmux rename-window "$project_name"
+  fi
+  
+  # TODO: tmuxの中だとなぜかtab-idを指定しないと最初のタブが選択されてしまう
+  type wezterm &>/dev/null && wezterm cli set-tab-title --tab-id "$(wezterm cli list-clients | awk '{print $NF}' | tail -1)" "$project_name"
+  cd "$dir"
+  z --add "$dir"
+  vim .
+  zle && { zle accept-line; zle reset-prompt }
+}
+
+
+# tmuxの新しいセッションでvimでプロジェクトを開く
+# see: https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer
+function open-recent-project-session() {
+  local dir=$(z | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf --prompt="Open project in session > " --tac)
   dir="${dir/#\~/$HOME}"
   if [[ -z $dir ]]; then
     zle && { zle accept-line; zle reset-prompt }
@@ -89,19 +117,18 @@ function open-recent-project() {
   fi
 
   local project_name="$(basename "$dir" | tr . _)"
-  if [[ "$project_name" == "nvim" ]]; then
-    project_name="${project_name}_config"
+
+  if ! tmux has-session -t="$project_name" 2> /dev/null; then
+    tmux new-session -ds "$project_name" -c "$dir"
+    tmux send-keys -t "$project_name" 'vim .' C-m
+    z --add "$dir"
   fi
-  
-  tmux rename-window "$project_name"
-  # wezterm cli set-tab-title "$project_name"
-  CUR_TAB_ID=$(wezterm cli list-clients | awk '{print $NF}' | tail -1)
-  wezterm cli set-tab-title --tab-id "$CUR_TAB_ID" "$project_name"
-  cd "$dir"
-  z --add "$dir"
-  vim .
+  tmux switch-client -t "$project_name"
   zle && { zle accept-line; zle reset-prompt }
 }
 
 zle -N open-recent-project
 bindkey '\ep' open-recent-project
+
+zle -N open-recent-project-session
+bindkey '\eP' open-recent-project-session
