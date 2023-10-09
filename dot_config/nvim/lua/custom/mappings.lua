@@ -373,8 +373,8 @@ M.projects = {
     -- open project in tmux window
     ["<A-p>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
     ["<A-P>"] = {
-      "<cmd>silent !tmux neww zsh -ic 'open-recent-project-session; exec zsh' <CR>",
-      "Open project in tmux session",
+      "<cmd>silent !tmux neww zsh -ic 'open-recent-project-tab; exec zsh' <CR>",
+      "Open project in terminal tab",
     },
     ["<leader>at"] = {
       function()

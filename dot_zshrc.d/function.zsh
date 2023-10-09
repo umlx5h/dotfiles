@@ -127,8 +127,26 @@ function open-recent-project-session() {
   zle && { zle accept-line; zle reset-prompt }
 }
 
+# weztermのタブでvimでプロジェクトを開く
+function open-recent-project-tab() {
+  local dir=$(z | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf --prompt="Open project in session > " --tac)
+  dir="${dir/#\~/$HOME}"
+  if [[ -z $dir ]]; then
+    zle && { zle accept-line; zle reset-prompt }
+    return 0
+  fi
+
+  local project_name="$(basename $dir)"
+  PANE_ID=$(wezterm cli spawn wsl.exe --cd "$dir")
+  echo "vim ." | wezterm cli send-text --pane-id "$PANE_ID" --no-paste
+  wezterm cli set-tab-title --pane-id "$PANE_ID" "$project_name"
+
+  zle && { zle accept-line; zle reset-prompt }
+}
+
 zle -N open-recent-project
 bindkey '\ep' open-recent-project
 
-zle -N open-recent-project-session
-bindkey '\eP' open-recent-project-session
+zle -N open-recent-project-tab
+bindkey '\eP' open-recent-project-tab
+
