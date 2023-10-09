@@ -36,7 +36,7 @@ function show() {
 
 # z のパスをfzfで選択
 function zz() {
-    local path=$(z -t | tac | awk '{print $2}' | fzf)
+    local path=$(z -t | awk '{print $2}' | fzf --tac)
     [ -n "$path" ] && cd -- "$path"
 }
 
@@ -81,11 +81,10 @@ function v() {
 
 # vimでプロジェクトを開く
 function open-recent-project() {
-  local dir=$(z | tac | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf)
+  local dir=$(z | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf --tac)
   dir="${dir/#\~/$HOME}"
   if [[ -z $dir ]]; then
-    zle accept-line
-    zle reset-prompt
+    zle && { zle accept-line; zle reset-prompt }
     return 0
   fi
 
@@ -95,11 +94,13 @@ function open-recent-project() {
   fi
   
   tmux rename-window "$project_name"
+  # wezterm cli set-tab-title "$project_name"
+  CUR_TAB_ID=$(wezterm cli list-clients | awk '{print $NF}' | tail -1)
+  wezterm cli set-tab-title --tab-id "$CUR_TAB_ID" "$project_name"
   cd "$dir"
   z --add "$dir"
   vim .
-  zle accept-line
-  zle reset-prompt
+  zle && { zle accept-line; zle reset-prompt }
 }
 
 zle -N open-recent-project

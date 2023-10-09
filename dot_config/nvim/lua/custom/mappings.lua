@@ -364,11 +364,39 @@ M.gopher = {
   },
 }
 
--- ahmedkhalf/project.nvim
 M.projects = {
   n = {
+    -- ahmedkhalf/project.nvim
     ["<leader>fp"] = { "<cmd> Telescope projects <CR>", "Find projects" },
     ["<leader>ap"] = { "<cmd> ProjectRoot <CR>", "Add cwd to project" },
+    -- my
+    -- open project in tmux window
+    ["<A-p>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
+    ["<leader>at"] = {
+      function()
+        local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+
+        local Job = require "plenary.job"
+        Job
+          :new({
+            command = "sh",
+            args = {
+              "-c",
+              string.format(
+                "wezterm cli set-tab-title --tab-id $(wezterm cli list-clients | awk '{print $NF}' | tail -1) '%s'",
+                dir_name
+              ),
+            },
+            on_exit = function(j, return_val)
+              if return_val ~= 0 then
+                print(j:result())
+              end
+            end,
+          })
+          :start()
+      end,
+      "Set cwd to terminal tab name",
+    },
   },
 }
 

@@ -86,6 +86,7 @@ local plugins = {
       local wk = require "which-key"
       wk.register {
         ["<leader>"] = {
+          a = { name = "+add" },
           c = { name = "+code" },
           d = { name = "+debug" },
           f = { name = "+find" },

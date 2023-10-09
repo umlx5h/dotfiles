@@ -145,6 +145,8 @@ end
 M.nvimtree = {
   on_attach = nvimtree_on_attach,
 
+  respect_buf_cwd = true,
+
   -- Enable Netrw to make the 'gx' shortcut work
   disable_netrw = false,
   -- netrwとnvtreeを共存されるのに必要な設定
