@@ -199,7 +199,40 @@ local plugins = {
   {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
-    opts = { open_cmd = "noswapfile vnew" },
+    opts = {
+      open_cmd = "noswapfile vnew",
+      mapping = {
+        ["toggle_no_ignore_vsc"] = {
+          map = "tg",
+          cmd = "<cmd>lua require('spectre').change_options('no-ignore-vcs')<CR>",
+          desc = "toggle no-ignore-vcs",
+        },
+        ["toggle_fixed_strings"] = {
+          map = "tf",
+          cmd = "<cmd>lua require('spectre').change_options('fixed-strings')<CR>",
+          desc = "toggle fixed-strings",
+        },
+      },
+      find_engine = {
+        ["rg"] = {
+          options = {
+            ["hidden"] = {
+              icon = "[SH]", -- Change from [H]
+            },
+            ["no-ignore-vcs"] = {
+              value = "--no-ignore-vcs",
+              desc = "Do not respect .gitignore",
+              icon = "[SGI]",
+            },
+            ["fixed-strings"] = {
+              value = "--fixed-strings",
+              desc = "Literal string match",
+              icon = "[F]",
+            },
+          },
+        },
+      },
+    },
   },
   {
     "folke/todo-comments.nvim",

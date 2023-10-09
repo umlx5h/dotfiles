@@ -166,9 +166,11 @@ M.nvimtree = {
   },
   renderer = {
     highlight_git = true,
+    -- highlight_diagnostics = true,
     icons = {
       show = {
         git = false, -- アイコン鬱陶しいので消す
+        -- diagnostics = false,
       },
     },
   },
