@@ -50,6 +50,10 @@ source $ZSHHOME/wsl.zsh
 {{- end }}
 source $ZSHHOME/theme.zsh
 
+if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
+  source $ZSHHOME/wezterm.sh
+fi
+
 # key
 [[ -f $HOME/.env ]] && source $HOME/.env
 
