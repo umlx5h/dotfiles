@@ -387,7 +387,7 @@ M.projects = {
             args = {
               "-c",
               string.format(
-                "wezterm cli set-tab-title --tab-id $(wezterm cli list-clients | awk '{print $NF}' | tail -1) '%s'",
+                "wezterm cli set-tab-title --pane-id $(wezterm cli list-clients | awk '{print $NF}' | tail -1) '%s'",
                 dir_name
               ),
             },

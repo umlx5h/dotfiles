@@ -139,7 +139,13 @@ function open-recent-project-tab() {
   fi
 
   local project_name="$(basename $dir)"
-  PANE_ID=$(wezterm cli spawn --cwd "$dir")
+
+  if [[ -n "$TMUX" ]]; then
+    # TODO: tmuxの中だと--pane-idを指定しないと、新しいウィンドウを開いてしまうことがある
+    PANE_ID=$(wezterm cli spawn --cwd "$dir" --pane-id "$(wezterm cli list-clients | awk '{print $NF}' | tail -1)")
+  else
+    PANE_ID=$(wezterm cli spawn --cwd "$dir")
+  fi
   echo "vim ." | wezterm cli send-text --pane-id "$PANE_ID" --no-paste
   wezterm cli set-tab-title --pane-id "$PANE_ID" "$project_name"
 
