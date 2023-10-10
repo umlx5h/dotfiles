@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+# MEMO: @from https://raw.githubusercontent.com/wez/wezterm/main/assets/shell-integration/wezterm.sh
 
 # This file hooks up shell integration for wezterm.
 # It is suitable for zsh and bash.
@@ -411,10 +412,13 @@ __wezterm_set_user_var() {
 # command provided by wezterm if wezterm is installed, but falls
 # back to a simple printf command otherwise.
 __wezterm_osc7() {
-  if hash wezterm 2>/dev/null ; then
-    wezterm set-working-directory 2>/dev/null && return 0
-    # If the command failed (perhaps the installed wezterm
-    # is too old?) then fall back to the simple version below.
+  # TODO: WSL上だとエラーでるので、条件を修正
+  if ! uname -r | grep -q "microsoft"; then
+    if hash wezterm 2>/dev/null ; then
+      wezterm set-working-directory 2>/dev/null && return 0
+      # If the command failed (perhaps the installed wezterm
+      # is too old?) then fall back to the simple version below.
+    fi
   fi
   printf "\033]7;file://%s%s\033\\" "${HOSTNAME}" "${PWD}"
 }

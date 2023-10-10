@@ -13,4 +13,5 @@ alias k="kubectl"
 alias kc="kubectx"
 alias kn="kubens"
 alias vim="nvim"
+alias wssh="wezterm ssh"
 

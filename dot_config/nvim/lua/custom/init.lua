@@ -58,9 +58,9 @@ vim.keymap.set("n", "<esc>f", "<C-i>", { desc = "Go forward (C-I)" })
 -- vim.keymap.set("x", "p", [[p:let @+=@0<CR>:let @"=@0<CR>]], { desc = "Paste without yank", silent = true})
 vim.keymap.set("n", "<leader>p", [["0p]], { desc = "Paste from yank register" })
 
--- JとKでまとめて上下に移動
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "chunk moving up" })
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "chunk moving down" })
+-- Ctrl+j,kでまとめて上下に移動
+vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { desc = "chunk moving up" })
+vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", { desc = "chunk moving down" })
 
 -- Alternative to VSCode Ctrl+D
 vim.keymap.set("x", "sr", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under cursor" })

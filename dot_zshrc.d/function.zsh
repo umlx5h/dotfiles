@@ -95,10 +95,12 @@ function open-recent-project() {
 
   if [[ -n "$TMUX" ]]; then
     tmux rename-window "$project_name"
+    # TODO: tmuxの中だとなぜかtab-idを指定しないと最初のタブが選択されてしまう
+    type wezterm &>/dev/null && wezterm cli set-tab-title --pane-id "$(wezterm cli list-clients | awk '{print $NF}' | tail -1)" "$project_name"
+  else
+    type wezterm &>/dev/null && wezterm cli set-tab-title "$project_name"
   fi
-  
-  # TODO: tmuxの中だとなぜかtab-idを指定しないと最初のタブが選択されてしまう
-  type wezterm &>/dev/null && wezterm cli set-tab-title --tab-id "$(wezterm cli list-clients | awk '{print $NF}' | tail -1)" "$project_name"
+
   cd "$dir"
   z --add "$dir"
   vim .
@@ -137,7 +139,7 @@ function open-recent-project-tab() {
   fi
 
   local project_name="$(basename $dir)"
-  PANE_ID=$(wezterm cli spawn wsl.exe --cd "$dir")
+  PANE_ID=$(wezterm cli spawn --cwd "$dir")
   echo "vim ." | wezterm cli send-text --pane-id "$PANE_ID" --no-paste
   wezterm cli set-tab-title --pane-id "$PANE_ID" "$project_name"
 
