@@ -70,6 +70,8 @@ config.keys = {
   { key = '{', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(-1) },
   { key = '}', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(1) },
   { key = 'i', mods = 'CTRL|SHIFT', action = act.ActivateLastTab },
+  { key = '(', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
+  { key = ')', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) },
 
   { key = 'j', mods = 'CMD|SHIFT', action = wezterm.action { ActivateTab = 0 } },
   { key = 'k', mods = 'CMD|SHIFT', action = wezterm.action { ActivateTab = 1 } },

@@ -118,7 +118,12 @@ M.telescope = {
   n = {
     -- find
     ["<C-p>"] = { "<cmd> Telescope find_files <CR>", "Find Project files" },
-    ["<leader><space>"] = { "<cmd> Telescope buffers <CR>", "Find buffers" },
+    ["<leader><space>"] = {
+      function()
+        require("telescope.builtin").buffers { sort_mru = true }
+      end,
+      "Find buffers",
+    },
     ["<leader>f/"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" }, -- from <leader>fz
     ["<leader>fc"] = { "<cmd> Telescope commands <CR>", "Find commands" }, -- copy from astronvim
     ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Find keymaps" }, -- copy from astronvim
@@ -223,6 +228,20 @@ M.tabufline = {
     },
 
     ["[b"] = {
+      function()
+        require("nvchad.tabufline").tabuflinePrev()
+      end,
+      "Goto prev buffer",
+    },
+
+    [")"] = {
+      function()
+        require("nvchad.tabufline").tabuflineNext()
+      end,
+      "Goto next buffer",
+    },
+
+    ["("] = {
       function()
         require("nvchad.tabufline").tabuflinePrev()
       end,
@@ -366,10 +385,6 @@ M.gopher = {
 
 M.projects = {
   n = {
-    -- ahmedkhalf/project.nvim
-    ["<leader>fp"] = { "<cmd> Telescope projects <CR>", "Find projects" },
-    ["<leader>ap"] = { "<cmd> ProjectRoot <CR>", "Add cwd to project" },
-    -- my
     -- open project in tmux window
     ["<A-p>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
     ["<A-P>"] = {

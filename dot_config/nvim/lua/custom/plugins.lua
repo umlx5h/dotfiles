@@ -62,6 +62,8 @@ local plugins = {
         "s",
       })
 
+      conf.mapping["<Up>"] = cmp.mapping.select_prev_item() -- C-p, C-nに加えてカーソルでも移動
+      conf.mapping["<Down>"] = cmp.mapping.select_next_item()
       conf.mapping["<PageUp>"] = cmp.mapping.select_prev_item { count = 11 }
       conf.mapping["<PageDown>"] = cmp.mapping.select_next_item { count = 11 }
       conf.mapping["<C-u>"] = cmp.mapping.scroll_docs(-4)
@@ -183,19 +185,6 @@ local plugins = {
     "mbbill/undotree",
     cmd = "UndotreeToggle",
   },
-  {
-    "ahmedkhalf/project.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("project_nvim").setup {
-        manual_mode = true,
-        patterns = { ".git", "package.json" },
-        datapath = vim.fn.stdpath "config" .. "/lua/custom/data", -- configフォルダ以下に保存する
-      }
-      require("telescope").load_extension "projects"
-    end,
-  },
-
   {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
