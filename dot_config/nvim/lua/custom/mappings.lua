@@ -301,6 +301,13 @@ M.tabufline = {
       end,
       "Move buffer left",
     },
+    ["W"] = {
+      function()
+        require("nvchad.tabufline").close_buffer()
+      end,
+      "Close buffer",
+    },
+    ["<S-Tab>"] = { "<C-^>", "Toggle last buffer" },
   },
 }
 

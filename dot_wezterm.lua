@@ -80,6 +80,8 @@ config.keys = {
   { key = '{', mods = 'CMD|SHIFT', action = act.MoveTabRelative(-1) },
   { key = '}', mods = 'CMD|SHIFT', action = act.MoveTabRelative(1) },
   { key = 'i', mods = 'CMD|SHIFT', action = act.ActivateLastTab },
+  { key = '(', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
+  { key = ')', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
 
   ------------  tmuxっぽい設定, wezterm sshで使うと役に立つかも --------------------------
   -- { key = 'q', mods = 'LEADER|CTRL', action = wezterm.action { SendString = '\x11' } },

@@ -61,6 +61,10 @@ if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
   source $ZSHHOME/wezterm.sh
 fi
 
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+complete -C '/usr/local/bin/aws_completer' aws
+
 # key
 [[ -f $HOME/.env ]] && source $HOME/.env
 

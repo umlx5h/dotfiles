@@ -36,7 +36,7 @@ function show() {
 
 # z のパスをfzfで選択
 function zz() {
-    local path=$(z -t | awk '{print $2}' | fzf --tac)
+    local path=$(z | awk '{print $2}' | fzf --tac)
     [ -n "$path" ] && cd -- "$path"
 }
 

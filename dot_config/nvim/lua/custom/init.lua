@@ -38,8 +38,6 @@ end
 -------------------------------------- remaps ------------------------------------------
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
--- きもいがtmuxと合わせる
-vim.keymap.set("n", "<leader><TAB>", "<C-^>", { desc = "Toggle last buffer" })
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard" })
 
@@ -61,6 +59,10 @@ vim.keymap.set("n", "<leader>p", [["0p]], { desc = "Paste from yank register" })
 -- Ctrl+j,kでまとめて上下に移動
 vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { desc = "chunk moving up" })
 vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", { desc = "chunk moving down" })
+
+-- Relative numberで行番号を見やすくする
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll window downwards with centering" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwords with centering" })
 
 -- Alternative to VSCode Ctrl+D
 vim.keymap.set("x", "sr", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under cursor" })

@@ -35,9 +35,8 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
-# ctrl + s & q # # instant prompt と競合するので削除
-# #stty stop undef
-# #stty start undef
+# bash上でCTRL+Sを有効にする (SSH上でも有効)
+stty -ixon
 
 # Turn off all beeps
 unsetopt BEEP
