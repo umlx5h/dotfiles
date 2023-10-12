@@ -28,3 +28,7 @@
 {{- if $isWSL }}
     win_user = "{{ $win_user }}"
 {{- end }}
+
+[merge]
+    command = "nvim"
+    args = ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Source }}", "{{ .Target }}`}}"]
