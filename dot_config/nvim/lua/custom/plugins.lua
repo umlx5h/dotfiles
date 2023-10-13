@@ -101,6 +101,7 @@ local plugins = {
   },
   {
     "folke/which-key.nvim",
+    event = "VeryLazy", -- always load
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "whichkey")
       require("which-key").setup(opts)
@@ -303,6 +304,15 @@ local plugins = {
   {
     "almo7aya/openingh.nvim",
     cmd = { "OpenInGHRepo", "OpenInGHFile", "OpenInGHFileLines" },
+  },
+  {
+    "kevinhwang91/nvim-bqf",
+    event = "VeryLazy",
+    dependencies = "junegunn/fzf",
+    ft = "qf",
+    opts = function()
+      return require "custom.configs.bqf"
+    end,
   },
 }
 

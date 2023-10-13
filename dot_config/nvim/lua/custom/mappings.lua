@@ -41,6 +41,10 @@ M.disabled = {
     ["<leader>ls"] = "", -- remap to gK (LSP signature help)
     ["<leader>ra"] = "", -- remap to <leader>cr (LSP rename)
     ["<leader>f"] = "", -- remap to <leader>fd (Floating diagnostic)
+
+    --------------------- Whichkey -----------------------
+    ["<leader>wK"] = "", -- remap to wk
+    ["<leader>wk"] = "",
   },
   i = {
     -- /* Disable .general */
@@ -62,6 +66,9 @@ M.general = {
   },
   n = {
     ["<leader>n"] = { "<cmd> enew <CR>", "New buffer" },
+
+    -- my
+    ["<leader>C"] = { "<cmd> copen <CR>", "Open Quickfix List" },
   },
 }
 
@@ -308,6 +315,19 @@ M.tabufline = {
       "Close buffer",
     },
     ["<S-Tab>"] = { "<C-^>", "Toggle last buffer" },
+  },
+}
+
+M.whichkey = {
+  plugin = true,
+
+  n = {
+    ["<leader>wk"] = {
+      function()
+        vim.cmd "WhichKey"
+      end,
+      "Which-key all keymaps",
+    },
   },
 }
 

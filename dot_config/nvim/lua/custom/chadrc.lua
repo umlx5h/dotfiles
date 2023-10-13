@@ -66,7 +66,6 @@ M.ui = {
   },
 
   tabufline = {
-    lazyload = false,
     overriden_modules = function(modules)
       -- override M.buttons
       -- https://github.com/NvChad/ui/blob/3c41d007bdcc6dbfe87b66dffa55d9a57fcd0559/lua/nvchad/tabufline/modules.lua#L195

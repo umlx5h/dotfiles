@@ -15,7 +15,7 @@ if [[ "$TERM_PROGRAM" == "WezTerm" && -z "$TMUX" && "$TMUX_AUTO_START" == "on" ]
 
       # アタッチされていないセッションがすでにあった場合は一番若い番号のセッションにアタッチ
       if [ -n "$attach_session" ]; then
-        exec tmux attach -t "$attach_session"
+        tmux attach -t "$attach_session"
       else
         if [[ "$PWD" =~ ^/mnt/c/Users/.* ]]; then
           # wezterm&tmux経由だとカレントディレクトリがおかしくなるので対策

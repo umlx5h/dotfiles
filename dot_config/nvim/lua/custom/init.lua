@@ -65,9 +65,9 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll window downwards with c
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwords with centering" })
 
 -- Alternative to VSCode Ctrl+D
-vim.keymap.set("x", "sr", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under cursor" })
-vim.keymap.set("n", "sr", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]], { desc = "Replace word under cursor" })
-vim.keymap.set("x", "sg", [[y:%s/\<<c-r>"\>//g<left><left>]], { desc = "Replace word under cursor globally" })
+vim.keymap.set("x", "gs", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under cursor" })
+vim.keymap.set("n", "gs", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]], { desc = "Replace word under cursor" })
+vim.keymap.set("x", "g/", [[y:%sno/<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
 
 -- Resize window using <ctrl> arrow keys (copy from lazyvim)
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
