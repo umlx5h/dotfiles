@@ -344,6 +344,9 @@ M.ui = {
       end,
       "Toggle spectre (replace tool)",
     },
+    -- aerial
+    ["<leader>uo"] = { "<cmd> AerialToggle <CR>", "Open Aerial (Symbol Outline)" },
+
     -- line numbers
     ["<leader>un"] = { "<cmd> set nonumber! norelativenumber! <CR>", "Toggle line number" },
     ["<leader>ul"] = { "<cmd> Lazy <CR>", "Open Lazy" },
@@ -367,7 +370,7 @@ M.dap = {
       "<cmd> DapContinue <CR>",
       "Start or continue the debugging",
     },
-    ["<leader>dus"] = {
+    ["<leader>du"] = {
       function()
         local widgets = require "dap.ui.widgets"
         local sidebar = widgets.sidebar(widgets.scopes)

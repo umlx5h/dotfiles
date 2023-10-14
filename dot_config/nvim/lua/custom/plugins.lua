@@ -314,6 +314,15 @@ local plugins = {
       return require "custom.configs.bqf"
     end,
   },
+  {
+    "stevearc/aerial.nvim", -- Symbol outline
+    opts = {},
+    cmd = { "AerialToggle" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
 }
 
 return plugins

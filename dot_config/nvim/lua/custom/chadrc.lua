@@ -12,6 +12,11 @@ M.lazy_nvim = {
 }
 
 M.ui = {
+  hl_add = {
+    AerialLine = {
+      fg = "#89DCEB", -- stevearc/aerial.nvim のファーカス時のシンボルの文字色を変える
+    },
+  },
   theme_toggle = { "catppuccin" },
   -- https://github.com/NvChad/base46/blob/v2.0/lua/base46/themes/catppuccin.lua
   theme = "catppuccin",
