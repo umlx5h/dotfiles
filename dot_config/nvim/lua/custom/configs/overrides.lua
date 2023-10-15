@@ -141,7 +141,7 @@ local function nvimtree_on_attach(bufnr)
 
   -- custom mappings
   -- @see: https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
-  vim.keymap.set("n", "l", api.node.open.preview_no_window_picker, opts "Open Preview: No Picker")
+  vim.keymap.set("n", "l", api.node.open.preview_no_picker, opts "Open Preview: No Picker")
   vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close Directory")
 end
 

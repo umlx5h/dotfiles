@@ -8,30 +8,9 @@ local plugins = {
     opts = overrides.telescope,
   },
   {
-    -- TODO: マージされたら戻す
     "nvim-tree/nvim-tree.lua",
-    enabled = false,
+    opts = overrides.nvimtree,
   },
-  {
-    "umlx5h/nvim-tree.lua",
-    name = "nvim-tree-fork",
-    branch = "add_preview_with_no_picker",
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    init = function()
-      require("core.utils").load_mappings "nvimtree"
-    end,
-    opts = function()
-      return vim.tbl_deep_extend("force", require "plugins.configs.nvimtree", overrides.nvimtree)
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "nvimtree")
-      require("nvim-tree").setup(opts)
-    end,
-  },
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   opts = overrides.nvimtree,
-  -- },
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -49,6 +28,9 @@ local plugins = {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-context",
+    },
     opts = overrides.treesitter,
   },
   {
@@ -316,7 +298,12 @@ local plugins = {
   },
   {
     "stevearc/aerial.nvim", -- Symbol outline
-    opts = {},
+    opts = {
+      keymaps = {
+        ["o"] = "actions.scroll",
+        ["O"] = "actions.jump",
+      },
+    },
     cmd = { "AerialToggle" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",

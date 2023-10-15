@@ -16,6 +16,13 @@ M.ui = {
     AerialLine = {
       fg = "#89DCEB", -- stevearc/aerial.nvim のファーカス時のシンボルの文字色を変える
     },
+    TreesitterContext = {
+      bg = "#363545",
+    },
+    -- TreesitterContextBottom = {
+    --   underline = true,
+    --   sp = "pink", -- not working?
+    -- },
   },
   theme_toggle = { "catppuccin" },
   -- https://github.com/NvChad/base46/blob/v2.0/lua/base46/themes/catppuccin.lua

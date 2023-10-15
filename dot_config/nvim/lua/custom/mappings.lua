@@ -69,6 +69,15 @@ M.general = {
 
     -- my
     ["<leader>C"] = { "<cmd> copen <CR>", "Open Quickfix List" },
+
+    -- nvim-treesitter/nvim-treesitter-context
+    ["[c"] = {
+      function()
+        require("treesitter-context").go_to_context()
+      end,
+      "Jump to treesitter context",
+      opts = { silent = true },
+    },
   },
 }
 
@@ -308,7 +317,7 @@ M.tabufline = {
       end,
       "Move buffer left",
     },
-    ["W"] = {
+    ["X"] = {
       function()
         require("nvchad.tabufline").close_buffer()
       end,
@@ -351,6 +360,9 @@ M.ui = {
     ["<leader>un"] = { "<cmd> set nonumber! norelativenumber! <CR>", "Toggle line number" },
     ["<leader>ul"] = { "<cmd> Lazy <CR>", "Open Lazy" },
 
+    -- nvim-treesitter/nvim-treesitter-context
+    ["<leader>uc"] = { "<cmd> TSContextToggle <CR>", "Toggle treesitter context" },
+
     -- Toggle diagnostic (linter)
     ["<leader>ud"] = {
       ":lua toggle_diagnostics() <CR>",
@@ -366,10 +378,6 @@ M.dap = {
       "<cmd> DapToggleBreakpoint <CR>",
       "Add breakpoint at line",
     },
-    ["<leader>dr"] = {
-      "<cmd> DapContinue <CR>",
-      "Start or continue the debugging",
-    },
     ["<leader>du"] = {
       function()
         local widgets = require "dap.ui.widgets"
@@ -377,6 +385,26 @@ M.dap = {
         sidebar.open()
       end,
       "Open debugging UI sidebar",
+    },
+    ["<leader>dr"] = {
+      "<cmd> DapContinue <CR>",
+      "Start or continue the debugging",
+    },
+    ["<F5>"] = {
+      "<cmd> DapContinue <CR>",
+      "Start or continue the debugging",
+    },
+    ["<F10>"] = {
+      "<cmd> DapStepOver <CR>",
+      "debug: Step Over",
+    },
+    ["<F11>"] = {
+      "<cmd> DapStepInto <CR>",
+      "debug: Step Into",
+    },
+    ["<F12>"] = {
+      "<cmd> DapStepOver <CR>",
+      "debug: Step Over",
     },
   },
 }
