@@ -113,6 +113,23 @@ Else
 	F14 & 6::Send +{F17}
 #If
 
+; Applications you want to disable emacs-like keybindings
+; (Please comment out applications you don't use)
+is_terminal()
+{
+	IfWinActive,ahk_exe WindowsTerminal.exe ; Windows Terminal
+		Return 1
+	IfWinActive,ahk_exe WezTerm.exe ; WezTerm
+		Return 1
+	IfWinActive,ahk_exe wezterm-gui.exe ; WezTerm
+		Return 1
+	IfWinActive,ahk_exe alacritty.exe
+		Return 1
+	IfWinActive,ahk_class VMwareUnityHostWndClass
+		Return 1
+	Return 0
+}
+
 #If !WinActive("ahk_exe Code.exe") and !WinActive("ahk_exe Code - Insiders.exe")
 	/*
 	Emacs keybind
@@ -127,23 +144,6 @@ Else
 	; The following line is a contribution of NTEmacs wiki http://www49.atwiki.jp/ntemacs/pages/20.html
 	;SetKeyDelay 0
 
-	; Applications you want to disable emacs-like keybindings
-	; (Please comment out applications you don't use)
-	is_target()
-	{
-		IfWinActive,ahk_exe WindowsTerminal.exe ; Windows Terminal
-			Return 1
-		IfWinActive,ahk_exe WezTerm.exe ; WezTerm
-			Return 1
-		IfWinActive,ahk_exe wezterm-gui.exe ; WezTerm
-			Return 1
-		IfWinActive,ahk_exe alacritty.exe
-			Return 1
-		IfWinActive,ahk_class VMwareUnityHostWndClass
-			Return 1
-		Return 0
-	}
-
 	keep_shift()
 	{
 		If GetKeyState("Shift")
@@ -153,7 +153,7 @@ Else
 
 	key_del()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^d
 		Else
 			Send {Blind}{Del}
@@ -161,7 +161,7 @@ Else
 	}
 	key_backspace()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^h
 		Else
 			Send {Blind}{BS}
@@ -169,7 +169,7 @@ Else
 	}
 	kill_home()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^u
 		Else {
 			Send {ShiftDown}{Home}{ShiftUp}
@@ -180,7 +180,7 @@ Else
 	}
 	kill_line()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^k
 		Else {
 			Send {ShiftDown}{END}{ShiftUp}
@@ -191,7 +191,7 @@ Else
 	}
 	quit()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^g
 		Else
 			Send {Blind}{ESC}
@@ -199,7 +199,7 @@ Else
 		}
 	key_home()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^a
 		Else
 			Send {Blind}{HOME}
@@ -207,7 +207,7 @@ Else
 	}
 	key_end()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^e
 		Else
 			Send {Blind}{END}
@@ -215,7 +215,7 @@ Else
 	}
 	key_up()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^p
 		Else
 			Send {Blind}{Up}
@@ -223,7 +223,7 @@ Else
 	}
 	key_down()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^n
 		Else
 			Send {Blind}{Down}
@@ -231,7 +231,7 @@ Else
 	}
 	key_right()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^f
 		Else
 			Send {Blind}{Right}
@@ -239,7 +239,7 @@ Else
 	}
 	key_left()
 	{
-		If is_target()
+		If is_terminal()
 			Send {Blind}^b
 		Else
 			Send {Blind}{Left}
@@ -324,6 +324,11 @@ Else
 	F14 & }::Send {Blind}^{]}
 #If
 
+#If is_terminal()
+	; ターミナルでF14 & vと CTRL+vを区別するための設定
+	^v::Send ^+v
+#If
+
 ; Capslock to F14 to Ctrl & Emacs cursor
 F14 & Enter::Send {Blind}^{Enter}
 F14 & Space::Send {Blind}^{Space}
@@ -404,7 +409,7 @@ F14 & Esc::~
 ------------------------------------- Mac Like -----------------------------------------
 ; Alt+Q to close application like mac
 !q::Send,!{F4}
-!w::Send,^w
+;!w::Send,^w
 ; !h::Send,{LWin down}{Down}{LWin up}
 ;
 
