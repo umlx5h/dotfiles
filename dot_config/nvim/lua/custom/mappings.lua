@@ -360,6 +360,8 @@ M.ui = {
     ["<leader>un"] = { "<cmd> set nonumber! norelativenumber! <CR>", "Toggle line number" },
     ["<leader>ul"] = { "<cmd> Lazy <CR>", "Open Lazy" },
 
+    ["<leader>ui"] = { "<cmd> IlluminateToggle <CR>", "Toggle vim-illuminate" },
+
     -- nvim-treesitter/nvim-treesitter-context
     ["<leader>uc"] = { "<cmd> TSContextToggle <CR>", "Toggle treesitter context" },
 
@@ -444,8 +446,8 @@ M.gopher = {
 M.projects = {
   n = {
     -- open project in tmux window
-    ["<A-p>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
-    ["<A-P>"] = {
+    ["<A-f>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
+    ["<A-F>"] = {
       "<cmd>silent !tmux neww zsh -ic 'open-recent-project-tab; exec zsh' <CR>",
       "Open project in terminal tab",
     },

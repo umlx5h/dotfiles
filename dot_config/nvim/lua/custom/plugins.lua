@@ -310,6 +310,20 @@ local plugins = {
       "nvim-tree/nvim-web-devicons",
     },
   },
+  {
+    "RRethy/vim-illuminate", -- カーソル下の単語をハイライト, ALT+P, Nで移動可
+    event = "VeryLazy",
+    opts = {
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { "lsp" },
+      },
+    },
+    config = function(_, opts)
+      require("illuminate").configure(opts)
+    end,
+  },
 }
 
 return plugins

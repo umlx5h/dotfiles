@@ -12,17 +12,27 @@ M.lazy_nvim = {
 }
 
 M.ui = {
+  hl_override = {
+    -- ハイライトを検索する方法
+    -- :Telescope highlightsを使う
+    -- or
+    -- :highlightsから調べる
+    --
+    -- :redir @a -> :highlight -> :redir END -> :bnew -> "ap
+    --
+    -- 色の指定方法: https://nvchad.com/docs/config/theming
+    IndentBlanklineSpaceChar = { link = "Comment" }, -- set listのタブ文字を明るく
+    SpecialKey = { link = "Comment" }, -- ^Mみたいなやつ
+    NonText = { link = "Comment" }, -- set listのタブ文字を明るく
+    Visual = { bg = "#2d3f76" }, -- テキスト選択の背景を少し青くして明るく
+  },
   hl_add = {
-    AerialLine = {
-      fg = "#89DCEB", -- stevearc/aerial.nvim のファーカス時のシンボルの文字色を変える
-    },
-    TreesitterContext = {
-      bg = "#363545",
-    },
-    -- TreesitterContextBottom = {
-    --   underline = true,
-    --   sp = "pink", -- not working?
-    -- },
+    -- linkするハイライトはtelescope highlightsが参考になる
+    AerialLine = { fg = "cyan" }, -- フォーカスのあたっているシンボルの色
+    TreesitterContext = { bg = "one_bg2" },
+    IlluminatedWordText = { bg = "one_bg2" },
+    IlluminatedWordRead = { bg = "one_bg2" },
+    IlluminatedWordWrite = { bg = "one_bg2" },
   },
   theme_toggle = { "catppuccin" },
   -- https://github.com/NvChad/base46/blob/v2.0/lua/base46/themes/catppuccin.lua
@@ -30,15 +40,11 @@ M.ui = {
   changed_themes = {
     ["catppuccin"] = {
       base_30 = {
-        -- grey_fg = "#8d8ba8", -- comment out color (from: #4e4d5d)
         grey_fg = "#8d8ba8", -- comment out color (from: #4e4d5d)
-        grey = "#5e5c72", -- line number (#474656)
+        grey = "#5e5c72", -- line number (from: #474656)
         white = "#e3eaf9", -- focus buffer color, etc (from: #D9E0EE)
         light_grey = "#858399", -- buffer tab backgroud (from: #605f6f)
         line = "#504e66", -- for lines like vertsplit (from: #383747)
-      },
-      base_16 = {
-        base02 = "#2D3F76", -- text selection bg color (from: #2f2e3e)
       },
     },
   },
