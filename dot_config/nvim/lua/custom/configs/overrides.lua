@@ -136,9 +136,6 @@ local function nvimtree_on_attach(bufnr)
   -- default mappings
   api.config.mappings.default_on_attach(bufnr)
 
-  -- remove mappings
-  vim.keymap.del("n", "<S-Tab>", { buffer = bufnr })
-
   -- custom mappings
   -- @see: https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
   vim.keymap.set("n", "l", api.node.open.preview_no_picker, opts "Open Preview: No Picker")

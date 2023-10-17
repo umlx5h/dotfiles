@@ -3,6 +3,15 @@ local opt = vim.opt
 opt.clipboard = "" -- disable yank to clipboard by default
 opt.pumheight = 12 -- set completion max rows
 opt.relativenumber = true
+opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  -- fold = "⸱",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
 
 -------------------------------------- filetypes ------------------------------------------
 
@@ -38,6 +47,8 @@ end
 -------------------------------------- remaps ------------------------------------------
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
+
+-- system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
 vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard" })
 
@@ -45,7 +56,7 @@ vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard" })
 -- vim.keymap.set({"n", "v"}, "<leader>dd", [["_d]])
 vim.keymap.set("v", "<leader>d", [["+d]], { desc = "Delete with clipboard" })
 
--- ALT+<- or -> でジャンプ
+-- ALT+<- or -> でジャンプ (マウス操作経由)
 vim.keymap.set("n", "<A-Left>", "<C-o>", { desc = "Go back (C-O)" })
 vim.keymap.set("n", "<A-Right>", "<C-i>", { desc = "Go forward (C-I)" })
 vim.keymap.set("n", "<esc>b", "<C-o>", { desc = "Go back (C-O)" }) -- Alt+<->をワード移動に設定しているのでそれも上書き
@@ -84,9 +95,10 @@ vim.keymap.set("i", "<C-a>", "<Home>", { desc = "Emacs Home" })
 vim.keymap.set("i", "<C-e>", "<End>", { desc = "Emacs End" })
 vim.keymap.set("i", "<C-d>", "<Delete>", { desc = "Emacs Delete" })
 vim.keymap.set("i", "<C-h>", "<BS>", { desc = "Emacs Backspace" })
-vim.keymap.set("i", "<C-k>", function()
-  return "<C-o>D"
-end, { desc = "Emacs Cut line", silent = true, expr = true })
+-- disable for conflict (enter digraph)
+-- vim.keymap.set("i", "<C-k>", function()
+--   return "<C-o>D"
+-- end, { desc = "Emacs Cut line", silent = true, expr = true })
 
 -- vim.keymap.set('i', '<C-k>', '<C-r>=<SID>kill()<CR>')
 

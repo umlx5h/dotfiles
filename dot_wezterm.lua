@@ -20,7 +20,7 @@ config.font = wezterm.font 'Hack Nerd Font'
 
 config.initial_rows = 30
 config.initial_cols = 115
-config.term = 'wezterm'
+-- config.term = 'wezterm'
 
 config.window_close_confirmation = 'NeverPrompt'
 config.audible_bell = 'Disabled'
@@ -42,8 +42,6 @@ config.leader = { key = 'd', mods = 'ALT' }
 ------------------------------ Keybinding ------------------------------------
 local act = wezterm.action
 config.keys = {
-  { key = 'v', mods = 'CTRL|SHIFT', action = act.SendKey { key = 'v', mods = 'CTRL' } },
-  { key = 'v', mods = 'CTRL', action = act.PasteFrom 'Clipboard' }, -- Ctrl+v to pase
   { key = 'LeftArrow', mods = 'ALT', action = act.SendString '\x1bb' }, -- word backword
   { key = 'RightArrow', mods = 'ALT', action = act.SendString '\x1bf' }, -- word forward
 

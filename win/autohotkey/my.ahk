@@ -833,3 +833,4 @@ IME_GetConverting(WinTitle="A",ConvCls="",CandCls="") {
 	SetTitleMatchMode, %tmm%
 	return ret
 }
+
