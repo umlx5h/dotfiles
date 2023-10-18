@@ -1,0 +1,28 @@
+" マウスを有効化
+set ttymouse=xterm2
+set mouse=a
+
+" 相対行番号に変更
+set relativenumber
+set number
+
+" 相対行番号でカーソル位置を中央に置くことで見やすくする
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" インサートモードでカーソルを見やすくする
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
+" ESCを速くする
+set timeoutlen=400
+set ttimeout
+set ttimeoutlen=50
+
+" tmux経由の時にCTRL-Left, Rightが動くようにする
+if &term =~ '^screen' || &term =~ '^tmux'
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif

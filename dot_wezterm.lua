@@ -44,6 +44,7 @@ local act = wezterm.action
 config.keys = {
   { key = 'LeftArrow', mods = 'ALT', action = act.SendString '\x1bb' }, -- word backword
   { key = 'RightArrow', mods = 'ALT', action = act.SendString '\x1bf' }, -- word forward
+  { key = 'Backspace', mods = 'CTRL', action = act.SendString '\x1b\x7f' }, -- word delete (= ALT+Backspace)
 
   -- CSI uコードを送る、 neovimなど対応しているプログラムは Shift+Enterと認識してくれる
   -- ESC           U+000D 13 CR/Ctrl-M     Shift modifier

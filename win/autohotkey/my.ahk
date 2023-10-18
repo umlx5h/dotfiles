@@ -346,8 +346,10 @@ F14 & Tab::
 	return
 #MaxThreadsPerHotkey
 
-F14 & BS::modified_backspace()
-F14 & Del::modified_delete()
+;F14 & BS::modified_backspace()
+;F14 & Del::modified_delete()
+F14 & BS::Send {Blind}^{BS}
+F14 & Del::Send {Blind}^{Del}
 F14 & Ins::Send {Blind}^{Ins}
 F14 & Up::Send {Blind}^{Up}
 F14 & Down::Send {Blind}^{Down}
