@@ -446,8 +446,8 @@ M.gopher = {
 M.projects = {
   n = {
     -- open project in tmux window
-    ["<A-f>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
-    ["<A-F>"] = {
+    ["<A-/>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
+    ["<A-?>"] = {
       "<cmd>silent !tmux neww zsh -ic 'open-recent-project-tab; exec zsh' <CR>",
       "Open project in terminal tab",
     },

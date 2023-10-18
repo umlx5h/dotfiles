@@ -153,8 +153,8 @@ function open-recent-project-tab() {
 }
 
 zle -N open-recent-project
-bindkey '\ef' open-recent-project
+bindkey '\e/' open-recent-project
 
 zle -N open-recent-project-tab
-bindkey '\ef' open-recent-project-tab
+bindkey '\e?' open-recent-project-tab
 

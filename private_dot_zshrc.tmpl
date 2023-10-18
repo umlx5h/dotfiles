@@ -40,6 +40,7 @@ fpath=(
 ZSHHOME="${HOME}/.zshrc.d"
 
 [[ -f $HOME/.asdf/asdf.sh ]] && source "$HOME/.asdf/asdf.sh"
+autoload bashcompinit && bashcompinit # for AWS
 
 source $ZSHHOME/path.zsh
 source $ZSHHOME/zim.zsh
@@ -61,9 +62,7 @@ if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
   source $ZSHHOME/wezterm.sh
 fi
 
-autoload bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
-complete -C '/usr/local/bin/aws_completer' aws
+complete -C '/usr/local/bin/aws_completer' aws # AWS completion
 
 # key
 [[ -f $HOME/.env ]] && source $HOME/.env
