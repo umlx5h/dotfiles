@@ -20,6 +20,7 @@ vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 -------------------------------------- custom functions ------------------------------------------
 
 local toggle_enabled = true
+-- diagnostics をトグルするカスタム関数
 function toggle_diagnostics()
   toggle_enabled = not toggle_enabled
   if toggle_enabled then
@@ -35,17 +36,23 @@ function toggle_diagnostics()
   end
 end
 
+-- MacかWSL2の場合はローカルと判定、それ以外はリモート扱い
+function is_local()
+  local uname = vim.loop.os_uname()
+  local isLocal = uname.sysname == "Darwin" or uname.sysname == "Linux" and uname.release:find "microsoft"
+  return isLocal
+end
+
 -------------------------------------- remaps ------------------------------------------
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
 
--- system clipboard
+-- system clipboard (リモートはOSC52版プラグインで上書きしている)
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
-vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank system clipboard" })
-
--- TODO: これなんだっけ？
--- vim.keymap.set({"n", "v"}, "<leader>dd", [["_d]])
-vim.keymap.set("v", "<leader>d", [["+d]], { desc = "Delete with clipboard" })
+vim.keymap.set({ "n", "v" }, "<leader>Y", [["+y$]], { desc = "Yank system clipboard" })
+vim.keymap.set("v", "<leader>d", [["+d]], { desc = "delete with clipboard" }) -- normalに割り当てるとdebugと被るのでやめる
+vim.keymap.set("n", "<leader>dd", [["+dd]], { desc = "Delete line with clipboard" })
+vim.keymap.set({ "n", "v" }, "<leader>D", [["+D]], { desc = "Delete with clipboard" })
 
 -- ALT+<- or -> でジャンプ (マウス操作経由)
 vim.keymap.set("n", "<A-Left>", "<C-o>", { desc = "Go back (C-O)" })

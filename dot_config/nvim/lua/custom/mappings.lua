@@ -41,6 +41,7 @@ M.disabled = {
     ["<leader>ls"] = "", -- remap to gK (LSP signature help)
     ["<leader>ra"] = "", -- remap to <leader>cr (LSP rename)
     ["<leader>f"] = "", -- remap to <leader>fd (Floating diagnostic)
+    ["<leader>D"] = "", -- remap to gy (LSP definition type)
 
     --------------------- Whichkey -----------------------
     ["<leader>wK"] = "", -- remap to wk
@@ -179,6 +180,12 @@ M.lspconfig = {
         vim.diagnostic.open_float { border = "rounded" }
       end,
       "Floating diagnostic",
+    },
+    ["gy"] = {
+      function()
+        vim.lsp.buf.type_definition()
+      end,
+      "LSP definition type",
     },
   },
 }

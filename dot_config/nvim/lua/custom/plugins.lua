@@ -324,6 +324,20 @@ local plugins = {
       require("illuminate").configure(opts)
     end,
   },
+  {
+    "ojroques/nvim-osc52", -- ローカル以外はOSC52を使ってクリップボードを扱う
+    enabled = function()
+      return not is_local()
+    end,
+    event = "VeryLazy",
+    config = function()
+      -- 既存のキーバインドの一部を上書き
+      -- TODO: <leader>dなどを用意できていない
+      vim.keymap.set("n", "<leader>y", require("osc52").copy_operator, { desc = "yank by OSC52", expr = true })
+      vim.keymap.set("n", "<leader>yy", "<leader>y_", { desc = "Yank by OSC52", remap = true })
+      vim.keymap.set("v", "<leader>y", require("osc52").copy_visual, { desc = "yank by OSC52" })
+    end,
+  },
 }
 
 return plugins
