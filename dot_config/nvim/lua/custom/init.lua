@@ -47,6 +47,8 @@ end
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
 
+vim.keymap.set("n", "<A-a>", "ggVG", { desc = "Select all" })
+
 -- system clipboard (リモートはOSC52版プラグインで上書きしている)
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
 vim.keymap.set({ "n", "v" }, "<leader>Y", [["+y$]], { desc = "Yank system clipboard" })
@@ -93,6 +95,19 @@ vim.keymap.set("i", "<C-a>", "<Home>", { desc = "Emacs Home" })
 vim.keymap.set("i", "<C-e>", "<End>", { desc = "Emacs End" })
 vim.keymap.set("i", "<C-d>", "<Delete>", { desc = "Emacs Delete" })
 vim.keymap.set("i", "<C-h>", "<BS>", { desc = "Emacs Backspace" })
+
+-- コマンドモードでCTRL-P,Nの挙動を矢印と入れ替える
+vim.keymap.set("c", "<C-p>", "<Up>")
+vim.keymap.set("c", "<C-n>", "<Down>")
+vim.keymap.set("c", "<Up>", "<C-p>")
+vim.keymap.set("c", "<Down>", "<C-n>")
+
+-- vim-unimpaired
+vim.keymap.set("n", "[q", "<cmd>cprevious<CR>")
+vim.keymap.set("n", "]q", "<cmd>cnext<CR>")
+vim.keymap.set("n", "[Q", "<cmd>cfirst<CR>")
+vim.keymap.set("n", "]Q", "<cmd>clast<CR>")
+
 -- disable for conflict (enter digraph)
 -- vim.keymap.set("i", "<C-k>", function()
 --   return "<C-o>D"

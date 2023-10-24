@@ -34,6 +34,48 @@ if &term =~ '^screen' || &term =~ '^tmux'
     execute "set <xLeft>=\e[1;*D"
 endif
 
+" コマンドモードの補完を使いやすく
+set wildmenu
+set wildmode=full
+
+" コマンド履歴を増やす
+set history=10000
+
+" ヘルプを日本語化
+" set helplang=ja,en
+
+" 検索を使いやすく
+set hlsearch
+set incsearch
+set ignorecase
+" 検索を見やすく
+highlight Search ctermbg=yellow ctermfg=black guibg=yellow guifg=black
+highlight CurSearch ctermbg=cyan ctermfg=black guibg=cyan guifg=black
+
+" ----------------------- keymap  ------------------------ "
+
+" コマンドモードでCTRL-P,Nの挙動を矢印と入れ替える
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <Up> <C-p>
+cnoremap <Down> <C-n>
+
+" vim-unimpaired
+nnoremap <silent> [a :previous<CR>
+nnoremap <silent> ]a :next<CR>
+nnoremap <silent> [A :first<CR>
+nnoremap <silent> ]A :last<CR>
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
+nnoremap <silent> [Q :cfirst<CR>
+nnoremap <silent> ]Q :clast<CR>
+nnoremap <silent> [t :tabprevious<CR>
+nnoremap <silent> ]t :tabnext<CR>
+
 " ------------------------- plugin ------------------------------ "
 
 " auto install plugin
@@ -45,6 +87,7 @@ endif
 
 call plug#begin()
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+Plug 'vim-jp/vimdoc-ja'
 call plug#end()
 
 " ----------------------- plugin config  ------------------------ "

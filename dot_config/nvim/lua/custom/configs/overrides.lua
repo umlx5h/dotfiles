@@ -36,6 +36,8 @@ M.treesitter = {
     "toml",
     "tsv",
     "csv",
+    "hcl",
+    "ruby",
   },
   indent = {
     enable = true,

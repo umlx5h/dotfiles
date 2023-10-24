@@ -205,6 +205,11 @@ local plugins = {
           cmd = "<cmd>lua require('spectre').change_options('fixed-strings')<CR>",
           desc = "toggle fixed-strings",
         },
+        ["toggle_pcre2"] = {
+          map = "tp",
+          cmd = "<cmd>lua require('spectre').change_options('pcre2')<CR>",
+          desc = "toggle pcre2",
+        },
       },
       find_engine = {
         ["rg"] = {
@@ -221,6 +226,11 @@ local plugins = {
               value = "--fixed-strings",
               desc = "Literal string match",
               icon = "[F]",
+            },
+            ["pcre2"] = {
+              value = "-P",
+              desc = "PCRE2 regex engine",
+              icon = "[P]",
             },
           },
         },

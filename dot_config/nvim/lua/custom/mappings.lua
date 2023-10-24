@@ -14,6 +14,8 @@ M.disabled = {
     ["<leader>b"] = "", -- to <leader>n (New buffer)
     ["<leader>n"] = "", -- to <leader>un (line numbers)
     ["<leader>rn"] = "", -- disable
+    ["<Up>"] = "",
+    ["<Down>"] = "",
 
     --------------------- tabufline -----------------------
     ["<tab>"] = "", -- TODO: Ctrl+Iと被ってしまう問題があるため一旦]bにremap
@@ -364,7 +366,7 @@ M.ui = {
     ["<leader>uo"] = { "<cmd> AerialToggle <CR>", "Open Aerial (Symbol Outline)" },
 
     -- line numbers
-    ["<leader>un"] = { "<cmd> set nonumber! norelativenumber! <CR>", "Toggle line number" },
+    ["<leader>un"] = { "<cmd> set relativenumber! <CR>", "Toggle relative line number" },
     ["<leader>ul"] = { "<cmd> Lazy <CR>", "Open Lazy" },
 
     ["<leader>ui"] = { "<cmd> IlluminateToggle <CR>", "Toggle vim-illuminate" },
