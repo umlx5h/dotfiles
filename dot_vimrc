@@ -52,6 +52,12 @@ set ignorecase
 highlight Search ctermbg=yellow ctermfg=black guibg=yellow guifg=black
 highlight CurSearch ctermbg=cyan ctermfg=black guibg=cyan guifg=black
 
+" バッファを編集していた場合に他のファイルを開けるようにする
+set hidden
+
+" コマンドラインモードでCTRL-% (CTRL-])で %:h に展開してくれる、現在開いているファイルを基準にパスを作成可能
+cnoremap <expr> <C-]> getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
 " ----------------------- keymap  ------------------------ "
 
 " コマンドモードでCTRL-P,Nの挙動を矢印と入れ替える

@@ -44,6 +44,8 @@ M.disabled = {
     ["<leader>ra"] = "", -- remap to <leader>cr (LSP rename)
     ["<leader>f"] = "", -- remap to <leader>fd (Floating diagnostic)
     ["<leader>D"] = "", -- remap to gy (LSP definition type)
+    ["[d"] = "", -- remap from nap.nvim
+    ["]d"] = "", -- remap from nap.nvim
 
     --------------------- Whichkey -----------------------
     ["<leader>wK"] = "", -- remap to wk
@@ -196,34 +198,6 @@ M.gitsigns = {
   plugin = true,
 
   n = {
-    ["]g"] = {
-      function()
-        if vim.wo.diff then
-          return "]g"
-        end
-        vim.schedule(function()
-          require("gitsigns").next_hunk()
-        end)
-        return "<Ignore>"
-      end,
-      "Jump to next hunk",
-      opts = { expr = true },
-    },
-
-    ["[g"] = {
-      function()
-        if vim.wo.diff then
-          return "[g"
-        end
-        vim.schedule(function()
-          require("gitsigns").prev_hunk()
-        end)
-        return "<Ignore>"
-      end,
-      "Jump to prev hunk",
-      opts = { expr = true },
-    },
-
     -- Actions
     ["<leader>gr"] = {
       function()
@@ -245,20 +219,6 @@ M.tabufline = {
 
   n = {
     ---------------- Remap ----------
-    ["]b"] = {
-      function()
-        require("nvchad.tabufline").tabuflineNext()
-      end,
-      "Goto next buffer",
-    },
-
-    ["[b"] = {
-      function()
-        require("nvchad.tabufline").tabuflinePrev()
-      end,
-      "Goto prev buffer",
-    },
-
     [")"] = {
       function()
         require("nvchad.tabufline").tabuflineNext()

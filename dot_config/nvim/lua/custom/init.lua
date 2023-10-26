@@ -95,6 +95,10 @@ vim.keymap.set("i", "<C-a>", "<Home>", { desc = "Emacs Home" })
 vim.keymap.set("i", "<C-e>", "<End>", { desc = "Emacs End" })
 vim.keymap.set("i", "<C-d>", "<Delete>", { desc = "Emacs Delete" })
 vim.keymap.set("i", "<C-h>", "<BS>", { desc = "Emacs Backspace" })
+-- disable for conflict (enter digraph)
+-- vim.keymap.set("i", "<C-k>", function()
+--   return "<C-o>D"
+-- end, { desc = "Emacs Cut line", silent = true, expr = true })
 
 -- コマンドモードでCTRL-P,Nの挙動を矢印と入れ替える
 vim.keymap.set("c", "<C-p>", "<Up>")
@@ -102,20 +106,13 @@ vim.keymap.set("c", "<C-n>", "<Down>")
 vim.keymap.set("c", "<Up>", "<C-p>")
 vim.keymap.set("c", "<Down>", "<C-n>")
 
--- vim-unimpaired
-vim.keymap.set("n", "[q", "<cmd>cprevious<CR>")
-vim.keymap.set("n", "]q", "<cmd>cnext<CR>")
-vim.keymap.set("n", "[Q", "<cmd>cfirst<CR>")
-vim.keymap.set("n", "]Q", "<cmd>clast<CR>")
-
--- disable for conflict (enter digraph)
--- vim.keymap.set("i", "<C-k>", function()
---   return "<C-o>D"
--- end, { desc = "Emacs Cut line", silent = true, expr = true })
-
--- vim.keymap.set('i', '<C-k>', '<C-r>=<SID>kill()<CR>')
-
--- vim.keymap.set({"n", "t", "i"}, "<C-u>", "<Nop>", { desc = "Go forward (C-I)"})
+-- コマンドラインモードでCTRL-% (CTRL-])で %:h に展開してくれる、現在開いているファイルを基準にパスを作成可能
+vim.keymap.set(
+  "c",
+  "<C-]>",
+  "getcmdtype() == ':' ? expand('%:h').'/' : '%%'",
+  { silent = false, expr = true, desc = "Expand current file dir" }
+)
 
 -- -- F13-F20 custom map
 -- local mode = { 'n', 'v', 'x', 's', 'o', 'i', 'l', 'c', 't' }

@@ -192,50 +192,9 @@ local plugins = {
   {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
-    opts = {
-      open_cmd = "noswapfile vnew",
-      mapping = {
-        ["toggle_no_ignore_vsc"] = {
-          map = "tg",
-          cmd = "<cmd>lua require('spectre').change_options('no-ignore-vcs')<CR>",
-          desc = "toggle no-ignore-vcs",
-        },
-        ["toggle_fixed_strings"] = {
-          map = "tf",
-          cmd = "<cmd>lua require('spectre').change_options('fixed-strings')<CR>",
-          desc = "toggle fixed-strings",
-        },
-        ["toggle_pcre2"] = {
-          map = "tp",
-          cmd = "<cmd>lua require('spectre').change_options('pcre2')<CR>",
-          desc = "toggle pcre2",
-        },
-      },
-      find_engine = {
-        ["rg"] = {
-          options = {
-            ["hidden"] = {
-              icon = "[SH]", -- Change from [H]
-            },
-            ["no-ignore-vcs"] = {
-              value = "--no-ignore-vcs",
-              desc = "Do not respect .gitignore",
-              icon = "[SGI]",
-            },
-            ["fixed-strings"] = {
-              value = "--fixed-strings",
-              desc = "Literal string match",
-              icon = "[F]",
-            },
-            ["pcre2"] = {
-              value = "-P",
-              desc = "PCRE2 regex engine",
-              icon = "[P]",
-            },
-          },
-        },
-      },
-    },
+    opts = function()
+      return require "custom.configs.spectre"
+    end,
   },
   {
     "folke/todo-comments.nvim",
@@ -314,7 +273,7 @@ local plugins = {
         ["O"] = "actions.jump",
       },
     },
-    cmd = { "AerialToggle" },
+    cmd = { "AerialToggle", "AerialNext", "AerialPrev" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
@@ -346,6 +305,13 @@ local plugins = {
       vim.keymap.set("n", "<leader>y", require("osc52").copy_operator, { desc = "yank by OSC52", expr = true })
       vim.keymap.set("n", "<leader>yy", "<leader>y_", { desc = "Yank by OSC52", remap = true })
       vim.keymap.set("v", "<leader>y", require("osc52").copy_visual, { desc = "yank by OSC52" })
+    end,
+  },
+  {
+    "liangxianzhe/nap.nvim", -- [q などの後にA-yで繰り返せるようになる
+    event = "VeryLazy",
+    config = function(_, _)
+      require "custom.configs.nap"
     end,
   },
 }

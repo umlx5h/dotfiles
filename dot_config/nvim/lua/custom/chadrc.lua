@@ -1,11 +1,13 @@
 ---@type ChadrcConfig
 local M = {}
--- netrwを有効化する
 M.lazy_nvim = {
   performance = {
     rtp = {
       disabled_plugins = vim.tbl_filter(function(name)
-        return string.sub(name, 1, 5) ~= "netrw"
+        return not (
+          string.sub(name, 1, 5) == "netrw" -- netrwを有効化する
+          or name == "matchit" -- matchitを有効化 HTMLなどで%で対応するタグに移動可能になる
+        )
       end, require("plugins.configs.lazy_nvim").performance.rtp.disabled_plugins),
     },
   },

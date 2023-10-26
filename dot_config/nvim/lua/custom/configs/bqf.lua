@@ -62,6 +62,7 @@ local opts = {
     win_height = 15,
     win_vheight = 15,
     auto_preview = true,
+    winblend = 0,
   },
   filter = {
     fzf = {
