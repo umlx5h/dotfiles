@@ -51,6 +51,8 @@ set ignorecase
 " 検索を見やすく
 highlight Search ctermbg=yellow ctermfg=black guibg=yellow guifg=black
 highlight CurSearch ctermbg=cyan ctermfg=black guibg=cyan guifg=black
+" ESC x 2でハイライトリセット
+nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
 
 " バッファを編集していた場合に他のファイルを開けるようにする
 set hidden

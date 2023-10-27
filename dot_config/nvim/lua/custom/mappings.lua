@@ -334,6 +334,9 @@ M.ui = {
     -- nvim-treesitter/nvim-treesitter-context
     ["<leader>uc"] = { "<cmd> TSContextToggle <CR>", "Toggle treesitter context" },
 
+    -- copilot
+    ["<leader>uC"] = { "<cmd> Copilot toggle <CR>", "Toggle Copilot" },
+
     -- Toggle diagnostic (linter)
     ["<leader>ud"] = {
       ":lua toggle_diagnostics() <CR>",

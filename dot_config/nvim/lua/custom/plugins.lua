@@ -316,4 +316,9 @@ local plugins = {
   },
 }
 
+local ok, work_plugins = pcall(require, "custom.work.plugins")
+if ok then
+  plugins = vim.tbl_deep_extend("force", plugins, work_plugins)
+end
+
 return plugins
