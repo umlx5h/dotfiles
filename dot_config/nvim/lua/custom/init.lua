@@ -62,10 +62,9 @@ vim.keymap.set("n", "<A-Right>", "<C-i>", { desc = "Go forward (C-I)" })
 vim.keymap.set("n", "<esc>b", "<C-o>", { desc = "Go back (C-O)" }) -- Alt+<->をワード移動に設定しているのでそれも上書き
 vim.keymap.set("n", "<esc>f", "<C-i>", { desc = "Go forward (C-I)" })
 
--- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
--- vim.keymap.set("x", "p", [[p:let @"=@0<CR>]], { desc = "Paste without yank", silent = true })
--- vim.keymap.set("x", "p", [[p:let @+=@0<CR>:let @"=@0<CR>]], { desc = "Paste without yank", silent = true})
-vim.keymap.set("n", "<leader>p", [["0p]], { desc = "Paste from yank register" })
+-- "0pを打ちやすく
+vim.keymap.set({ "n", "v" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
+vim.keymap.set({ "n", "v" }, "<leader>P", [["0P]], { desc = "Paste from yank register" })
 
 -- Ctrl+j,kでまとめて上下に移動
 vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { desc = "chunk moving up" })
@@ -78,7 +77,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwords with cen
 -- Alternative to VSCode Ctrl+D
 vim.keymap.set("x", "gs", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under cursor" })
 vim.keymap.set("n", "gs", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]], { desc = "Replace word under cursor" })
-vim.keymap.set("x", "g/", [[y:%sno/<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
+vim.keymap.set("x", "g/", [[y:%s/\V<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
 
 -- Resize window using <ctrl> arrow keys (copy from lazyvim)
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
@@ -105,6 +104,15 @@ vim.keymap.set("c", "<C-p>", "<Up>")
 vim.keymap.set("c", "<C-n>", "<Down>")
 vim.keymap.set("c", "<Up>", "<C-p>")
 vim.keymap.set("c", "<Down>", "<C-n>")
+
+-- 完全一致検索
+vim.keymap.set(
+  "n",
+  "<leader>s",
+  -- [[<cmd>let search = input('Search literally: ') | redraw | execute '/\V' . escape(search, '/\') <CR>]],
+  [[<cmd>let search = input('Search literally: ') | redraw | execute '/\V' . substitute(escape(search, '/\'), '\\n', 'n', 'g') <CR>]], -- 複数行の検索に対応 \nだけ改行文字として認識させる
+  { desc = "Literal Search" }
+)
 
 -- コマンドラインモードでCTRL-% (CTRL-])で %:h に展開してくれる、現在開いているファイルを基準にパスを作成可能
 vim.keymap.set(

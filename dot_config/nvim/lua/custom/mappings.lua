@@ -62,6 +62,9 @@ M.disabled = {
     ["<C-j>"] = "",
     ["<C-k>"] = "",
   },
+  x = {
+    ["p"] = "", -- デフォルト挙動に戻す (pasteで入れ替えれるようにする)
+  },
 }
 
 --------------------- Override -----------------------
@@ -146,6 +149,7 @@ M.telescope = {
       "Find buffers",
     },
     ["<leader>f/"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" }, -- from <leader>fz
+    ["<leader>fg"] = { "<cmd> Telescope git_files <CR>", "Find git files" },
     ["<leader>fc"] = { "<cmd> Telescope commands <CR>", "Find commands" }, -- copy from astronvim
     ["<leader>fk"] = { "<cmd> Telescope keymaps <CR>", "Find keymaps" }, -- copy from astronvim
     ["<leader>fs"] = { "<cmd> Telescope lsp_document_symbols <CR>", "Find symbol" },
@@ -155,6 +159,7 @@ M.telescope = {
     ["<leader>Q"] = { "<cmd> TodoLocList <CR>", "TODO List" },
     ["<leader>fy"] = { "<cmd> Telescope yaml_schema <CR>", "Find json schema" }, -- someone-stole-my-name/yaml-companion.nvim
     ["<leader>fq"] = { "<cmd> Telescope diagnostics <CR>", "Find diagnostics" },
+    ["<leader>fr"] = { "<cmd> Telescope resume <CR>", "Resume telescope" },
   },
 }
 

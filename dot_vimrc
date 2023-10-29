@@ -1,4 +1,11 @@
 " ------------------------- basic config  ------------------------------ "
+" デフォルト設定を読み込む
+source $VIMRUNTIME/defaults.vim
+" q: のヒントメッセージを無効
+:augroup vimHints | exe 'au!' | augroup END
+" %表示だけ有効化
+set rulerformat=%=%P
+
 " マウスを有効化
 set ttymouse=xterm2
 set mouse=a
@@ -48,11 +55,17 @@ set history=10000
 set hlsearch
 set incsearch
 set ignorecase
+set smartcase
+
 " 検索を見やすく
 highlight Search ctermbg=yellow ctermfg=black guibg=yellow guifg=black
 highlight CurSearch ctermbg=cyan ctermfg=black guibg=cyan guifg=black
 " ESC x 2でハイライトリセット
 nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
+
+" 完全一致検索
+" substituteは複数行に対応するため
+nnoremap <leader>s :execute '/\V' . substitute(escape(input('Search literally: '), '/\'), '\\n', 'n', 'g')<CR>
 
 " バッファを編集していた場合に他のファイルを開けるようにする
 set hidden
@@ -67,6 +80,12 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <Up> <C-p>
 cnoremap <Down> <C-n>
+
+" paste from 0 register
+nnoremap <leader>p "0p
+xnoremap <leader>p "0p
+nnoremap <leader>P "0P
+xnoremap <leader>P "0P
 
 " vim-unimpaired
 nnoremap <silent> [a :previous<CR>

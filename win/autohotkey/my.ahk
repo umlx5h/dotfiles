@@ -125,10 +125,27 @@ is_terminal()
 		Return 1
 	IfWinActive,ahk_exe alacritty.exe
 		Return 1
+	IfWinActive,ahk_exe gvim.exe
+		Return 1
 	IfWinActive,ahk_class VMwareUnityHostWndClass
 		Return 1
 	Return 0
 }
+
+; 複数行のテキストを1行にしてコピー 改行文字を\nに変換 Vimに貼り付けるときに便利
+#v::
+	Clip0 = %ClipBoardAll%
+	ClipBoard = %ClipBoard%       ; Convert to text
+	ClipBoard := StrReplace(StrReplace(ClipBoard, "`r`n", "\n"), "`n", "\n")  ; 改行文字を\nに変換
+	If is_terminal()
+		Send ^+v
+	Else
+		Send ^v
+	Return
+	Sleep 50                      ; Don't change clipboard while it is pasted! (Sleep > 0)
+	ClipBoard = %Clip0%           ; Restore original ClipBoard
+	VarSetCapacity(Clip0, 0)      ; Free memory
+Return
 
 #If !WinActive("ahk_exe Code.exe") and !WinActive("ahk_exe Code - Insiders.exe")
 	/*

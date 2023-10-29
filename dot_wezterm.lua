@@ -24,9 +24,11 @@ config.initial_cols = 115
 
 config.window_close_confirmation = 'NeverPrompt'
 config.audible_bell = 'Disabled'
+
 -- config.window_decorations = 'RESIZE'
 
 config.colors = {
+  cursor_fg = '#555555', -- カーソルがあたっている文字を見やすく
   compose_cursor = '#111111', -- 日本語入力時に背景色とカーソルが同じになり見づらい問題の対策
 }
 config.adjust_window_size_when_changing_font_size = false -- 拡大縮小時にウィンドウサイズを維持
@@ -70,7 +72,9 @@ config.keys = {
   { key = '}', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(1) },
   { key = 'i', mods = 'CTRL|SHIFT', action = act.ActivateLastTab },
   { key = '(', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
-  { key = ')', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) },
+  { key = ')', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) }, -- not working in windows!
+  { key = '&', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) }, -- )が動いたら消す
+  { key = '*', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) },
 
   { key = 'j', mods = 'CMD|SHIFT', action = wezterm.action { ActivateTab = 0 } },
   { key = 'k', mods = 'CMD|SHIFT', action = wezterm.action { ActivateTab = 1 } },
@@ -81,6 +85,8 @@ config.keys = {
   { key = 'i', mods = 'CMD|SHIFT', action = act.ActivateLastTab },
   { key = '(', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
   { key = ')', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
+  { key = '&', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
+  { key = '*', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
 
   ------------  tmuxっぽい設定, wezterm sshで使うと役に立つかも --------------------------
   -- { key = 'q', mods = 'LEADER|CTRL', action = wezterm.action { SendString = '\x11' } },
