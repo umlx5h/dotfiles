@@ -30,6 +30,9 @@ local plugins = {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-context",
+      opts = {
+        multiline_threshold = 1, -- Maximum number of lines to show for a single context
+      },
     },
     opts = overrides.treesitter,
   },

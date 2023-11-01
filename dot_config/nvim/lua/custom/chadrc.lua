@@ -26,7 +26,7 @@ M.ui = {
     IndentBlanklineSpaceChar = { link = "Comment" }, -- set listのタブ文字を明るく
     SpecialKey = { link = "Comment" }, -- ^Mみたいなやつ
     NonText = { link = "Comment" }, -- set listのタブ文字を明るく
-    Visual = { bg = "#2d3f76" }, -- テキスト選択の背景を少し青くして明るく
+    Visual = { bg = "#30447f" }, -- テキスト選択の背景を少し青くして明るく
   },
   hl_add = {
     -- linkするハイライトはtelescope highlightsが参考になる
@@ -35,6 +35,7 @@ M.ui = {
     IlluminatedWordText = { bg = "one_bg2" },
     IlluminatedWordRead = { bg = "one_bg2" },
     IlluminatedWordWrite = { bg = "one_bg2" },
+    CurSearch = { link = "IncSearch" },
   },
   theme_toggle = { "catppuccin" },
   -- https://github.com/NvChad/base46/blob/v2.0/lua/base46/themes/catppuccin.lua

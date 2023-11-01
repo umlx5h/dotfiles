@@ -35,10 +35,10 @@ set ttimeoutlen=50
 
 " tmux経由の時にCTRL-Left, Rightが動くようにする
 if &term =~ '^screen' || &term =~ '^tmux'
-    execute "set <xUp>=\e[1;*A"
-    execute "set <xDown>=\e[1;*B"
-    execute "set <xRight>=\e[1;*C"
-    execute "set <xLeft>=\e[1;*D"
+  execute "set <xUp>=\e[1;*A"
+  execute "set <xDown>=\e[1;*B"
+  execute "set <xRight>=\e[1;*C"
+  execute "set <xLeft>=\e[1;*D"
 endif
 
 " コマンドモードの補完を使いやすく
@@ -66,6 +66,16 @@ nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
 " 完全一致検索
 " substituteは複数行に対応するため
 nnoremap <leader>s :execute '/\V' . substitute(escape(input('Search literally: '), '/\'), '\\n', 'n', 'g')<CR>
+
+" * or # で選択中のテキストで検索 (neovimと同じ)
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+function! s:VSetSearch(cmdtype)
+  let temp = @s
+  norm! gv"sy
+  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+  let @s = temp
+endfunction
 
 " バッファを編集していた場合に他のファイルを開けるようにする
 set hidden
@@ -102,6 +112,10 @@ nnoremap <silent> [Q :cfirst<CR>
 nnoremap <silent> ]Q :clast<CR>
 nnoremap <silent> [t :tabprevious<CR>
 nnoremap <silent> ]t :tabnext<CR>
+
+" &でフラグを維持するように変更 (Neovimと同じ)
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
 
 " ------------------------- plugin ------------------------------ "
 

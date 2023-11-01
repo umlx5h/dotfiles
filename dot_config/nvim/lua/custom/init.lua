@@ -17,6 +17,17 @@ vim.filetype.add {
 -- TODO: vscodeと共有したい
 vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 
+-------------------------------------- nvim stuff ------------------------------------------
+
+-- highlight yanked region, see `:h lua-highlight`
+local yank_group = vim.api.nvim_create_augroup("highlight_yank", { clear = true })
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+  group = yank_group,
+  callback = function()
+    vim.highlight.on_yank { higroup = "@label", timeout = 230 }
+  end,
+})
+
 -------------------------------------- custom functions ------------------------------------------
 
 local toggle_enabled = true
@@ -47,14 +58,15 @@ end
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
 
+-- 全選択
 vim.keymap.set("n", "<A-a>", "ggVG", { desc = "Select all" })
 
 -- system clipboard (リモートはOSC52版プラグインで上書きしている)
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
-vim.keymap.set({ "n", "v" }, "<leader>Y", [["+y$]], { desc = "Yank system clipboard" })
-vim.keymap.set("v", "<leader>d", [["+d]], { desc = "delete with clipboard" }) -- normalに割り当てるとdebugと被るのでやめる
+vim.keymap.set({ "n", "x" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
+vim.keymap.set({ "n", "x" }, "<leader>Y", [["+y$]], { desc = "Yank system clipboard" })
+vim.keymap.set("x", "<leader>d", [["+d]], { desc = "delete with clipboard" }) -- normalに割り当てるとdebugと被るのでやめる
 vim.keymap.set("n", "<leader>dd", [["+dd]], { desc = "Delete line with clipboard" })
-vim.keymap.set({ "n", "v" }, "<leader>D", [["+D]], { desc = "Delete with clipboard" })
+vim.keymap.set({ "n", "x" }, "<leader>D", [["+D]], { desc = "Delete with clipboard" })
 
 -- ALT+<- or -> でジャンプ (マウス操作経由)
 vim.keymap.set("n", "<A-Left>", "<C-o>", { desc = "Go back (C-O)" })
@@ -63,21 +75,35 @@ vim.keymap.set("n", "<esc>b", "<C-o>", { desc = "Go back (C-O)" }) -- Alt+<->を
 vim.keymap.set("n", "<esc>f", "<C-i>", { desc = "Go forward (C-I)" })
 
 -- "0pを打ちやすく
-vim.keymap.set({ "n", "v" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
-vim.keymap.set({ "n", "v" }, "<leader>P", [["0P]], { desc = "Paste from yank register" })
+vim.keymap.set({ "n", "x" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
+vim.keymap.set({ "n", "x" }, "<leader>P", [["0P]], { desc = "Paste from yank register" })
 
 -- Ctrl+j,kでまとめて上下に移動
-vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { desc = "chunk moving up" })
-vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", { desc = "chunk moving down" })
+vim.keymap.set("x", "<C-k>", ":m '<-2<CR>gv=gv", { desc = "chunk moving up" })
+vim.keymap.set("x", "<C-j>", ":m '>+1<CR>gv=gv", { desc = "chunk moving down" })
 
 -- Relative numberで行番号を見やすくする
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll window downwards with centering" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwords with centering" })
 
 -- Alternative to VSCode Ctrl+D
-vim.keymap.set("x", "gs", [["sy:let @/=@s<CR>cgn]], { desc = "Replace word under cursor" })
-vim.keymap.set("n", "gs", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]], { desc = "Replace word under cursor" })
-vim.keymap.set("x", "g/", [[y:%s/\V<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
+vim.keymap.set("x", "gs", [["sy:let @/=@s<CR>:set hls<CR>cgn]], { desc = "Replace word under cursor" })
+vim.keymap.set(
+  "n",
+  "gs",
+  [[:let @/='\<'.expand('<cword>').'\>'<CR>:set hls<CR>cgn]],
+  { desc = "Replace word under cursor" }
+)
+-- vim.keymap.set("x", "gs", [[y/<C-r>"<CR>Ncgn]], { desc = "Replace word under cursor" }) -- 検索履歴に残るver, 選択範囲にスラッシュがあった時の挙動が異なる
+-- vim.keymap.set("n", "gs", [[/\<<C-r><C-w>\><CR>Ncgn]], { desc = "Replace word under cursor" })
+vim.keymap.set("x", "gS", [[y:%s/\V<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
+
+vim.keymap.set(
+  "n",
+  "<leader>?",
+  ":execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>",
+  { desc = "Open quickfix with last search" }
+)
 
 -- Resize window using <ctrl> arrow keys (copy from lazyvim)
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
@@ -104,6 +130,8 @@ vim.keymap.set("c", "<C-p>", "<Up>")
 vim.keymap.set("c", "<C-n>", "<Down>")
 vim.keymap.set("c", "<Up>", "<C-p>")
 vim.keymap.set("c", "<Down>", "<C-n>")
+
+vim.keymap.set("x", "&", ":&&<CR>", { desc = "Repeat last substitute" })
 
 -- 完全一致検索
 vim.keymap.set(
