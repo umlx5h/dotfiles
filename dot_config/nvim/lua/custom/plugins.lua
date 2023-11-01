@@ -317,6 +317,10 @@ local plugins = {
       require "custom.configs.nap"
     end,
   },
+  {
+    "tpope/vim-fugitive",
+    event = "VeryLazy",
+  },
 }
 
 local ok, work_plugins = pcall(require, "custom.work.plugins")

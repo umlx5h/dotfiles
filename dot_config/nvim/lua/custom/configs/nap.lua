@@ -3,6 +3,14 @@ nap.setup {
   next_repeat = "<A-y>",
   prev_repeat = "<A-u>",
   operators = {
+    ["a"] = {
+      next = { rhs = "<cmd>next<cr>", opts = { desc = "Next arglist" } },
+      prev = { rhs = "<cmd>prev<cr>", opts = { desc = "Prev arglist" } },
+    },
+    ["A"] = {
+      next = { rhs = "<cmd>start<cr>", opts = { desc = "First arglist" } },
+      prev = { rhs = "<cmd>last<cr>", opts = { desc = "Last arglist" } },
+    },
     ["o"] = { -- [o (Symbol outline)
       next = { rhs = "<cmd>AerialNext<cr>", opts = { desc = "Next outline symbol" } },
       prev = { rhs = "<cmd>AerialPrev<cr>", opts = { desc = "Prev outline symbol" } },

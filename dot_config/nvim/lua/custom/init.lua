@@ -87,15 +87,18 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll window downwards with c
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwords with centering" })
 
 -- Alternative to VSCode Ctrl+D
-vim.keymap.set("x", "gs", [["sy:let @/=@s<CR>:set hls<CR>cgn]], { desc = "Replace word under cursor" })
+vim.keymap.set(
+  "x",
+  "gs",
+  [["sy:let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn]],
+  { desc = "Replace word under cursor" }
+)
 vim.keymap.set(
   "n",
   "gs",
   [[:let @/='\<'.expand('<cword>').'\>'<CR>:set hls<CR>cgn]],
   { desc = "Replace word under cursor" }
 )
--- vim.keymap.set("x", "gs", [[y/<C-r>"<CR>Ncgn]], { desc = "Replace word under cursor" }) -- 検索履歴に残るver, 選択範囲にスラッシュがあった時の挙動が異なる
--- vim.keymap.set("n", "gs", [[/\<<C-r><C-w>\><CR>Ncgn]], { desc = "Replace word under cursor" })
 vim.keymap.set("x", "gS", [[y:%s/\V<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
 
 vim.keymap.set(
@@ -104,6 +107,13 @@ vim.keymap.set(
   ":execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>",
   { desc = "Open quickfix with last search" }
 )
+
+-- レジスタからマクロを張り付けた時にfやtや.の後ろに<80><fd>a という謎シーケンスが混入するのでこれを除去する
+-- <fd>: <ý> 253, Hex 00fd, Oct 375, Digr y'
+-- <80>: <<80>> 128, Hex 0080, Oct 200, Digr PA
+-- https://github.com/neovim/neovim/issues/25865
+vim.keymap.set("x", "gM", [[:s/\v.%xfda//g<CR>]], { desc = "Format macro text" })
+-- vim.keymap.set("x", "gM", [[:s/\v([ft].).%xfda/\1/g<CR>]], { desc = "Format macro text " })
 
 -- Resize window using <ctrl> arrow keys (copy from lazyvim)
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
