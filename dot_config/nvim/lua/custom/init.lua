@@ -1,8 +1,12 @@
 -------------------------------------- options ------------------------------------------
+
 local opt = vim.opt
 opt.clipboard = "" -- disable yank to clipboard by default
 opt.pumheight = 12 -- set completion max rows
 opt.relativenumber = true
+opt.grepprg = "rg --vimgrep" -- make :grep using ripgrep
+opt.grepformat = "%f:%l:%c:%m"
+opt.scrolloff = 3
 
 -------------------------------------- filetypes ------------------------------------------
 

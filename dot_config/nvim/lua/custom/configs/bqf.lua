@@ -57,7 +57,7 @@ vim.o.qftf = "{info -> v:lua._G.qftf(info)}"
 
 -- plugin config
 local opts = {
-  auto_resize_height = true,
+  -- auto_resize_height = true,
   preview = {
     win_height = 15,
     win_vheight = 15,

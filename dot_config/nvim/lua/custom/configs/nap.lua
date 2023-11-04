@@ -8,8 +8,8 @@ nap.setup {
       prev = { rhs = "<cmd>prev<cr>", opts = { desc = "Prev arglist" } },
     },
     ["A"] = {
-      next = { rhs = "<cmd>start<cr>", opts = { desc = "First arglist" } },
-      prev = { rhs = "<cmd>last<cr>", opts = { desc = "Last arglist" } },
+      next = { rhs = "<cmd>last<cr>", opts = { desc = "Last arglist" } },
+      prev = { rhs = "<cmd>first<cr>", opts = { desc = "First arglist" } },
     },
     ["o"] = { -- [o (Symbol outline)
       next = { rhs = "<cmd>AerialNext<cr>", opts = { desc = "Next outline symbol" } },
@@ -74,7 +74,7 @@ nap.setup {
 }
 
 -- disable default mapping
-local keys = { "f", "F", "s", "e", "Q", "L", "B", "<M-q>", "<M-l>", "<C-q>", "<C-l>", "<C-t>" }
+local keys = { "f", "F", "e", "Q", "L", "B", "<M-q>", "<M-l>", "<C-q>", "<C-l>", "<C-t>" }
 for _, k in ipairs(keys) do
   nap.map(k, false)
 end

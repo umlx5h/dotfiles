@@ -74,9 +74,7 @@ M.general = {
   },
   n = {
     ["<leader>n"] = { "<cmd> enew <CR>", "New buffer" },
-
-    -- my
-    ["<leader>C"] = { "<cmd> copen <CR>", "Open Quickfix List" },
+    ["<leader>W"] = { "<cmd> noautocmd w <CR>", "Save without format" },
 
     -- nvim-treesitter/nvim-treesitter-context
     ["[c"] = {
@@ -86,6 +84,15 @@ M.general = {
       "Jump to treesitter context",
       opts = { silent = true },
     },
+  },
+  t = {
+    -- ["<esc><esc>"] = { "<c-\\><c-n>", opts = { desc = "Enter Normal Mode" } },
+    ["<C-h>"] = { "<cmd>wincmd h<cr>", opts = { desc = "Go to left window" } },
+    ["<C-j>"] = { "<cmd>wincmd j<cr>", opts = { desc = "Go to lower window" } },
+    ["<C-k>"] = { "<cmd>wincmd k<cr>", opts = { desc = "Go to upper window" } },
+    ["<C-l>"] = { "<cmd>wincmd l<cr>", opts = { desc = "Go to right window" } },
+    ["<C-w>w"] = { "<c-\\><c-n><c-w>w", opts = { desc = "Enter Normal Mode" } },
+    ["<C-w><C-w>"] = { "<c-\\><c-n><c-w>w", opts = { desc = "Enter Normal Mode" } },
   },
 }
 
@@ -156,7 +163,7 @@ M.telescope = {
     ["<leader>fS"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", "Find workspace Symbol" },
     ["<leader>fH"] = { "<cmd> Telescope terms <CR>", "Find Hidden term" },
     ["<leader>ft"] = { "<cmd> TodoTelescope <CR>", "Find TODO" },
-    ["<leader>Q"] = { "<cmd> TodoLocList <CR>", "TODO List" },
+    ["<leader>T"] = { "<cmd> TodoQuickFix <CR>", "TODO List" },
     ["<leader>fy"] = { "<cmd> Telescope yaml_schema <CR>", "Find json schema" }, -- someone-stole-my-name/yaml-companion.nvim
     ["<leader>fq"] = { "<cmd> Telescope diagnostics <CR>", "Find diagnostics" },
     ["<leader>fr"] = { "<cmd> Telescope resume <CR>", "Resume telescope" },
@@ -195,6 +202,12 @@ M.lspconfig = {
         vim.lsp.buf.type_definition()
       end,
       "LSP definition type",
+    },
+    ["<leader>Q"] = {
+      function()
+        vim.diagnostic.setqflist()
+      end,
+      "Diagnostic setquickfix",
     },
   },
 }
@@ -333,6 +346,9 @@ M.ui = {
     -- line numbers
     ["<leader>un"] = { "<cmd> set relativenumber! <CR>", "Toggle relative line number" },
     ["<leader>ul"] = { "<cmd> Lazy <CR>", "Open Lazy" },
+
+    -- quickfix window
+    ["<leader>uq"] = { "<cmd> copen <CR>", "Open Quickfix List" },
 
     ["<leader>ui"] = { "<cmd> IlluminateToggle <CR>", "Toggle vim-illuminate" },
 

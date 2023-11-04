@@ -67,7 +67,10 @@ local plugins = {
         "i",
         "s",
       })
-
+      -- conf.mapping["<C-y>"] = cmp.mapping.confirm { -- vim way
+      --   behavior = cmp.ConfirmBehavior.Insert,
+      --   select = true,
+      -- }
       conf.mapping["<Up>"] = cmp.mapping.select_prev_item() -- C-p, C-nに加えてカーソルでも移動
       conf.mapping["<Down>"] = cmp.mapping.select_next_item()
       conf.mapping["<PageUp>"] = cmp.mapping.select_prev_item { count = 11 }
@@ -76,7 +79,7 @@ local plugins = {
       conf.mapping["<C-d>"] = cmp.mapping.scroll_docs(4)
       conf.mapping["<C-f>"] = nil -- emacsのRight cursorと被るので無効
       conf.mapping["<C-e>"] = nil -- emacsのEnd of cursorと被るのでC-gにremap
-      conf.mapping["<C-g>"] = cmp.mapping.close()
+      conf.mapping["<C-g>"] = cmp.mapping.close() -- 使えるキーがないのでemacs風に
 
       -- 関数入力時の補完を設定 lspデフォルトはカーソルと被る問題があるため変更する
       conf.sources[#conf.sources + 1] = { name = "nvim_lsp_signature_help" }
@@ -319,6 +322,11 @@ local plugins = {
   },
   {
     "tpope/vim-fugitive",
+    event = "VeryLazy",
+  },
+  {
+    "kylechui/nvim-surround",
+    version = "*",
     event = "VeryLazy",
   },
 }
