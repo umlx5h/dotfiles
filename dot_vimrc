@@ -6,6 +6,14 @@ source $VIMRUNTIME/defaults.vim
 " %表示だけ有効化
 set rulerformat=%=%P
 
+" vimdiffを見やすく
+if &diff
+  colorscheme industry
+endif
+
+" 5 -> 3に少し小さく
+set scrolloff=3
+
 " マウスを有効化
 set ttymouse=xterm2
 set mouse=a
@@ -44,6 +52,13 @@ endif
 " コマンドモードの補完を使いやすく
 set wildmenu
 set wildmode=full
+
+" 補完ポップアップの最大アイテム数
+set pumheight=12
+" valid from vim 9, disable for portability
+" set wildoptions=pum
+" 黒っぽい色に変更
+hi Pmenu ctermbg=238 ctermfg=250 guibg=#444444 guifg=#bcbcbc
 
 " コマンド履歴を増やす
 set history=10000
@@ -110,8 +125,10 @@ nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
 nnoremap <silent> [Q :cfirst<CR>
 nnoremap <silent> ]Q :clast<CR>
-nnoremap <silent> [t :tabprevious<CR>
-nnoremap <silent> ]t :tabnext<CR>
+nnoremap <silent> [t :tprevious<CR>
+nnoremap <silent> ]t :tnext<CR>
+nnoremap <silent> [T :tfirst<CR>
+nnoremap <silent> ]T :tlast<CR>
 
 " &でフラグを維持するように変更 (Neovimと同じ)
 nnoremap & :&&<CR>

@@ -323,6 +323,9 @@ local plugins = {
   {
     "tpope/vim-fugitive",
     event = "VeryLazy",
+    dependencies = {
+      "tpope/vim-rhubarb",
+    },
   },
   {
     "kylechui/nvim-surround",

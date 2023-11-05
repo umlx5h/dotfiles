@@ -25,6 +25,8 @@ M.disabled = {
     ["<leader>fz"] = "",
     ["<leader>ma"] = "",
     ["<leader>pt"] = "",
+    ["<leader>cm"] = "",
+    ["<leader>gt"] = "",
 
     --------------------- nvterm -----------------------
     ["<A-h>"] = "",
@@ -336,12 +338,13 @@ M.ui = {
     -- spectre
     ["<leader>us"] = {
       function()
-        require("spectre").open()
+        require("spectre").toggle()
       end,
       "Toggle spectre (replace tool)",
     },
+    ["<leader>ug"] = { "<cmd> vertical G <CR>", "Open Git fugitive" },
     -- aerial
-    ["<leader>uo"] = { "<cmd> AerialToggle <CR>", "Open Aerial (Symbol Outline)" },
+    ["<leader>uo"] = { "<cmd> AerialToggle <CR>", "Toggle Aerial (Symbol Outline)" },
 
     -- line numbers
     ["<leader>un"] = { "<cmd> set relativenumber! <CR>", "Toggle relative line number" },
@@ -476,6 +479,13 @@ M.projects = {
 M.openingh = {
   n = {
     ["<leader>go"] = { "<cmd> OpenInGHFileLines <CR>", "Open file in GitHub" },
+  },
+}
+
+M.fugitive = {
+  n = {
+    ["<leader>gO"] = { "<cmd> GBrowse <CR>", "Open in GitHub" },
+    ["<leader>gd"] = { "<cmd> Gvdiffsplit <CR>", "Git diff split" },
   },
 }
 
