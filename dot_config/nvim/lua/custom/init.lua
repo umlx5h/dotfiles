@@ -7,6 +7,7 @@ opt.relativenumber = true
 opt.grepprg = "rg --vimgrep" -- make :grep using ripgrep
 opt.grepformat = "%f:%l:%c:%m"
 opt.scrolloff = 3
+opt.whichwrap = "b,s,<,>,[,]" -- h, lはデフォルト挙動に
 
 -------------------------------------- filetypes ------------------------------------------
 

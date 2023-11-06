@@ -21,8 +21,10 @@ set mouse=a
 " leader is <Space>
 map <space> <leader>
 
-" Macで色をつける
-syntax on
+" ターミナルの背景に合わせる必要がある
+set background=dark
+" 色を確実に有効化
+syntax enable
 
 " 相対行番号に変更
 set relativenumber
@@ -97,6 +99,11 @@ set hidden
 
 " コマンドラインモードでCTRL-% (CTRL-])で %:h に展開してくれる、現在開いているファイルを基準にパスを作成可能
 cnoremap <expr> <C-]> getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
+" ----------------------- autocmd  ------------------------ "
+
+" helpのスクロール調整
+autocmd FileType help setlocal scrolloff=7
 
 " ----------------------- keymap  ------------------------ "
 
