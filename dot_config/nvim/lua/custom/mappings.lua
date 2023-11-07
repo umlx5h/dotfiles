@@ -157,6 +157,7 @@ M.telescope = {
       end,
       "Find buffers",
     },
+    ["<leader>*"] = { "<cmd> Telescope grep_string <CR>", "Find word under cursor" },
     ["<leader>f/"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" }, -- from <leader>fz
     ["<leader>fg"] = { "<cmd> Telescope git_files <CR>", "Find git files" },
     ["<leader>fc"] = { "<cmd> Telescope commands <CR>", "Find commands" }, -- copy from astronvim
@@ -169,6 +170,9 @@ M.telescope = {
     ["<leader>fy"] = { "<cmd> Telescope yaml_schema <CR>", "Find json schema" }, -- someone-stole-my-name/yaml-companion.nvim
     ["<leader>fq"] = { "<cmd> Telescope diagnostics <CR>", "Find diagnostics" },
     ["<leader>fr"] = { "<cmd> Telescope resume <CR>", "Resume telescope" },
+  },
+  x = {
+    ["<leader>*"] = { "<cmd> Telescope grep_string <CR>", "Find word under cursor" },
   },
 }
 
