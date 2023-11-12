@@ -64,6 +64,12 @@ M.disabled = {
     ["<C-j>"] = "",
     ["<C-k>"] = "",
   },
+  v = {
+    ["<Up>"] = "",
+    ["<Down>"] = "",
+    ["<leader>ca"] = "", -- remap to <leader>a
+  },
+
   x = {
     ["p"] = "", -- デフォルト挙動に戻す (pasteで入れ替えれるようにする)
   },
@@ -77,9 +83,10 @@ M.general = {
   n = {
     ["<leader>n"] = { "<cmd> enew <CR>", "New buffer" },
     ["<leader>W"] = { "<cmd> noautocmd w <CR>", "Save without format" },
+    ["<leader>K"] = { "<cmd> Man <CR>", "Search in Manpage" },
 
     -- nvim-treesitter/nvim-treesitter-context
-    ["[c"] = {
+    ["[x"] = {
       function()
         require("treesitter-context").go_to_context()
       end,
@@ -95,6 +102,9 @@ M.general = {
     ["<C-l>"] = { "<cmd>wincmd l<cr>", opts = { desc = "Go to right window" } },
     ["<C-w>w"] = { "<c-\\><c-n><c-w>w", opts = { desc = "Enter Normal Mode" } },
     ["<C-w><C-w>"] = { "<c-\\><c-n><c-w>w", opts = { desc = "Enter Normal Mode" } },
+  },
+  x = {
+    ["<leader>K"] = { 'y:Man <c-r>" <CR>', "Search in Manpage" },
   },
 }
 
@@ -214,6 +224,14 @@ M.lspconfig = {
         vim.diagnostic.setqflist()
       end,
       "Diagnostic setquickfix",
+    },
+  },
+  v = {
+    ["<leader>a"] = {
+      function()
+        vim.lsp.buf.code_action()
+      end,
+      "LSP code action",
     },
   },
 }
@@ -367,7 +385,7 @@ M.ui = {
 
     -- Toggle diagnostic (linter)
     ["<leader>ud"] = {
-      ":lua toggle_diagnostics() <CR>",
+      ":lua Toggle_diagnostics() <CR>",
       "Toggle diagnostic (linter)",
     },
   },

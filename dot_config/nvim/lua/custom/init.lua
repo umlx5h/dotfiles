@@ -8,6 +8,23 @@ opt.grepprg = "rg --vimgrep" -- make :grep using ripgrep
 opt.grepformat = "%f:%l:%c:%m"
 opt.scrolloff = 3
 opt.whichwrap = "b,s,<,>,[,]" -- h, lはデフォルト挙動に
+opt.spelllang:append "cjk" -- 日本語をスペルチェックから除外
+
+-- Indenting
+-- タブにしたい場合           :set ts=4 noet
+-- スペース幅を調整したい場合 :set ts=N (sw=N (filetype pluginで0以外に設定されていたらswも指定)
+-- opt.autoindent = true -- default
+opt.smartindent = true
+-- opt.smarttab = true -- default
+opt.tabstop = 2
+opt.softtabstop = 0 -- off
+opt.shiftwidth = 0 -- same as tabstop
+opt.expandtab = true
+
+vim.g.man_hardwrap = 0 -- manpageでコピペしやすく
+
+vim.g.netrw_preview = 1 -- 縦分割
+vim.g.netrw_alto = 0
 
 -------------------------------------- filetypes ------------------------------------------
 
@@ -33,11 +50,11 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   end,
 })
 
--------------------------------------- custom functions ------------------------------------------
+---------------------------------------- custom functions ----------------------------------------
 
 local toggle_enabled = true
 -- diagnostics をトグルするカスタム関数
-function toggle_diagnostics()
+function Toggle_diagnostics()
   toggle_enabled = not toggle_enabled
   if toggle_enabled then
     vim.api.nvim_echo({ { "Enabled diagnostics" } }, false, {})
@@ -53,7 +70,7 @@ function toggle_diagnostics()
 end
 
 -- MacかWSL2の場合はローカルと判定、それ以外はリモート扱い
-function is_local()
+function Is_local()
   local uname = vim.loop.os_uname()
   local isLocal = uname.sysname == "Darwin" or uname.sysname == "Linux" and uname.release:find "microsoft"
   return isLocal
@@ -68,6 +85,7 @@ vim.keymap.set("n", "<A-a>", "ggVG", { desc = "Select all" })
 
 -- system clipboard (リモートはOSC52版プラグインで上書きしている)
 vim.keymap.set({ "n", "x" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
+vim.keymap.set("x", "<leader>c", [["+y]], { desc = "yank system clipboard" }) -- 片手でコピペしやすく
 vim.keymap.set({ "n", "x" }, "<leader>Y", [["+y$]], { desc = "Yank system clipboard" })
 vim.keymap.set("x", "<leader>d", [["+d]], { desc = "delete with clipboard" }) -- normalに割り当てるとdebugと被るのでやめる
 vim.keymap.set("n", "<leader>dd", [["+dd]], { desc = "Delete line with clipboard" })

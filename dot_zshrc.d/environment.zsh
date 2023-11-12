@@ -50,8 +50,13 @@ zstyle ':completion:*:sudo:*' command-path $path
 
 export EDITOR=vim
 export VISUAL=vim
+
 # manを色付きにする
 # #export GROFF_NO_SGR=1
+
+# neovimでman
+export MANPAGER='nvim +Man!'
+export MANWIDTH=999
 
 TIMEFMT=$'%J\n%U user\n%S system\n%P cpu\n%*E total'
 

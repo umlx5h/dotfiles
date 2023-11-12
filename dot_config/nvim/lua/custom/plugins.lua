@@ -16,10 +16,13 @@ local plugins = {
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
+
       -- MEMO: vim .で開いた時に空バッファが作成されタブがおかしくなるので、それを解消する
       -- タブ移動すると無駄な空バッファが消えて、netrwとnvimtreeがいい感じに両立できるようになる
-      -- 設定場所は適当にここに設定した
-      vim.cmd [[b 1]]
+      -- 設定場所はなぜかここではないとうまくいかなかった (autocmdやVeryLazyでロードしているプラグインではダメだった)
+      if vim.bo.filetype == "netrw" then
+        vim.cmd [[ b # ]]
+      end
     end,
   },
   {
@@ -302,7 +305,7 @@ local plugins = {
   {
     "ojroques/nvim-osc52", -- ローカル以外はOSC52を使ってクリップボードを扱う
     enabled = function()
-      return not is_local()
+      return not Is_local()
     end,
     event = "VeryLazy",
     config = function()
@@ -322,7 +325,7 @@ local plugins = {
   },
   {
     "tpope/vim-fugitive",
-    event = "VeryLazy",
+    lazy = false, -- コマンドから起動するため常にロード (G)
     dependencies = {
       "tpope/vim-rhubarb",
     },
@@ -331,6 +334,7 @@ local plugins = {
     "kylechui/nvim-surround",
     version = "*",
     event = "VeryLazy",
+    opts = {}, -- necessary
   },
 }
 

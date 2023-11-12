@@ -36,6 +36,7 @@ M.ui = {
     IlluminatedWordRead = { bg = "one_bg2" },
     IlluminatedWordWrite = { bg = "one_bg2" },
     CurSearch = { link = "IncSearch" },
+    manItalic = { italic = true, fg = "green" },
   },
   theme_toggle = { "catppuccin" },
   -- https://github.com/NvChad/base46/blob/v2.0/lua/base46/themes/catppuccin.lua
@@ -65,13 +66,19 @@ M.ui = {
         local filename = (fn.expand "%" == "" and "Empty ") or fn.expand "%:t"
 
         if filename ~= "Empty " then
-          -- filenameにカレントディレクトリからのパスを付加する (差分)
-          filename = fn.fnamemodify(fn.expand "%:h", ":p:~:.") .. filename
           local devicons_present, devicons = pcall(require, "nvim-web-devicons")
 
           if devicons_present then
             local ft_icon = devicons.get_icon(filename)
             icon = (ft_icon ~= nil and " " .. ft_icon) or ""
+          end
+
+          -- filenameにカレントディレクトリからのパスを付加する (差分)
+          filename = fn.fnamemodify(fn.expand "%:h", ":p:~:.") .. filename
+
+          -- ファイルが変更されたら [+] をつける (差分)
+          if vim.api.nvim_get_option_value("modified", { scope = "local" }) then
+            filename = filename .. " [+]"
           end
 
           filename = " " .. filename .. " "

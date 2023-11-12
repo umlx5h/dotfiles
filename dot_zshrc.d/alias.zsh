@@ -14,4 +14,4 @@ alias kc="kubectx"
 alias kn="kubens"
 alias vim="nvim"
 alias wssh="wezterm ssh"
-
+alias G="nvim -c 'vert Git' ."

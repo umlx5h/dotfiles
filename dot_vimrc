@@ -100,6 +100,26 @@ set hidden
 " コマンドラインモードでCTRL-% (CTRL-])で %:h に展開してくれる、現在開いているファイルを基準にパスを作成可能
 cnoremap <expr> <C-]> getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
+" debianだとセキュリティ的な理由でデフォルト無効になっているが有効化
+set modeline
+
+" ウィンドウ分割の位置を調整
+set splitbelow
+set splitright
+
+" インデント周り
+set autoindent
+set smartindent
+set smarttab
+set tabstop=2
+set softtabstop=0
+set shiftwidth=0 " tabstopと合わせる
+set expandtab
+
+" ----------------------- filetype  ------------------------ "
+
+runtime ftplugin/man.vim
+
 " ----------------------- autocmd  ------------------------ "
 
 " helpのスクロール調整

@@ -117,7 +117,24 @@ M.mason = {
 }
 
 M.telescope = {
+  defaults = {
+    file_ignore_patterns = {
+      "node_modules",
+      ".git/",
+      ".github/",
+      "package-lock.json",
+      "yarn.lock",
+    },
+  },
   pickers = {
+    find_files = {
+      hidden = true,
+    },
+    live_grep = {
+      additional_args = function()
+        return { "--hidden" }
+      end,
+    },
     buffers = {
       mappings = {
         i = {
