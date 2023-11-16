@@ -167,7 +167,8 @@ M.telescope = {
       end,
       "Find buffers",
     },
-    ["<leader>*"] = { "<cmd> Telescope grep_string <CR>", "Find word under cursor" },
+    ["<leader>#"] = { "<cmd> Telescope grep_string <CR>", "Find all word under cursor" },
+    ["<leader>*"] = { "<cmd> Telescope grep_string word_match=-w <CR>", "Find word under cursor" },
     ["<leader>f/"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" }, -- from <leader>fz
     ["<leader>fg"] = { "<cmd> Telescope git_files <CR>", "Find git files" },
     ["<leader>fc"] = { "<cmd> Telescope commands <CR>", "Find commands" }, -- copy from astronvim
@@ -182,7 +183,8 @@ M.telescope = {
     ["<leader>fr"] = { "<cmd> Telescope resume <CR>", "Resume telescope" },
   },
   x = {
-    ["<leader>*"] = { "<cmd> Telescope grep_string <CR>", "Find word under cursor" },
+    ["<leader>#"] = { "<cmd> Telescope grep_string <CR>", "Find all word under cursor" },
+    ["<leader>*"] = { "<cmd> Telescope grep_string word_match=-w <CR>", "Find word under cursor" },
   },
 }
 
@@ -507,7 +509,7 @@ M.openingh = {
 M.fugitive = {
   n = {
     ["<leader>gO"] = { "<cmd> GBrowse <CR>", "Open in GitHub" },
-    ["<leader>gd"] = { "<cmd> Gvdiffsplit <CR>", "Git diff split" },
+    ["<leader>gd"] = { "<cmd> vertical Gdiffsplit! <CR>", "Git diff split (three way)" },
   },
 }
 

@@ -98,7 +98,7 @@ endfunction
 set hidden
 
 " コマンドラインモードでCTRL-% (CTRL-])で %:h に展開してくれる、現在開いているファイルを基準にパスを作成可能
-cnoremap <expr> <C-]> getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+cnoremap <expr> <C-]> getcmdtype() == ':' ? expand('%:~:.:h').'/' : '%%'
 
 " debianだとセキュリティ的な理由でデフォルト無効になっているが有効化
 set modeline

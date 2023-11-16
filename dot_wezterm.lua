@@ -14,7 +14,7 @@ end
 -- config.exit_behavior = 'Hold'
 config.hide_tab_bar_if_only_one_tab = true
 config.color_scheme = 'Snazzy'
-config.font_size = 11
+config.font_size = 11.7
 -- config.font = wezterm.font 'JetBrainsMonoNL Nerd Font'
 config.font = wezterm.font 'Hack Nerd Font'
 
@@ -29,7 +29,7 @@ config.audible_bell = 'Disabled'
 
 config.colors = {
   cursor_fg = '#555555', -- カーソルがあたっている文字を見やすく
-  compose_cursor = '#111111', -- 日本語入力時に背景色とカーソルが同じになり見づらい問題の対策
+  -- compose_cursor = '#111111', -- 日本語入力時に背景色とカーソルが同じになり見づらい問題の対策
 }
 config.adjust_window_size_when_changing_font_size = false -- 拡大縮小時にウィンドウサイズを維持
 
@@ -73,8 +73,8 @@ config.keys = {
   { key = 'i', mods = 'CTRL|SHIFT', action = act.ActivateLastTab },
   { key = '(', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
   { key = ')', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) }, -- not working in windows!
-  { key = '&', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) }, -- )が動いたら消す
-  { key = '*', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) },
+  { key = 'u', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) }, -- )が動いたら消す
+  { key = 'y', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(1) },
 
   { key = 'j', mods = 'CMD|SHIFT', action = wezterm.action { ActivateTab = 0 } },
   { key = 'k', mods = 'CMD|SHIFT', action = wezterm.action { ActivateTab = 1 } },
@@ -85,8 +85,8 @@ config.keys = {
   { key = 'i', mods = 'CMD|SHIFT', action = act.ActivateLastTab },
   { key = '(', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
   { key = ')', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
-  { key = '&', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
-  { key = '*', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
+  { key = 'u', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(-1) },
+  { key = 'y', mods = 'CMD|SHIFT', action = act.ActivateTabRelative(1) },
 
   ------------  tmuxっぽい設定, wezterm sshで使うと役に立つかも --------------------------
   -- { key = 'q', mods = 'LEADER|CTRL', action = wezterm.action { SendString = '\x11' } },

@@ -74,7 +74,8 @@ M.ui = {
           end
 
           -- filenameにカレントディレクトリからのパスを付加する (差分)
-          filename = fn.fnamemodify(fn.expand "%:h", ":p:~:.") .. filename
+          -- filename = fn.fnamemodify(fn.expand "%:h", ":p:~:.") .. filename
+          filename = fn.expand "%:~:."
 
           -- ファイルが変更されたら [+] をつける (差分)
           if vim.api.nvim_get_option_value("modified", { scope = "local" }) then

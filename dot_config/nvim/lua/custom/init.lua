@@ -21,8 +21,30 @@ opt.softtabstop = 0 -- off
 opt.shiftwidth = 0 -- same as tabstop
 opt.expandtab = true
 
+-- treesitter fold
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- treesitterで自動的に折り畳みを作成
+opt.foldtext = "v:lua.vim.treesitter.foldtext()" -- 折り畳みを見やすくする
+opt.foldlevelstart = 99 -- デフォルトで全て開く
+-- TODO: 最初に全て開く時にzR か foldopenを使わないとzmが動かない問題がある
+-- vim.cmd [[autocmd BufWinEnter * silent! :%foldopen!]]
+-- vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, { command = "normal zR" })
+
+-- diffモードではtreesitterのfoldtextを使わない
+vim.api.nvim_create_autocmd({ "OptionSet" }, {
+  pattern = "diff",
+  callback = function()
+    if vim.v.option_new then
+      vim.opt_local.foldtext = vim.api.nvim_get_option_info2("foldtext", {}).default
+    else
+      vim.opt_local.foldtext = "v:lua.vim.treesitter.foldtext()"
+    end
+  end,
+})
+
 vim.g.man_hardwrap = 0 -- manpageでコピペしやすく
 
+-- netrw
 vim.g.netrw_preview = 1 -- 縦分割
 vim.g.netrw_alto = 0
 
@@ -176,10 +198,11 @@ vim.keymap.set(
 )
 
 -- コマンドラインモードでCTRL-% (CTRL-])で %:h に展開してくれる、現在開いているファイルを基準にパスを作成可能
+-- :h filename-modifiers
 vim.keymap.set(
   "c",
   "<C-]>",
-  "getcmdtype() == ':' ? expand('%:h').'/' : '%%'",
+  "getcmdtype() == ':' ? expand('%:~:.:h').'/' : '%%'",
   { silent = false, expr = true, desc = "Expand current file dir" }
 )
 

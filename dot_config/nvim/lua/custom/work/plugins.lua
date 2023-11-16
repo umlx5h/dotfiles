@@ -2,7 +2,7 @@ local plugins = {
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "InsertEnter",
+    -- event = "InsertEnter",
     opts = {
       suggestion = {
         enabled = true,
