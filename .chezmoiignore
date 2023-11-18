@@ -8,6 +8,10 @@ ansible
 
 win/
 
+# nvim stuff
+.config/nvim/.dep/
+.config/nvim/.dep/**
+
 {{- if not .isWSL }}
 .zshrc.d/wsl.zsh
 win-wezterm.sh
