@@ -2,6 +2,8 @@ local nap = require "nap"
 nap.setup {
   next_repeat = "<A-y>",
   prev_repeat = "<A-u>",
+  -- disable default mapping
+  exclude_default_operators = { "f", "F", "e", "Q", "L", "B", "<M-q>", "<M-l>", "<C-q>", "<C-l>", "<C-t>" },
   operators = {
     ["a"] = {
       next = { rhs = "<cmd>next<cr>", opts = { desc = "Next arglist" } },
@@ -72,9 +74,3 @@ nap.setup {
     },
   },
 }
-
--- disable default mapping
-local keys = { "f", "F", "e", "Q", "L", "B", "<M-q>", "<M-l>", "<C-q>", "<C-l>", "<C-t>" }
-for _, k in ipairs(keys) do
-  nap.map(k, false)
-end

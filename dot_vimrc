@@ -171,8 +171,10 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'vim-jp/vimdoc-ja'
+Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " ----------------------- plugin config  ------------------------ "
@@ -182,3 +184,8 @@ nmap <leader>y <Plug>OSCYankOperator
 nmap <leader>yy <leader>y_
 vmap <leader>y <Plug>OSCYankVisual
 
+" mbbill/undotree
+nnoremap <leader>ut :UndotreeToggle<CR>
+
+" tpope/vim-fugitive
+nnoremap <leader>ug :vertical G<CR>
