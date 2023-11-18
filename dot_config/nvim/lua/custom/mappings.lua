@@ -394,7 +394,7 @@ M.ui = {
 }
 
 M.dap = {
-  plugin = true,
+  -- plugin = true,
   n = {
     ["<leader>db"] = {
       "<cmd> DapToggleBreakpoint <CR>",

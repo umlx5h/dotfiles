@@ -98,6 +98,23 @@ function Is_local()
   return isLocal
 end
 
+-------------------------------------- local options ------------------------------------------
+
+if not Is_local() then
+  -- ローカル以外はOSC52でクリップボードを扱う
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy "+",
+      ["*"] = require("vim.ui.clipboard.osc52").copy "*",
+    },
+    paste = {
+      ["+"] = require("vim.ui.clipboard.osc52").paste "+",
+      ["*"] = require("vim.ui.clipboard.osc52").paste "*",
+    },
+  }
+end
+
 -------------------------------------- remaps ------------------------------------------
 
 vim.keymap.set("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })

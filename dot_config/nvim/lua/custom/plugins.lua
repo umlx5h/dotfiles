@@ -115,55 +115,54 @@ local plugins = {
   -------------------------- my plugins -----------------------------------
   {
     "nvimtools/none-ls.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     opts = function()
       return require "custom.configs.null-ls"
     end,
   },
   {
     "mfussenegger/nvim-dap",
+    cmd = { "DapToggleBreakpoint", "DapContinue" },
+    dependencies = {
+      {
+        "rcarriga/nvim-dap-ui",
+        config = function()
+          local dap = require "dap"
+          local dapui = require "dapui"
+          dapui.setup()
+          dap.listeners.after.event_initialized["dapui_config"] = function()
+            dapui.open()
+          end
+          dap.listeners.before.event_terminated["dapui_config"] = function()
+            dapui.close()
+          end
+          dap.listeners.before.event_exited["dapui_config"] = function()
+            dapui.close()
+          end
+        end,
+      },
+      {
+        "jay-babu/mason-nvim-dap.nvim", -- for DAP (C++, Bash)
+        -- ft = { "c", "cpp", "sh" },
+        dependencies = {
+          "williamboman/mason.nvim",
+        },
+        opts = {
+          handlers = {},
+        },
+      },
+      {
+        "leoluz/nvim-dap-go",
+        -- ft = "go",
+        config = function(_, opts)
+          require("dap-go").setup(opts)
+          require("core.utils").load_mappings "dap_go"
+        end,
+      },
+    },
     config = function(_, _)
       require "custom.configs.dap" -- load setting
       require("core.utils").load_mappings "dap" -- load keymap
-    end,
-  },
-  {
-    "rcarriga/nvim-dap-ui",
-    event = "VeryLazy",
-    dependencies = "mfussenegger/nvim-dap",
-    config = function()
-      local dap = require "dap"
-      local dapui = require "dapui"
-      dapui.setup()
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close()
-      end
-    end,
-  },
-  {
-    "jay-babu/mason-nvim-dap.nvim", -- for DAP (C++, Bash)
-    ft = { "c", "cpp", "sh" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "mfussenegger/nvim-dap",
-    },
-    opts = {
-      handlers = {},
-    },
-  },
-  {
-    "leoluz/nvim-dap-go",
-    ft = "go",
-    dependencies = "mfussenegger/nvim-dap",
-    config = function(_, opts)
-      require("dap-go").setup(opts)
-      require("core.utils").load_mappings "dap_go"
     end,
   },
 
@@ -267,9 +266,8 @@ local plugins = {
   },
   {
     "kevinhwang91/nvim-bqf",
-    event = "VeryLazy",
-    dependencies = "junegunn/fzf",
     ft = "qf",
+    dependencies = "junegunn/fzf",
     opts = function()
       return require "custom.configs.bqf"
     end,
@@ -290,7 +288,8 @@ local plugins = {
   },
   {
     "RRethy/vim-illuminate", -- カーソル下の単語をハイライト, ALT+P, Nで移動可
-    event = "VeryLazy",
+    ft = "man", -- manコマンド経由で実行された時にtreesitterを有効にすることで色付けを正しくする
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       delay = 200,
       large_file_cutoff = 2000,
@@ -302,20 +301,20 @@ local plugins = {
       require("illuminate").configure(opts)
     end,
   },
-  {
-    "ojroques/nvim-osc52", -- ローカル以外はOSC52を使ってクリップボードを扱う
-    enabled = function()
-      return not Is_local()
-    end,
-    event = "VeryLazy",
-    config = function()
-      -- 既存のキーバインドの一部を上書き
-      -- TODO: <leader>dなどを用意できていない
-      vim.keymap.set("n", "<leader>y", require("osc52").copy_operator, { desc = "yank by OSC52", expr = true })
-      vim.keymap.set("n", "<leader>yy", "<leader>y_", { desc = "Yank by OSC52", remap = true })
-      vim.keymap.set("v", "<leader>y", require("osc52").copy_visual, { desc = "yank by OSC52" })
-    end,
-  },
+  -- {
+  --   "ojroques/nvim-osc52", -- ローカル以外はOSC52を使ってクリップボードを扱う
+  --   enabled = function()
+  --     return not Is_local()
+  --   end,
+  --   event = "VeryLazy",
+  --   config = function()
+  --     -- 既存のキーバインドの一部を上書き
+  --     -- TODO: <leader>dなどを用意できていない
+  --     vim.keymap.set("n", "<leader>y", require("osc52").copy_operator, { desc = "yank by OSC52", expr = true })
+  --     vim.keymap.set("n", "<leader>yy", "<leader>y_", { desc = "Yank by OSC52", remap = true })
+  --     vim.keymap.set("v", "<leader>y", require("osc52").copy_visual, { desc = "yank by OSC52" })
+  --   end,
+  -- },
   {
     "liangxianzhe/nap.nvim", -- [q などの後にA-yで繰り返せるようになる
     event = "VeryLazy",
@@ -332,8 +331,8 @@ local plugins = {
   },
   {
     "kylechui/nvim-surround",
+    event = { "BufReadPre", "BufNewFile" },
     version = "*",
-    event = "VeryLazy",
     opts = {}, -- necessary
   },
 }
