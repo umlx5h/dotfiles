@@ -191,7 +191,8 @@ Return
 		Else {
 			Send {ShiftDown}{Home}{ShiftUp}
 			Sleep 10
-			Send ^x
+			;Send ^x
+			Send {Del}
 		}
 		Return
 	}
@@ -284,6 +285,14 @@ Return
 		Send {BS}
 		Return
 	}
+	backspace_word_my()
+	{
+		If is_terminal()
+			Send {Blind}^w
+		Else
+			Send ^{BS}
+		Return
+	}
 	modified_delete()
 	{
 		If keep_shift()
@@ -328,10 +337,11 @@ Return
 	F14 & r::Send {Blind}^r
 	F14 & s::Send {Blind}^s
 	F14 & t::Send {Blind}^t
-	;F14 & u::kill_home()
-	F14 & u::Send {Blind}^u
+	F14 & u::kill_home()
+	;F14 & u::Send {Blind}^u
 	F14 & v::Send {Blind}^v
-	F14 & w::Send {Blind}^w
+	;F14 & w::Send {Blind}^w
+	F14 & w::backspace_word_my()
 	F14 & x::Send {Blind}^x
 	F14 & y::Send {Blind}^y
 	F14 & z::Send {Blind}^z
