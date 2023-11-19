@@ -189,3 +189,7 @@ nnoremap <leader>ut :UndotreeToggle<CR>
 
 " tpope/vim-fugitive
 nnoremap <leader>ug :vertical G<CR>
+autocmd FileType fugitive map <buffer> <tab> =
+autocmd FileType fugitive map <buffer> , -
+autocmd FileType fugitive nmap <buffer> q gq
+

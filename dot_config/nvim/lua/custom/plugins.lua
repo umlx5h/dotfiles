@@ -260,13 +260,10 @@ local plugins = {
       }
     end,
   },
-  -- {
-  --   "almo7aya/openingh.nvim",
-  --   cmd = { "OpenInGHRepo", "OpenInGHFile", "OpenInGHFileLines" },
-  -- },
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
+    event = "QuickFixCmdPost",
     dependencies = "junegunn/fzf",
     opts = function()
       return require "custom.configs.bqf"
@@ -301,20 +298,6 @@ local plugins = {
       require("illuminate").configure(opts)
     end,
   },
-  -- {
-  --   "ojroques/nvim-osc52", -- ローカル以外はOSC52を使ってクリップボードを扱う
-  --   enabled = function()
-  --     return not Is_local()
-  --   end,
-  --   event = "VeryLazy",
-  --   config = function()
-  --     -- 既存のキーバインドの一部を上書き
-  --     -- TODO: <leader>dなどを用意できていない
-  --     vim.keymap.set("n", "<leader>y", require("osc52").copy_operator, { desc = "yank by OSC52", expr = true })
-  --     vim.keymap.set("n", "<leader>yy", "<leader>y_", { desc = "Yank by OSC52", remap = true })
-  --     vim.keymap.set("v", "<leader>y", require("osc52").copy_visual, { desc = "yank by OSC52" })
-  --   end,
-  -- },
   {
     "liangxianzhe/nap.nvim", -- [q などの後にA-yで繰り返せるようになる
     event = "VeryLazy",
@@ -327,6 +310,8 @@ local plugins = {
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "G", "Git" },
     config = function(_, _)
+      -- Gclogでquicfixに送る時にauthorと日時を表示する
+      vim.g.fugitive_summary_format = "%cs || %<(14,trunc)%an || %s"
       dofile(vim.g.base46_cache .. "git") -- ハイライトを正常化
     end,
     dependencies = {

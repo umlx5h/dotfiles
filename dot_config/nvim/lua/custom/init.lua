@@ -259,26 +259,6 @@ vim.keymap.set(
   { silent = false, expr = true, desc = "Expand current file dir" }
 )
 
--- -- F13-F20 custom map
--- local mode = { 'n', 'v', 'x', 's', 'o', 'i', 'l', 'c', 't' }
--- local opts = { silent = true, nowait = true, noremap = false, remap = true }
-
--- -- https://unix.stackexchange.com/questions/154501/can-i-get-my-iterm-key-combos-working-in-tmux
--- -- https://aperiodic.net/phil/archives/Geekery/term-function-keys/
-
--- if vim.fn.expand('$TERM'):match("^screen|tmux") then
---   vim.keymap.set(mode, "<esc>[1;2P", '<F13>', opts)
--- elseif vim.fn.expand('$TERM'):match("^xterm") then
---   vim.keymap.set(mode, '<esc>O2P', '<F13>', opts)
--- end
-
--- if vim.fn.expand('$TERM'):match("^screen") then
---   vim.keymap.set(mode, "<S-F1>", '<F13>', opts) -- Shift
--- end
-
--- コマンドモードでShift+Enter押したときにEnterを押すようにする
--- vim.keymap.set({ "c", "v", "s", "t" }, "<F13>", "<CR>")
-
 -- auto insert semicolon (shift+Enter)
 vim.keymap.set("i", "<S-CR>", function()
   local line = vim.fn.getline "."

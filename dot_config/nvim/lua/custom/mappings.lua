@@ -508,18 +508,12 @@ M.projects = {
   },
 }
 
--- "almo7aya/openingh.nvim"
--- M.openingh = {
---   n = {
---     ["<leader>gO"] = { "<cmd> OpenInGHFileLines <CR>", "Open file in GitHub" },
---   },
--- }
-
 M.fugitive = {
   n = {
     ["<leader>go"] = { "<cmd> GBrowse <CR>", "Open in GitHub" },
     ["<leader>gd"] = { "<cmd> vertical Gdiffsplit! <CR>", "Git diff split (three way)" },
     ["<leader>gb"] = { "<cmd> G blame <CR>", "Blame fugitive" },
+    ["<leader>gh"] = { "<cmd> leftabove vs | 0Gclog <CR>", "Git history of current file" },
   },
   x = {
     ["<leader>go"] = { "<cmd> '<,'>GBrowse <CR>", "Open line in GitHub" },

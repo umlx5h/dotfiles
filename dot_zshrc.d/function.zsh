@@ -5,6 +5,11 @@ function zsh_update_completions() {
 
     fish -c 'fish_update_completions'
     zsh-manpage-completion-generator -clean
+
+    # gitでエラー出る対策
+    /bin/rm -f $HOME/.local/share/zsh/generated_man_completions/_git
+    /bin/rm -f $HOME/.local/share/zsh/generated_man_completions/_git-*
+
     generate_cmd_completions_common
     type generate_cmd_completions_work &>/dev/null && generate_cmd_completions_work
 
