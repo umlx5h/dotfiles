@@ -260,10 +260,10 @@ local plugins = {
       }
     end,
   },
-  {
-    "almo7aya/openingh.nvim",
-    cmd = { "OpenInGHRepo", "OpenInGHFile", "OpenInGHFileLines" },
-  },
+  -- {
+  --   "almo7aya/openingh.nvim",
+  --   cmd = { "OpenInGHRepo", "OpenInGHFile", "OpenInGHFileLines" },
+  -- },
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
@@ -324,7 +324,11 @@ local plugins = {
   },
   {
     "tpope/vim-fugitive",
-    lazy = false, -- コマンドから起動するため常にロード (G)
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "G", "Git" },
+    config = function(_, _)
+      dofile(vim.g.base46_cache .. "git") -- ハイライトを正常化
+    end,
     dependencies = {
       "tpope/vim-rhubarb",
     },

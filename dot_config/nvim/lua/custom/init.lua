@@ -32,6 +32,7 @@ opt.foldlevelstart = 99 -- デフォルトで全て開く
 
 -- diffモードではtreesitterのfoldtextを使わない
 vim.api.nvim_create_autocmd({ "OptionSet" }, {
+  desc = "Reset 'foldtext' to default when diff mode",
   pattern = "diff",
   callback = function()
     if vim.v.option_new then
@@ -66,6 +67,7 @@ vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 -- highlight yanked region, see `:h lua-highlight`
 local yank_group = vim.api.nvim_create_augroup("highlight_yank", { clear = true })
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+  desc = "highlight after yank",
   group = yank_group,
   callback = function()
     vim.highlight.on_yank { higroup = "@label", timeout = 230 }
@@ -97,6 +99,40 @@ function Is_local()
   local isLocal = uname.sysname == "Darwin" or uname.sysname == "Linux" and uname.release:find "microsoft"
   return isLocal
 end
+
+---------------------------------------- user commands ----------------------------------------
+
+vim.api.nvim_create_user_command("DiffClip", function()
+  vim.cmd [[
+    let ft=&ft
+    leftabove vnew [Clipboard]
+    setlocal bufhidden=wipe buftype=nofile noswapfile
+    put +
+    0d_
+    " remove CR for Windows
+    silent %s/\r$//e
+    execute "set ft=" . ft
+    diffthis
+    " setlocal nomodifiable
+    wincmd p
+    diffthis
+  ]]
+end, { desc = "Compare Active File with Clipboard" })
+
+vim.api.nvim_create_user_command("DiffOrig", function()
+  vim.cmd [[
+    let ft=&ft
+    leftabove vnew [Original]
+    setlocal bufhidden=wipe buftype=nofile noswapfile
+    read ++edit #
+    0d_
+    execute "set ft=" . ft
+		diffthis
+    setlocal nomodifiable
+    wincmd p
+    diffthis
+  ]]
+end, { desc = "Compare Active File with Saved" })
 
 -------------------------------------- local options ------------------------------------------
 

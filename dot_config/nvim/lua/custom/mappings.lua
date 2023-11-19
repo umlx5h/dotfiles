@@ -14,7 +14,7 @@ M.disabled = {
     ["<leader>b"] = "", -- to <leader>n (New buffer)
     ["<leader>n"] = "", -- to <leader>un (line numbers)
     ["<leader>rn"] = "", -- disable
-    ["<Up>"] = "",
+    ["<Up>"] = "", -- jと区別したい
     ["<Down>"] = "",
 
     --------------------- tabufline -----------------------
@@ -39,6 +39,7 @@ M.disabled = {
     ["[c"] = "", -- to <leader>[g (Jump to prev hunk)
     ["<leader>rh"] = "", -- to <leader>gr (Reset hunk)
     ["<leader>ph"] = "", -- to <leader>gp (Preview hunk)
+    ["<leader>gb"] = "", -- to <leader>gl (Blame line)
 
     --------------------- LSP -----------------------
     ["gi"] = "",
@@ -71,6 +72,8 @@ M.disabled = {
   },
 
   x = {
+    ["j"] = "", -- normalモードだけgjを有効化
+    ["k"] = "",
     ["p"] = "", -- デフォルト挙動に戻す (pasteで入れ替えれるようにする)
   },
 }
@@ -254,6 +257,12 @@ M.gitsigns = {
         require("gitsigns").preview_hunk()
       end,
       "Preview hunk",
+    },
+    ["<leader>gl"] = {
+      function()
+        package.loaded.gitsigns.blame_line()
+      end,
+      "Blame line",
     },
   },
 }
@@ -500,16 +509,20 @@ M.projects = {
 }
 
 -- "almo7aya/openingh.nvim"
-M.openingh = {
-  n = {
-    ["<leader>go"] = { "<cmd> OpenInGHFileLines <CR>", "Open file in GitHub" },
-  },
-}
+-- M.openingh = {
+--   n = {
+--     ["<leader>gO"] = { "<cmd> OpenInGHFileLines <CR>", "Open file in GitHub" },
+--   },
+-- }
 
 M.fugitive = {
   n = {
-    ["<leader>gO"] = { "<cmd> GBrowse <CR>", "Open in GitHub" },
+    ["<leader>go"] = { "<cmd> GBrowse <CR>", "Open in GitHub" },
     ["<leader>gd"] = { "<cmd> vertical Gdiffsplit! <CR>", "Git diff split (three way)" },
+    ["<leader>gb"] = { "<cmd> G blame <CR>", "Blame fugitive" },
+  },
+  x = {
+    ["<leader>go"] = { "<cmd> '<,'>GBrowse <CR>", "Open line in GitHub" },
   },
 }
 
