@@ -27,6 +27,12 @@ M.ui = {
     SpecialKey = { link = "Comment" }, -- ^Mみたいなやつ
     NonText = { link = "Comment" }, -- set listのタブ文字を明るく
     Visual = { bg = "#30447f" }, -- テキスト選択の背景を少し青くして明るく
+
+    -- vimdiff
+    DiffAdd = { fg = "NONE", bg = "#315343" },
+    DiffDelete = { fg = "NONE", bg = "#653f4b" },
+    DiffChange = { fg = "NONE", bg = "#1C3448" },
+    DiffText = { fg = "NONE", bg = "#396992" },
   },
   hl_add = {
     -- linkするハイライトはtelescope highlightsが参考になる
@@ -37,6 +43,9 @@ M.ui = {
     IlluminatedWordWrite = { bg = "one_bg2" },
     CurSearch = { link = "IncSearch" },
     manItalic = { italic = true, fg = "green" },
+
+    -- vimdiffと合わせる
+    GitSignsChange = { fg = "blue" },
   },
   theme_toggle = { "catppuccin" },
   -- https://github.com/NvChad/base46/blob/v2.0/lua/base46/themes/catppuccin.lua
