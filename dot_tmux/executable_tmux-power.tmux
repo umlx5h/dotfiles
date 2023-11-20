@@ -51,6 +51,9 @@ case $TC in
     'forest' )
         TC='#228b22'
         ;;
+    'everforest' )
+        TC='#8abf72'
+        ;;
     'violet' )
         TC='#9370db'
         ;;

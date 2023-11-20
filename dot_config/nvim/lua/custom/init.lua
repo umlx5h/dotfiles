@@ -49,6 +49,8 @@ vim.g.man_hardwrap = 0 -- manpageでコピペしやすく
 vim.g.netrw_preview = 1 -- 縦分割
 vim.g.netrw_alto = 0
 
+pcall(require, "custom.work.work")
+
 -------------------------------------- filetypes ------------------------------------------
 
 vim.filetype.add {
