@@ -3,6 +3,8 @@ alias watch="watch "
 alias la="ll"
 # sudoでもaliasを使う
 alias sudo='sudo '
+# OSのデフォルトシェルがbashでも、zshからtmuxを起動したらzshを起動する
+alias tmux='SHELL=$(which zsh) tmux'
 
 #
 # Third party
