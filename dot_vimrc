@@ -19,7 +19,7 @@ set ttymouse=xterm2
 set mouse=a
 
 " leader is <Space>
-map <space> <leader>
+let mapleader = "\<Space>"
 
 " ターミナルの背景に合わせる必要がある
 set background=dark
@@ -93,6 +93,9 @@ function! s:VSetSearch(cmdtype)
   let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
   let @s = temp
 endfunction
+
+xnoremap gs y:let @/ = '\V' . substitute(escape(@0, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn
+nnoremap gs :let @/='\<'.expand('<cword>').'\>'<CR>:set hls<CR>cgn
 
 " バッファを編集していた場合に他のファイルを開けるようにする
 set hidden
@@ -175,6 +178,8 @@ Plug 'vim-jp/vimdoc-ja'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " ----------------------- plugin config  ------------------------ "
@@ -192,4 +197,15 @@ nnoremap <leader>ug :vertical G<CR>
 autocmd FileType fugitive map <buffer> <tab> =
 autocmd FileType fugitive map <buffer> , -
 autocmd FileType fugitive nmap <buffer> q gq
+
+" junegunn/fzf.vim
+nnoremap <C-p> :Files<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fg :GFiles<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader><leader> :Buffers<CR>
+nnoremap <leader>fw :RG<CR>
+nnoremap <leader>f/ :BLines<CR>
+nnoremap <leader>fo :History<CR>
 

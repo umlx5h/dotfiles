@@ -319,10 +319,28 @@ local plugins = {
     },
   },
   {
+    "rbong/vim-flog",
+    cmd = { "Flog", "Flogsplit", "Floggit" },
+    dependencies = {
+      "tpope/vim-fugitive",
+    },
+    config = function()
+      vim.g.flog_default_opts = {
+        -- format = "%ad [%h] {%an}%d %s" -- default
+        date = "format:%Y-%m-%d %H:%M",
+      }
+    end,
+  },
+  {
     "kylechui/nvim-surround",
     event = { "BufReadPre", "BufNewFile" },
     version = "*",
-    opts = {}, -- necessary
+    opts = {
+      keymaps = {
+        insert = false, -- nvim-cmp uses <C-g>
+        insert_line = false,
+      },
+    },
   },
 }
 

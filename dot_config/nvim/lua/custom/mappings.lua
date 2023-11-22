@@ -186,8 +186,7 @@ M.telescope = {
     ["<leader>fr"] = { "<cmd> Telescope resume <CR>", "Resume telescope" },
   },
   x = {
-    ["<leader>#"] = { "<cmd> Telescope grep_string <CR>", "Find all word under cursor" },
-    ["<leader>*"] = { "<cmd> Telescope grep_string word_match=-w <CR>", "Find word under cursor" },
+    ["<leader>*"] = { "<cmd> Telescope grep_string <CR>", "Find all word under cursor" },
   },
 }
 
@@ -384,7 +383,7 @@ M.ui = {
     ["<leader>ul"] = { "<cmd> Lazy <CR>", "Open Lazy" },
 
     -- quickfix window
-    ["<leader>uq"] = { "<cmd> copen <CR>", "Open Quickfix List" },
+    ["<leader>uq"] = { "<cmd> QFToggle <CR>", "Toggle Quickfix window" },
 
     ["<leader>ui"] = { "<cmd> IlluminateToggle <CR>", "Toggle vim-illuminate" },
 
@@ -475,45 +474,22 @@ M.gopher = {
 M.projects = {
   n = {
     -- open project in tmux window
-    ["<A-/>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in tmux window" },
+    ["<A-/>"] = { "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>", "Open project in new window" },
     ["<A-?>"] = {
-      "<cmd>silent !tmux neww zsh -ic 'open-recent-project-tab; exec zsh' <CR>",
-      "Open project in terminal tab",
+      "<cmd>silent !tmux neww zsh -ic 'open-recent-project-session; exec zsh' <CR>",
+      "Open project in new session",
     },
-    ["<leader>at"] = {
-      function()
-        local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-
-        local Job = require "plenary.job"
-        Job
-          :new({
-            command = "sh",
-            args = {
-              "-c",
-              string.format(
-                "wezterm cli set-tab-title --pane-id $(wezterm cli list-clients | awk '{print $NF}' | tail -1) '%s'",
-                dir_name
-              ),
-            },
-            on_exit = function(j, return_val)
-              if return_val ~= 0 then
-                print(j:result())
-              end
-            end,
-          })
-          :start()
-      end,
-      "Set cwd to terminal tab name",
-    },
+    ["<leader>at"] = { "<cmd> SetTermTab <CR>", "Set cwd to terminal tab name" },
   },
 }
 
-M.fugitive = {
+M.git = {
   n = {
     ["<leader>go"] = { "<cmd> GBrowse <CR>", "Open in GitHub" },
     ["<leader>gd"] = { "<cmd> vertical Gdiffsplit! <CR>", "Git diff split (three way)" },
     ["<leader>gb"] = { "<cmd> G blame <CR>", "Blame fugitive" },
     ["<leader>gh"] = { "<cmd> leftabove vs | 0Gclog <CR>", "Git history of current file" },
+    ["<leader>gf"] = { "<cmd> Flog <CR>", "Open flog" },
   },
   x = {
     ["<leader>go"] = { "<cmd> '<,'>GBrowse <CR>", "Open line in GitHub" },

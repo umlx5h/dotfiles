@@ -1,0 +1,13 @@
+zle -N open-recent-project
+bindkey '\e/' open-recent-project
+
+function open-recent-project-session() {
+{{- if .isLocal }}
+  open-recent-project-tab
+{{- else }}
+  open-recent-project-tmux
+{{- end }}
+}
+
+zle -N open-recent-project-session
+bindkey '\e?' open-recent-project-session

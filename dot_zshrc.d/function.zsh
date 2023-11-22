@@ -115,7 +115,7 @@ function open-recent-project() {
 
 # tmuxの新しいセッションでvimでプロジェクトを開く
 # see: https://github.com/ThePrimeagen/.dotfiles/blob/master/bin/.local/scripts/tmux-sessionizer
-function open-recent-project-session() {
+function open-recent-project-tmux() {
   local dir=$(z | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf --prompt="Open project in session > " --tac)
   dir="${dir/#\~/$HOME}"
   if [[ -z $dir ]]; then
@@ -156,10 +156,4 @@ function open-recent-project-tab() {
 
   zle && { zle accept-line; zle reset-prompt }
 }
-
-zle -N open-recent-project
-bindkey '\e/' open-recent-project
-
-zle -N open-recent-project-tab
-bindkey '\e?' open-recent-project-tab
 

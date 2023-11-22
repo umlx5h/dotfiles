@@ -136,6 +136,46 @@ vim.api.nvim_create_user_command("DiffOrig", function()
   ]]
 end, { desc = "Compare Active File with Saved" })
 
+vim.api.nvim_create_user_command("QFToggle", function()
+  local function qf_exist()
+    for _, w in ipairs(vim.fn.getwininfo()) do
+      if w.quickfix == 1 then
+        return true
+      end
+    end
+    return false
+  end
+
+  if qf_exist() then
+    vim.notify "cclose"
+    vim.cmd.cclose()
+  else
+    vim.notify "copen"
+    vim.cmd.copen()
+  end
+end, { desc = "Toggle quickfix window" })
+
+vim.api.nvim_create_user_command("SetTermTab", function()
+  local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+
+  local Job = require "plenary.job"
+  Job:new({
+    command = "sh",
+    args = {
+      "-c",
+      string.format(
+        "wezterm cli set-tab-title --pane-id $(wezterm cli list-clients | awk '{print $NF}' | tail -1) '%s'",
+        dir_name
+      ),
+    },
+    on_exit = function(j, return_val)
+      if return_val ~= 0 then
+        print(j:result())
+      end
+    end,
+  }):start()
+end, { desc = "Set current project name to wezterm tab name" })
+
 -------------------------------------- local options ------------------------------------------
 
 if not Is_local() then
@@ -190,7 +230,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwords with cen
 vim.keymap.set(
   "x",
   "gs",
-  [["sy:let @/ = '\V' . substitute(escape(@s, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn]],
+  [[y:let @/ = '\V' . substitute(escape(@0, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn]],
   { desc = "Replace word under cursor" }
 )
 vim.keymap.set(
@@ -199,7 +239,7 @@ vim.keymap.set(
   [[:let @/='\<'.expand('<cword>').'\>'<CR>:set hls<CR>cgn]],
   { desc = "Replace word under cursor" }
 )
-vim.keymap.set("x", "gS", [[y:%s/\V<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
+vim.keymap.set("x", "g/", [[y:%s/\V<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
 
 vim.keymap.set(
   "n",
