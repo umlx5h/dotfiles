@@ -230,15 +230,19 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwords with cen
 vim.keymap.set(
   "x",
   "gs",
-  [[y:let @/ = '\V' . substitute(escape(@0, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn]],
+  [[y:let @/ = '\V\C' . substitute(escape(@0, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn]],
   { desc = "Replace word under cursor" }
 )
 vim.keymap.set(
   "n",
   "gs",
-  [[:let @/='\<'.expand('<cword>').'\>'<CR>:set hls<CR>cgn]],
+  [[:let @/ = '\C\<'.expand('<cword>').'\>'<CR>:set hls<CR>cgn]],
   { desc = "Replace word under cursor" }
 )
+-- 検索履歴に入るver (大文字小文字無視)
+-- vim.keymap.set("x", "gs", "*Ncgn", { remap = true })
+-- vim.keymap.set("n", "gs", "*Ncgn")
+
 vim.keymap.set("x", "g/", [[y:%s/\V<c-r>"//g<left><left>]], { desc = "Replace word under cursor globally" })
 
 vim.keymap.set(

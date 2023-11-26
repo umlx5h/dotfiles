@@ -6,7 +6,6 @@ TMUX_AUTO_START="on"
 if [[ "$TERM_PROGRAM" == "WezTerm" && -z "$TMUX" && "$TMUX_AUTO_START" == "on" ]]; then
     tmux_running=$(pgrep tmux)
     if [[ -z "$tmux_running" ]]; then
-      # 最初のメインセッションはシェル経由で立ち上げる
       tmux new
     else
       attach_session=$(tmux 2> /dev/null ls -F \
@@ -21,8 +20,8 @@ if [[ "$TERM_PROGRAM" == "WezTerm" && -z "$TMUX" && "$TMUX_AUTO_START" == "on" ]
           # wezterm&tmux経由だとカレントディレクトリがおかしくなるので対策
           cd $HOME
         fi
-        # アタッチされていないセッションがなかったので、シェルを経由せずにセッションを立ち上げる
-        exec tmux new
+        # アタッチされていないセッションがなかったので、セッションを立ち上げる
+        tmux new
       fi
     fi
 fi

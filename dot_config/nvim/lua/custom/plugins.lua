@@ -307,8 +307,7 @@ local plugins = {
   },
   {
     "tpope/vim-fugitive",
-    event = { "BufReadPost", "BufNewFile" },
-    cmd = { "G", "Git" },
+    cmd = { "G", "Git", "GBrowse", "Gclog", "GDelete", "Ggrep", "Gread", "Gwrite", "Gdiffsplit", "Gvdiffsplit" },
     config = function(_, _)
       -- Gclogでquicfixに送る時にauthorと日時を表示する
       vim.g.fugitive_summary_format = "%cs || %<(14,trunc)%an || %s"
@@ -328,6 +327,19 @@ local plugins = {
       vim.g.flog_default_opts = {
         -- format = "%ad [%h] {%an}%d %s" -- default
         date = "format:%Y-%m-%d %H:%M",
+      }
+    end,
+  },
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    config = function(_, _)
+      dofile(vim.g.base46_cache .. "git")
+      local actions = require("diffview.config").actions
+      require("diffview").setup {
+        keymaps = {
+          file_history_panel = { ["O"] = actions.open_in_diffview },
+        },
       }
     end,
   },

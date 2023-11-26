@@ -40,7 +40,7 @@ function _G.qftf(info)
     name_max_size = math.max(name_max_size, #item_name)
   end
 
-  name_max_size = math.min(name_max_size, 35) -- 30 is max size of name.
+  name_max_size = math.min(name_max_size, 40) -- 40 is max size of name.
 
   local itemFmt1 = "%-" .. name_max_size .. "s"
   local itemFmt2 = "…%." .. (name_max_size - 1) .. "s"

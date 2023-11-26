@@ -14,7 +14,8 @@ end
 -- config.exit_behavior = 'Hold'
 config.hide_tab_bar_if_only_one_tab = true
 config.color_scheme = 'Snazzy'
-config.font_size = 11.7
+config.font_size = 11
+config.freetype_load_flags = 'NO_HINTING'
 -- config.font = wezterm.font 'JetBrainsMonoNL Nerd Font'
 config.font = wezterm.font 'Hack Nerd Font'
 

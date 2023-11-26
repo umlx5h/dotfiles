@@ -175,6 +175,7 @@ endif
 
 call plug#begin()
 Plug 'vim-jp/vimdoc-ja'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
