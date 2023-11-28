@@ -11,15 +11,15 @@ opt.whichwrap = "b,s,<,>,[,]" -- h, lはデフォルト挙動に
 opt.spelllang:append "cjk" -- 日本語をスペルチェックから除外
 
 -- Indenting
--- タブにしたい場合           :set ts=4 noet
--- スペース幅を調整したい場合 :set ts=N (sw=N (filetype pluginで0以外に設定されていたらswも指定)
--- opt.autoindent = true -- default
+-- タブにしたい場合           :set ts=4 sw=0 noet
+-- スペース幅を調整したい場合 :set sw=4
+opt.autoindent = true -- default
 opt.smartindent = true
--- opt.smarttab = true -- default
-opt.tabstop = 2
-opt.softtabstop = 0 -- off
-opt.shiftwidth = 0 -- same as tabstop
-opt.expandtab = true
+opt.smarttab = true -- default
+opt.tabstop = 8 -- default
+opt.softtabstop = -1 -- same as 'shiftwidth'
+opt.shiftwidth = 2 -- default: indent is 2
+opt.expandtab = true -- default: tab is not used
 
 -- treesitter fold
 opt.foldmethod = "expr"
@@ -175,6 +175,12 @@ vim.api.nvim_create_user_command("SetTermTab", function()
     end,
   }):start()
 end, { desc = "Set current project name to wezterm tab name" })
+
+vim.api.nvim_create_user_command("ShowIndentOpt", function()
+  vim.cmd [[
+    verbose setlocal ts? sts? sw? et?
+  ]]
+end, { desc = "Show current indent options" })
 
 -------------------------------------- local options ------------------------------------------
 

@@ -114,6 +114,13 @@ local plugins = {
 
   -------------------------- my plugins -----------------------------------
   {
+    "tpope/vim-sleuth",
+    cmd = "Sleuth",
+    config = function()
+      vim.g.sleuth_automatic = 0
+    end,
+  },
+  {
     "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = function()

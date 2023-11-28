@@ -5,6 +5,7 @@
 alias rm="mv2trash"
 alias gm="mv2trash"
 alias grep="ggrep"
+alias tig="TERM=xterm-256color tig"
 
 #
 # Path

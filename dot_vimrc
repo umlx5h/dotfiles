@@ -114,9 +114,9 @@ set splitright
 set autoindent
 set smartindent
 set smarttab
-set tabstop=2
-set softtabstop=0
-set shiftwidth=0 " tabstopと合わせる
+set tabstop=8
+set softtabstop=-1 " same as shiftwidth
+set shiftwidth=2 " same as shiftwidth
 set expandtab
 
 " ----------------------- filetype  ------------------------ "
@@ -175,7 +175,7 @@ endif
 
 call plug#begin()
 Plug 'vim-jp/vimdoc-ja'
-Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-sleuth'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
@@ -209,4 +209,3 @@ nnoremap <leader><leader> :Buffers<CR>
 nnoremap <leader>fw :RG<CR>
 nnoremap <leader>f/ :BLines<CR>
 nnoremap <leader>fo :History<CR>
-
