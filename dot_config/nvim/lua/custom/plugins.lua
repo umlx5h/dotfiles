@@ -114,11 +114,22 @@ local plugins = {
 
   -------------------------- my plugins -----------------------------------
   {
-    "tpope/vim-sleuth",
-    cmd = "Sleuth",
-    config = function()
-      vim.g.sleuth_automatic = 0
-    end,
+    -- "nmac427/guess-indent.nvim",
+    "umlx5h/guess-indent.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      -- auto_cmd = false,
+      on_tab_options = {
+        ["expandtab"] = false,
+        ["softtabstop"] = 0,
+        ["shiftwidth"] = 0,
+      },
+      on_space_options = {
+        ["expandtab"] = true,
+        ["shiftwidth"] = "detected",
+        ["softtabstop"] = -1,
+      },
+    },
   },
   {
     "nvimtools/none-ls.nvim",

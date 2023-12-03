@@ -51,6 +51,11 @@ if &term =~ '^screen' || &term =~ '^tmux'
   execute "set <xLeft>=\e[1;*D"
 endif
 
+" F2で'paste'をトグル
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
 " コマンドモードの補完を使いやすく
 set wildmenu
 set wildmode=full
@@ -175,6 +180,7 @@ endif
 
 call plug#begin()
 Plug 'vim-jp/vimdoc-ja'
+" Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-sleuth'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'mbbill/undotree'

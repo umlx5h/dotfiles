@@ -9,6 +9,7 @@ opt.grepformat = "%f:%l:%c:%m"
 opt.scrolloff = 3
 opt.whichwrap = "b,s,<,>,[,]" -- h, lはデフォルト挙動に
 opt.spelllang:append "cjk" -- 日本語をスペルチェックから除外
+opt.virtualedit = "block"
 
 -- Indenting
 -- タブにしたい場合           :set ts=4 sw=0 noet
@@ -31,7 +32,9 @@ opt.foldlevelstart = 99 -- デフォルトで全て開く
 -- vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, { command = "normal zR" })
 
 -- diffモードではtreesitterのfoldtextを使わない
+
 vim.api.nvim_create_autocmd({ "OptionSet" }, {
+  group = vim.api.nvim_create_augroup("reset_foldtext_when_diffmode", { clear = true }),
   desc = "Reset 'foldtext' to default when diff mode",
   pattern = "diff",
   callback = function()
@@ -67,15 +70,31 @@ vim.g.vscode_snippets_path = "./lua/custom/my-snippets"
 -------------------------------------- nvim stuff ------------------------------------------
 
 -- highlight yanked region, see `:h lua-highlight`
-local yank_group = vim.api.nvim_create_augroup("highlight_yank", { clear = true })
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+  group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
   desc = "highlight after yank",
-  group = yank_group,
   callback = function()
     vim.highlight.on_yank { higroup = "@label", timeout = 230 }
   end,
 })
 
+-- editorconfigでindent_sizeのみ指定された時にtabstopが書き換えられるのを無効化する
+-- copy from https://github.com/neovim/neovim/blob/e6d38c7dac2e079d9b0f1621fef193bca858664f/runtime/lua/editorconfig.lua#L59-L71
+require("editorconfig").properties.indent_size = function(bufnr, val, opts)
+  if val == "tab" then
+    vim.bo[bufnr].shiftwidth = 0
+    vim.bo[bufnr].softtabstop = 0
+  else
+    local n = assert(tonumber(val), "indent_size must be a number")
+    vim.bo[bufnr].shiftwidth = n
+    vim.bo[bufnr].softtabstop = -1
+
+    -- MEMO: comment out for keeping tabstop to 8
+    -- if not opts.tab_width then
+    --   vim.bo[bufnr].tabstop = n
+    -- end
+  end
+end
 ---------------------------------------- custom functions ----------------------------------------
 
 local toggle_enabled = true

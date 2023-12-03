@@ -103,6 +103,10 @@ bind -n M-o select-pane -t :.+
 # 前のウィンドウにiで切り替え
 bind-key i last-window
 
+# セッション切り替えをリピート可能にする
+bind-key -r ( switch-client -p
+bind-key -r ) switch-client -n
+
 # ウィンドウ移動をAlt + ()に設定
 bind -n M-9 previous-window
 bind -n M-0 next-window

@@ -344,7 +344,6 @@ M.tabufline = {
       end,
       "Close buffer",
     },
-    ["<S-Tab>"] = { "<C-^>", "Toggle last buffer" },
   },
 }
 
@@ -492,7 +491,7 @@ M.git = {
     ["<leader>gf"] = { "<cmd> Flog <CR>", "Open flog" },
   },
   x = {
-    ["<leader>go"] = { "<cmd> '<,'>GBrowse <CR>", "Open line in GitHub" },
+    ["<leader>go"] = { ":'<,'>GBrowse <CR>", "Open line in GitHub" },
   },
 }
 
