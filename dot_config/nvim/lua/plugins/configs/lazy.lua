@@ -1,18 +1,9 @@
 return {
   defaults = { lazy = true },
-  install = { colorscheme = { "nvchad" } },
-
-  ui = {
-    icons = {
-      ft = "",
-      lazy = "󰂠 ",
-      loaded = "",
-      not_loaded = "",
-    },
-  },
-
+  install = { colorscheme = { "nightfox" } },
   performance = {
     rtp = {
+      -- TODO: 棚卸
       disabled_plugins = {
         "2html_plugin",
         "tohtml",
@@ -24,7 +15,7 @@ return {
         "netrwPlugin",
         "netrwSettings",
         "netrwFileHandlers",
-        "matchit",
+        -- "matchit",
         "tar",
         "tarPlugin",
         "rrhelper",

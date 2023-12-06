@@ -1,9 +1,8 @@
-local nap = require "nap"
-nap.setup {
+require("nap").setup({
   next_repeat = "<A-y>",
   prev_repeat = "<A-u>",
   -- disable default mapping
-  exclude_default_operators = { "f", "F", "e", "Q", "L", "B", "<M-q>", "<M-l>", "<C-q>", "<C-l>", "<C-t>" },
+  exclude_default_operators = { "f", "F", "e", "L", "B", "<M-q>", "<M-l>", "<C-q>", "<C-l>", "<C-t>" },
   operators = {
     ["a"] = {
       next = { rhs = "<cmd>next<cr>", opts = { desc = "Next arglist" } },
@@ -17,6 +16,10 @@ nap.setup {
       next = { rhs = "<cmd>AerialNext<cr>", opts = { desc = "Next outline symbol" } },
       prev = { rhs = "<cmd>AerialPrev<cr>", opts = { desc = "Prev outline symbol" } },
       mode = { "n", "v", "o" },
+    },
+    ["Q"] = { -- remap <C-p> to Q
+      next = { rhs = "<cmd>cnfile<cr>", opts = { desc = "Next quickfix item in different file" } },
+      prev = { rhs = "<cmd>cpfile<cr>", opts = { desc = "Prev quickfix item in different file" } },
     },
     ["g"] = { -- [g (git hunk)
       next = {
@@ -45,18 +48,8 @@ nap.setup {
       },
     },
     ["b"] = { -- [b
-      next = {
-        rhs = function()
-          require("nvchad.tabufline").tabuflineNext()
-        end,
-        opts = { desc = "Next buffer" },
-      },
-      prev = {
-        rhs = function()
-          require("nvchad.tabufline").tabuflinePrev()
-        end,
-        opts = { desc = "Prev buffer" },
-      },
+      next = { rhs = "<cmd>BufferLineCycleNext<cr>", opts = { desc = "Next buffer" } },
+      prev = { rhs = "<cmd>BufferLineCyclePrev<cr>", opts = { desc = "Prev buffer" } },
     },
     ["T"] = { -- [T (TODO item)
       next = {
@@ -73,4 +66,4 @@ nap.setup {
       },
     },
   },
-}
+})

@@ -1,4 +1,4 @@
-local opts = {
+require("spectre").setup({
   open_cmd = "noswapfile vnew",
   mapping = {
     ["toggle_no_ignore_vsc"] = {
@@ -41,6 +41,4 @@ local opts = {
       },
     },
   },
-}
-
-return opts
+})

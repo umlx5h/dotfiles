@@ -8,10 +8,6 @@ ansible
 
 win/
 
-# nvim stuff
-.config/nvim/.dep/
-.config/nvim/.dep/**
-
 {{- if not .isWSL }}
 .zshrc.d/wsl.zsh
 win-wezterm.sh
@@ -28,7 +24,7 @@ win-wezterm.sh
 
 {{- if not .isWork }}
 .zshrc.d/work.zsh
-.config/nvim/lua/custom/work/
+.config/nvim/lua/work/
 {{- end }}
 
 {{- if not (and (.isLinux) (not .isCentOS)) }}

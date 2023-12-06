@@ -54,7 +54,7 @@ function _G.qftf(info)
     local str
     if string.find(file_name, "^fugitive:///") then -- Special formatting for fugitive logs
       local validFmt = "%s │ %s │%s %s"
-      local sha, path = item_name:match "([%a%d]+):(.+)"
+      local sha, path = item_name:match("([%a%d]+):(.+)")
       if #path <= name_max_size then
         -- 一番長いパスに合わせ短いパスの場合は空白を挿入してそろえる
         -- name_max_sizeは sha1と:を含んだ8文字分多くなっているため差し引く必要がある
@@ -81,7 +81,7 @@ end
 vim.o.qftf = "{info -> v:lua._G.qftf(info)}"
 
 -- plugin config
-local opts = {
+require("bqf").setup({
   -- auto_resize_height = true,
   preview = {
     win_height = 15,
@@ -96,7 +96,7 @@ local opts = {
       if fsize > 100 * 1024 then
         -- skip file size greater than 100k
         ret = false
-      elseif bufname:match "^fugitive://" then
+      elseif bufname:match("^fugitive://") then
         -- skip fugitive buffer
         ret = false
       end
@@ -108,6 +108,4 @@ local opts = {
       extra_opts = { "--bind", "ctrl-o:toggle-all", "--delimiter", "│" },
     },
   },
-}
-
-return opts
+})
