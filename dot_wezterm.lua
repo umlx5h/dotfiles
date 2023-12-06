@@ -48,6 +48,9 @@ config.keys = {
   { key = 'LeftArrow', mods = 'ALT', action = act.SendString '\x1bb' }, -- word backword
   { key = 'RightArrow', mods = 'ALT', action = act.SendString '\x1bf' }, -- word forward
   { key = 'Backspace', mods = 'CTRL', action = act.SendString '\x1b\x7f' }, -- word delete (= ALT+Backspace)
+  { key = 'Tab', mods = 'CTRL', action = act.SendString '\x1e' }, -- vim C-^ (alt file switch)
+  { key = 'c', mods = 'CTRL|SHIFT', action = act.SendKey { key = 'F3' } }, -- Copy
+  { key = 'c', mods = 'CMD', action = act.SendKey { key = 'F3' } }, -- Copy
 
   -- CSI uコードを送る、 neovimなど対応しているプログラムは Shift+Enterと認識してくれる
   -- ESC           U+000D 13 CR/Ctrl-M     Shift modifier

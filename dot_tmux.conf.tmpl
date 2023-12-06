@@ -102,6 +102,7 @@ bind -n M-o select-pane -t :.+
 
 # 前のウィンドウにiで切り替え
 bind-key i last-window
+bind -n M-i last-window
 
 # セッション切り替えをリピート可能にする
 bind-key -r ( switch-client -p
@@ -173,6 +174,8 @@ bind -T copy-mode-vi C-v send -X rectangle-toggle
 
 # 'y' でヤンク
 bind -T copy-mode-vi y send -X copy-selection
+# F3でもヤンク
+bind -T copy-mode-vi F3 send -X copy-selection
 
 # 'Y' で行ヤンク
 bind -T copy-mode-vi Y send -X copy-line

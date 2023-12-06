@@ -192,9 +192,11 @@ call plug#end()
 " ----------------------- plugin config  ------------------------ "
 
 " ojroques/vim-oscyank
+
 nmap <leader>y <Plug>OSCYankOperator
 nmap <leader>yy <leader>y_
-vmap <leader>y <Plug>OSCYankVisual
+xmap <leader>y <Plug>OSCYankVisual
+xmap <F3> <Plug>OSCYankVisual
 
 " mbbill/undotree
 nnoremap <leader>ut :UndotreeToggle<CR>
