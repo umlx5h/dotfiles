@@ -46,7 +46,7 @@ map("i", "<C-b>", "<Left>", { desc = "Emacs Left" })
 map("i", "<C-f>", "<Right>", { desc = "Emacs Right" })
 map("i", "<C-a>", "<Home>", { desc = "Emacs Home" })
 map("i", "<C-e>", "<End>", { desc = "Emacs End" })
-map("i", "<C-d>", "<Delete>", { desc = "Emacs Delete" })
+-- map("i", "<C-d>", "<Delete>", { desc = "Emacs Delete" }) -- Conflict indent delete
 map("i", "<C-h>", "<BS>", { desc = "Emacs Backspace" })
 -- disable for conflict (enter digraph)
 -- map("i", "<C-k>", function()

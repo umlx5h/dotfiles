@@ -91,3 +91,21 @@ vim.api.nvim_create_user_command("DiagnosticsToggle", function()
     end)
   end
 end, { desc = "Toggle diagnostics" })
+
+-- Open URL in browser
+-- :Browse http://example.com
+-- Makes it possible for `:GBrowse` to work with netrw plugin disabled
+-- The idea was taken from https://github.com/kyazdani42/nvim-tree.lua/issues/559#issuecomment-962593611
+vim.api.nvim_create_user_command("Browse", function(opts)
+  -- required: created symlink 'open' to 'xdg-open' in Linux
+  vim.cmd("silent !open " .. vim.fn.shellescape(opts.args, true))
+end, {
+  nargs = 1,
+})
+
+-- Oil (replacing netrw)
+vim.api.nvim_create_user_command("Explore", "Oil <args>", { nargs = "?", complete = "dir" })
+vim.api.nvim_create_user_command("E", "Explore <args>", { nargs = "?", complete = "dir" })
+vim.api.nvim_create_user_command("Sexplore", "belowright split | Oil <args>", { nargs = "?", complete = "dir" })
+-- vim.api.nvim_create_user_command("Vexplore", "leftabove vsplit | Oil <args>", { nargs = "?", complete = "dir" })
+vim.api.nvim_create_user_command("Vexplore", "rightbelow vsplit | Oil <args>", { nargs = "?", complete = "dir" })

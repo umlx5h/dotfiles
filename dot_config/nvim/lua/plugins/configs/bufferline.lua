@@ -1,6 +1,7 @@
 require("bufferline").setup({
   options = {
     themable = true,
+    always_show_bufferline = false,
     offsets = {
       { filetype = "NvimTree", highlight = "NvimTreeNormal" },
     },

@@ -12,6 +12,10 @@ require("nap").setup({
       next = { rhs = "<cmd>last<cr>", opts = { desc = "Last arglist" } },
       prev = { rhs = "<cmd>first<cr>", opts = { desc = "First arglist" } },
     },
+    ["d"] = {
+      next = { rhs = vim.diagnostic.goto_next, opts = { desc = "Next diagnostic" } },
+      prev = { rhs = vim.diagnostic.goto_prev, opts = { desc = "Prev diagnostic" } },
+    },
     ["o"] = { -- [o (Symbol outline)
       next = { rhs = "<cmd>AerialNext<cr>", opts = { desc = "Next outline symbol" } },
       prev = { rhs = "<cmd>AerialPrev<cr>", opts = { desc = "Prev outline symbol" } },

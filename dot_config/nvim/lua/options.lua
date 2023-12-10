@@ -37,7 +37,7 @@ opt.undofile = true
 opt.timeoutlen = 400
 opt.updatetime = 250
 
-opt.scrolloff = 3
+opt.scrolloff = 5
 opt.sidescroll = 1
 opt.sidescrolloff = 3
 
@@ -81,6 +81,10 @@ vim.api.nvim_create_autocmd({ "OptionSet" }, {
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.man_hardwrap = 0 -- manpageでコピペしやすく
+
+-- disable netrw early
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- netrw
 -- vim.g.netrw_preview = 1 -- 縦分割

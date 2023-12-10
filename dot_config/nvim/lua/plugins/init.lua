@@ -50,9 +50,20 @@ local plugins = {
       opts = {
         multiline_threshold = 1, -- Maximum number of lines to show for a single context
       },
+      {
+        -- replaceing matchit, matchparen
+        "andymass/vim-matchup",
+      },
     },
     config = function()
       require("plugins.configs.treesitter")
+      require("nvim-treesitter.configs").setup({
+        matchup = {
+          enable = true, -- mandatory, false will disable the whole extension
+          disable = {}, -- optional, list of language that will be disabled
+          disable_virtual_text = true,
+        },
+      })
     end,
   },
 
@@ -228,7 +239,7 @@ local plugins = {
   {
     "tpope/vim-fugitive",
     cmd = { "G", "Git", "GBrowse", "Gclog", "GDelete", "Ggrep", "Gread", "Gwrite", "Gdiffsplit", "Gvdiffsplit" },
-    config = function(_, _)
+    config = function()
       -- Gclogでquicfixに送る時にauthorと日時を表示する
       vim.g.fugitive_summary_format = "%cs || %<(14,trunc)%an || %s"
     end,
@@ -276,7 +287,6 @@ local plugins = {
       require("Comment").setup()
     end,
   },
-  ------------------------------- my----------------------------
 
   {
     "folke/which-key.nvim",
@@ -404,6 +414,7 @@ local plugins = {
         keymaps = {
           insert = false, -- nvim-cmp uses <C-g>
           insert_line = false,
+          visual_line = false, -- mini.splitjoin gS
         },
       })
     end,
@@ -442,6 +453,7 @@ local plugins = {
           dapui.setup()
           dap.listeners.after.event_initialized["dapui_config"] = function()
             dapui.open()
+            require("hydra").spawn("dap-hydra")
           end
           dap.listeners.before.event_terminated["dapui_config"] = function()
             dapui.close()
@@ -453,7 +465,7 @@ local plugins = {
       },
       {
         "jay-babu/mason-nvim-dap.nvim", -- for DAP (C++, Bash)
-        -- ft = { "c", "cpp", "sh" },
+        ft = { "c", "cpp", "sh" },
         dependencies = {
           "williamboman/mason.nvim",
         },
@@ -464,10 +476,26 @@ local plugins = {
         end,
       },
       {
+        "theHamsta/nvim-dap-virtual-text",
+        config = function()
+          require("nvim-dap-virtual-text").setup()
+        end,
+      },
+      {
         "leoluz/nvim-dap-go",
-        -- ft = "go",
+        ft = "go",
         config = function()
           require("dap-go").setup()
+        end,
+      },
+      {
+        "anuvyklack/hydra.nvim",
+        dependencies = "anuvyklack/keymap-layer.nvim",
+        keys = {
+          { "<leader>dh", "", { desc = "Dap Hydra" } },
+        },
+        config = function()
+          require("plugins.configs.hydra")
         end,
       },
     },
@@ -498,6 +526,19 @@ local plugins = {
       vim.api.nvim_create_user_command("GoCovClear", function()
         require("nvim-goc").ClearCoverage()
       end, {})
+    end,
+  },
+
+  {
+    "echasnovski/mini.splitjoin",
+    -- keys = { "gS" },
+    keys = {
+      { "gS", mode = "n" },
+      { "gS", mode = "x" },
+    },
+    version = false,
+    config = function()
+      require("mini.splitjoin").setup()
     end,
   },
 }
