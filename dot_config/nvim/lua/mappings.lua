@@ -110,15 +110,27 @@ map("n", "<leader>ww", "<cmd> noautocmd w <CR>", { desc = "Save without format" 
 map("n", "<leader>K", "<cmd> Man <CR>", { desc = "Search in Manpage" })
 map("x", "<leader>K", 'y:Man <c-r>" <CR>', { desc = "Search in Manpage" })
 
--- terminal
-map("t", "<C-x>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
-map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
+-- terminal mode
+-- map("t", "<C-x>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
+map("t", "<C-Space>", "<C-\\><C-n>", { desc = "Escape Terminal" })
+map("t", "<C-v><C-Space>", "<C-\\><C-n>", { desc = "Sent <C-Space> in Terminal" })
+map("t", "<C-v><C-v>", "<C-v>", { desc = "Sent <C-v> in Terminal" })
+-- map("t", "<Esc>", "<C-\\><C-n>", { desc = "Escape Terminal mode" })
+-- map("t", "<C-v><Esc>", "<Esc>", { desc = "Enter ESC on terminal mode" })
 map("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to left window" })
 map("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to lower window" })
 map("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to upper window" })
 map("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to right window" })
-map("t", "<C-w>w", "<c-\\><c-n><c-w>w", { desc = "Enter Normal Mode" })
-map("t", "<C-w><C-w>", "<c-\\><c-n><c-w>w", { desc = "Enter Normal Mode" })
+map("t", "<C-v><C-h>", "<C-h>", { desc = "Sent <C-h> in Terminal" })
+map("t", "<C-v><C-j>", "<C-j>", { desc = "Sent <C-j> in Terminal" })
+map("t", "<C-v><C-k>", "<C-k>", { desc = "Sent <C-k> in Terminal" })
+map("t", "<C-v><C-l>", "<C-l>", { desc = "Sent <C-l> in Terminal" })
+
+-- terminal
+map("n", "<leader>ts", "<cmd> split | terminal <cr>", { desc = "Horizontal terminal" })
+map("n", "<leader>tv", "<cmd> vsplit | terminal <cr>", { desc = "Vertical terminal" })
+map("n", "<leader>tn", "<cmd> tabedit | terminal <cr>", { desc = "Terminal in New tab" })
+map("n", "<leader>te", "<cmd> terminal <cr>", { desc = "Open terminal in current window" })
 
 -- map("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
 map("n", "<leader>-", "<cmd> Oil <CR>", { desc = "Open Explorer in current file" })
@@ -351,8 +363,8 @@ map("n", "<leader>uo", "<cmd> AerialToggle <CR>", { desc = "Toggle Aerial (Symbo
 map("n", "<leader>ul", "<cmd> Lazy <CR>", { desc = "Open Lazy" })
 
 -- lukas-reineke/indent-blankline.nvim
-local indent_blankline_loaded = false
-map("n", "<leader>ui", function()
+local indent_blankline_loaded = true
+map("n", "<leader>uI", function()
   if not indent_blankline_loaded then
     vim.cmd("IBLEnable")
     indent_blankline_loaded = true
@@ -362,7 +374,7 @@ map("n", "<leader>ui", function()
 end, { desc = "Toggle indent-blankline" })
 
 -- echasnovski/mini.indentscope
-map("n", "<leader>uI", function()
+map("n", "<leader>ui", function()
   vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
   if vim.g.miniindentscope_disable then
     MiniIndentscope.undraw()

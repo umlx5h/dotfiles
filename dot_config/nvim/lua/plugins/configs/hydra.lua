@@ -20,7 +20,7 @@ local dap_hydra = Hydra({
     },
   },
   name = "dap",
-  mode = { "n", "x" },
+  mode = { "n" },
   body = "<leader>dh",
   heads = {
     { "n", dap.step_over, { silent = true } },

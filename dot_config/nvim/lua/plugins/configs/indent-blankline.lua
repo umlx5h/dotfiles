@@ -6,7 +6,7 @@ require("ibl").setup({
     smart_indent_cap = false,
   },
   scope = {
-    enabled = false,
+    enabled = false, -- use mini-indentscope
     -- char = "▏",
     -- show_start = false,
     -- show_end = false,

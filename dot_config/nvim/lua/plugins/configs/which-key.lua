@@ -15,5 +15,6 @@ wk.register({
     f = { name = "+find" },
     g = { name = "+git" },
     u = { name = "+ui/toggle" },
+    t = { name = "+terminal" },
   },
 })

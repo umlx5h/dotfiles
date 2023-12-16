@@ -4,6 +4,7 @@ require("oil").setup({
   -- TODO: trash_commandを復活させたい
   delete_to_trash = true,
   keymaps = {
+    ["<2-LeftMouse>"] = "actions.select",
     -- change
     ["<C-c>"] = false,
     ["X"] = "actions.close",

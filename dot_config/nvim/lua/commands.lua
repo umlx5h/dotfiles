@@ -109,3 +109,4 @@ vim.api.nvim_create_user_command("E", "Explore <args>", { nargs = "?", complete 
 vim.api.nvim_create_user_command("Sexplore", "belowright split | Oil <args>", { nargs = "?", complete = "dir" })
 -- vim.api.nvim_create_user_command("Vexplore", "leftabove vsplit | Oil <args>", { nargs = "?", complete = "dir" })
 vim.api.nvim_create_user_command("Vexplore", "rightbelow vsplit | Oil <args>", { nargs = "?", complete = "dir" })
+vim.api.nvim_create_user_command("Texplore", "tabedit % | Oil <args>", { nargs = "?", complete = "dir" })

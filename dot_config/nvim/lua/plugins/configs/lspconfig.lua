@@ -191,12 +191,13 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- setup signcolumn's icon
--- :sign list
-local function lspSymbol(name, icon)
-  local hl = "DiagnosticSign" .. name
-  vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
-end
-lspSymbol("Error", "󰅙")
-lspSymbol("Info", "󰋼")
-lspSymbol("Hint", "󰌵")
-lspSymbol("Warn", "")
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "󰅙",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.INFO] = "󰋼",
+      [vim.diagnostic.severity.HINT] = "󰌵",
+    },
+  },
+})

@@ -182,8 +182,8 @@ local plugins = {
   -- indent lines
   {
     "lukas-reineke/indent-blankline.nvim",
-    cmd = { "IBLToggle", "IBLEnable" }, -- default disable for high cpu usage
-    -- event = { "BufReadPost", "BufNewFile" },
+    -- cmd = { "IBLToggle", "IBLEnable" }, -- disable for high cpu usage
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("plugins.configs.indent-blankline")
     end,
@@ -347,11 +347,11 @@ local plugins = {
     end,
   },
   {
-    "anuvyklack/windows.nvim", -- Ctrl+W Z to zoom like tmux
+    "anuvyklack/windows.nvim", -- <leader>Z to zoom like tmux
     dependencies = {
       { "anuvyklack/middleclass" },
     },
-    keys = { { "<C-w>z", "<cmd>WindowsMaximize<cr>", desc = "Zoom" } },
+    keys = { { "<leader>z", "<cmd>WindowsMaximize<cr>", desc = "Zoom" } },
     config = function()
       require("windows").setup({
         autowidth = {
@@ -382,6 +382,11 @@ local plugins = {
           ["o"] = "actions.scroll",
           ["O"] = "actions.jump",
         },
+        -- on_attach = function(bufnr)
+        --   -- Jump forwards/backwards with '{' and '}'
+        --   vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Prev symbol" })
+        --   vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Next symbol" })
+        -- end,
       })
     end,
   },
@@ -465,7 +470,7 @@ local plugins = {
       },
       {
         "jay-babu/mason-nvim-dap.nvim", -- for DAP (C++, Bash)
-        ft = { "c", "cpp", "sh" },
+        -- ft = { "c", "cpp", "sh" },
         dependencies = {
           "williamboman/mason.nvim",
         },
@@ -483,7 +488,7 @@ local plugins = {
       },
       {
         "leoluz/nvim-dap-go",
-        ft = "go",
+        -- ft = "go",
         config = function()
           require("dap-go").setup()
         end,

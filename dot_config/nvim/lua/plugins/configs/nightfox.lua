@@ -16,6 +16,7 @@ local Shade = require("nightfox.lib.shade")
 -- s/\v#\zs\x{6}/\=system('pastel color ' .. submatch(0)  .. ' | pastel saturate 0.2 | pastel format hex | cut -c 2-7 | tr -d "\n"')
 
 -- ~/.local/share/nvim/lazy/nightfox.nvim/lua/nightfox/palette/nightfox.lua
+-- :lua print(vim.inspect(require("nightfox.palette").load("nightfox")))
 -- local orig_nightfox_palette = {
 --   nightfox = {
 --
@@ -153,6 +154,8 @@ require("nightfox").setup({
       manItalic = { fg = "palette.green", style = "italic" }, -- manpageの斜体に色つける
       Whitespace = { fg = "palette.comment" }, -- :set listのタブ文字に色をつける
       SpecialKey = { fg = "palette.comment" }, -- ^Mのようなやつ
+      LspReferenceText = { bg = "palette.black" }, -- 選択テキストと被るので黒系の色にする
+      TermCursorNC = { bg = "palette.orange" }, -- ターミナルのカーソル位置, ノーマルモードにいるときに見やすく
 
       ------------ plugin ------------
       -- lukas-reineke/indent-blankline.nvim
