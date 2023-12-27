@@ -169,30 +169,25 @@ nnoremap <silent> ]T :tlast<CR>
 nnoremap & :&&<CR>
 xnoremap & :&&<CR>
 
-" ------------------------- plugin ------------------------------ "
+" ----------------------------- plugin ---------------------------------
 
-" auto install plugin
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+packadd minpac
+call minpac#init()
 
-call plug#begin()
-Plug 'vim-jp/vimdoc-ja'
-" Plug 'editorconfig/editorconfig-vim'
-Plug 'tpope/vim-sleuth'
-Plug 'ojroques/vim-oscyank', {'branch': 'main'}
-Plug 'mbbill/undotree'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-call plug#end()
+command! PackUpdate call minpac#update()
+command! PackClean call minpac#clean()
 
-" ----------------------- plugin config  ------------------------ "
+call minpac#add('tpope/vim-scriptease', {'type': 'opt'})
+call minpac#add('tpope/vim-sleuth')
+call minpac#add('ojroques/vim-oscyank')
+call minpac#add('mbbill/undotree')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('junegunn/fzf')
+call minpac#add('junegunn/fzf.vim')
+
+" ----------------------------- plugin config ---------------------------------
 
 " ojroques/vim-oscyank
-
 nmap <leader>y <Plug>OSCYankOperator
 nmap <leader>yy <leader>y_
 xmap <leader>y <Plug>OSCYankVisual

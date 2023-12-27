@@ -339,7 +339,7 @@ map("n", "<leader>gf", "<cmd> Flog <CR>", { desc = "Open flog" })
 
 --------------------------------- ui stuffs -------------------------------------
 
-map("n", "<leader>un", "<cmd> set relativenumber! <CR>", { desc = "Toggle relative line number" })
+map("n", "<leader>un", "<cmd> bufdo set relativenumber! <CR>", { desc = "Toggle relative line number" })
 map("n", "<leader>uw", "<cmd> set wrap! <CR>", { desc = "Toggle wrap" })
 map("n", "<leader>uq", "<cmd> QFToggle <CR>", { desc = "Toggle Quickfix window" })
 -- Toggle diagnostic (linter)

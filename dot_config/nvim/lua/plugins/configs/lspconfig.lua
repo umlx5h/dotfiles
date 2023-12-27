@@ -34,7 +34,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     map("n", "K", vim.lsp.buf.hover, "LSP hover")
     map("n", "gK", vim.lsp.buf.signature_help, "LSP signature help")
-    -- map("i", "<C-k>", vim.lsp.buf.signature_help, "LSP signature help")
+    map("i", "<C-k>", vim.lsp.buf.signature_help, "LSP signature help")
+    -- remap Enter digraph
+    map("i", "<C-x><C-k>", "<C-k>", "Insert digraph")
 
     map("n", "<leader>cr", vim.lsp.buf.rename, "LSP rename")
     map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "LSP code action")
