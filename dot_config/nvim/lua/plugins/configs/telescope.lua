@@ -17,7 +17,6 @@ telescope.setup({
     file_ignore_patterns = {
       "node_modules",
       ".git/",
-      ".github/",
       "package-lock.json",
       "yarn.lock",
     },

@@ -2,7 +2,7 @@ require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
     javascript = { "prettierd" },
-    go = { "goimports", "gofmt" },
+    go = { "gofmt", "goimports" },
     sh = { "shfmt" },
     c = { "clang_format" },
     cpp = { "clang_format" },

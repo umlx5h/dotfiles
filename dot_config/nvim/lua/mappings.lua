@@ -111,9 +111,8 @@ map("n", "<leader>K", "<cmd> Man <CR>", { desc = "Search in Manpage" })
 map("x", "<leader>K", 'y:Man <c-r>" <CR>', { desc = "Search in Manpage" })
 
 -- terminal mode
--- map("t", "<C-x>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
-map("t", "<C-Space>", "<C-\\><C-n>", { desc = "Escape Terminal" })
-map("t", "<C-v><C-Space>", "<C-\\><C-n>", { desc = "Sent <C-Space> in Terminal" })
+map("t", "<C-x>", "<C-\\><C-n>", { desc = "Escape Terminal" })
+map("t", "<C-v><C-x>", "<C-\\><C-n>", { desc = "Sent <C-x> in Terminal" })
 map("t", "<C-v><C-v>", "<C-v>", { desc = "Sent <C-v> in Terminal" })
 -- map("t", "<Esc>", "<C-\\><C-n>", { desc = "Escape Terminal mode" })
 -- map("t", "<C-v><Esc>", "<Esc>", { desc = "Enter ESC on terminal mode" })
@@ -127,9 +126,9 @@ map("t", "<C-v><C-k>", "<C-k>", { desc = "Sent <C-k> in Terminal" })
 map("t", "<C-v><C-l>", "<C-l>", { desc = "Sent <C-l> in Terminal" })
 
 -- terminal
-map("n", "<leader>ts", "<cmd> split | terminal <cr>", { desc = "Horizontal terminal" })
-map("n", "<leader>tv", "<cmd> vsplit | terminal <cr>", { desc = "Vertical terminal" })
-map("n", "<leader>tn", "<cmd> tabedit | terminal <cr>", { desc = "Terminal in New tab" })
+map("n", "<leader>ts", "<cmd> split | redraw! | terminal <cr>", { desc = "Horizontal terminal" })
+map("n", "<leader>tv", "<cmd> vsplit | redraw! | terminal <cr>", { desc = "Vertical terminal" })
+map("n", "<leader>tn", "<cmd> tabedit | redraw! | terminal <cr>", { desc = "Terminal in New tab" })
 map("n", "<leader>te", "<cmd> terminal <cr>", { desc = "Open terminal in current window" })
 
 -- map("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
