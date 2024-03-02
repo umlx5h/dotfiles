@@ -7,7 +7,8 @@ null_ls.setup({
     -- null_ls.builtins.formatting.stylua,
 
     -- Shell
-    null_ls.builtins.code_actions.shellcheck,
+    -- null_ls.builtins.code_actions.shellcheck,
+    require("none-ls-shellcheck.code_actions"), -- LSPのbashlsでも対応しているが、全てのcode_actionsが出てこないのでこれも追加する
     -- null_ls.builtins.formatting.shfmt,
 
     -- Go
@@ -22,8 +23,7 @@ null_ls.setup({
     -- null_ls.builtins.formatting.clang_format,
 
     -- Typescript, Javascript
-    null_ls.builtins.diagnostics.eslint,
-    -- { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "css", "scss", "less", "html", "json", "jsonc", "yaml", "markdown", "markdown.mdx", "graphql", "handlebars" }
+    -- null_ls.builtins.diagnostics.eslint, -- instead using LSP eslint
     -- null_ls.builtins.formatting.prettierd,
   },
 

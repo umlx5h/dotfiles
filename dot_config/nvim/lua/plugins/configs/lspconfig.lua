@@ -170,6 +170,7 @@ local servers = {
   "pyright",
   "intelephense",
   "rust_analyzer",
+  "eslint",
 }
 
 for _, lsp in ipairs(servers) do

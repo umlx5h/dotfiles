@@ -174,6 +174,9 @@ local plugins = {
   {
     "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "gbprod/none-ls-shellcheck.nvim",
+    },
     opts = function()
       return require("plugins.configs.null-ls")
     end,
