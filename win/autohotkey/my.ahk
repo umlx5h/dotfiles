@@ -127,6 +127,8 @@ is_terminal()
 		Return 1
 	IfWinActive,ahk_exe gvim.exe
 		Return 1
+	IfWinActive,ahk_exe neovide.exe
+		Return 1
 	IfWinActive,ahk_class VMwareUnityHostWndClass
 		Return 1
 	Return 0
@@ -354,6 +356,7 @@ Return
 #If is_terminal()
 	; ターミナルでF14 & vと CTRL+vを区別するための設定
 	^v::Send ^+v
+        ^c::Send ^+c
 #If
 
 ; Capslock to F14 to Ctrl & Emacs cursor
@@ -453,7 +456,7 @@ F14 & Esc::~
 ;
 ; AutoHotkey: v1.1.33.00
 ; Author:     Miraium  https://github.com/Miraium/ctrl-ime-ahk
-; 
+;
 ; 以下フォーク元
 ; Author:     karakaram   http://www.karakaram.com/alt-ime-on-off
 ; Author:     moremorefor  https://github.com/moremorefor/ctrl-ime-ahk
@@ -580,7 +583,7 @@ RCtrl up::
 		IME_SET(1)
 	}
 	Return
-	
+
 
 
 /*****************************************************************************
@@ -597,7 +600,7 @@ RCtrl up::
 履歴
 	2008.07.11 v1.0.47以降の 関数ライブラリスクリプト対応用にファイル名を変更
 	2008.12.10 コメント修正
-	2009.07.03 IME_GetConverting() 追加 
+	2009.07.03 IME_GetConverting() 追加
 			   Last Found Windowが有効にならない問題修正、他。
 	2009.12.03
 	  ・IME 状態チェック GUIThreadInfo 利用版 入れ込み
@@ -612,7 +615,7 @@ RCtrl up::
 	  ・LongPtr対策：ポインタサイズをA_PtrSizeで見るようにした
 
 				;==================================
-				;  GUIThreadInfo 
+				;  GUIThreadInfo
 				;=================================
 				; 構造体 GUITreadInfo
 				;typedef struct tagGUITHREADINFO {(x86) (x64)
@@ -701,7 +704,7 @@ IME_SET(SetSts, WinTitle="A")    {
 
 ;  ※ 地域と言語のオプション - [詳細] - 詳細設定
 ;     - 詳細なテキストサービスのサポートをプログラムのすべてに拡張する
-;    が ONになってると値が取れない模様 
+;    が ONになってると値が取れない模様
 ;    (Google日本語入力βはここをONにしないと駄目なので値が取れないっぽい)
 
 ;-------------------------------------------------------
@@ -862,4 +865,3 @@ IME_GetConverting(WinTitle="A",ConvCls="",CandCls="") {
 	SetTitleMatchMode, %tmm%
 	return ret
 }
-
