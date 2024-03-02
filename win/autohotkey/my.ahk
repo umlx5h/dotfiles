@@ -1,452 +1,447 @@
-------------------------------------------- Global -----------------------------------------------------
-#InstallKeybdHook
+#Requires AutoHotkey v2.0+
 #UseHook
+InstallKeybdHook()
 
-SetKeyDelay 0
+holdup_key() {
+	keys := ["Alt", "LAlt", "RAlt", "Ctrl", "LCtrl", "RCtrl", "Shift", "LShift", "RShift", "LWin", "RWin", "F13", "F14", "LButton", "RButton", "MButton"]
+	for key in keys {
+		SendInput(Format("{ {1} up }", key))
+	}
+	SendInput("{ESC}")
+}
 
-; Fix stuck?
-Send, {Alt Up}{LAlt Up}{RAlt Up}{Ctrl Up}{LCtrl Up}{RCtrl Up}{Shift Up}{LShift Up}{RShift Up}{LWin Up}{RWin Up}{LButton Up}{RButton Up}{MButton Up}
-Send, {ESC}
+; Fix stuck
+holdup_key()
 
--------------------------------------------  Original  ------------------------------------------------
+/* ------------------------------- Win stuff ------------------------------- */
 
-/*
-  PDIC用
-*/
-; copy word after opening popup
+/* タスクバーを隠すトグル */
+^LWin:: ; Ctrl + left Win key
+{
+	if WinExist("ahk_class Shell_TrayWnd")
+	{
+		WinHide("ahk_class Shell_TrayWnd")
+		WinHide("ahk_class Shell_SecondaryTrayWnd")
+	}
+	else
+	{
+		WinShow("ahk_class Shell_TrayWnd")
+		WinShow("ahk_class Shell_SecondaryTrayWnd")
+	}
+}
+
+/* ------------------------------- Mac like ------------------------------- */
+
+!q:: Send("!{F4}") ; Alt+Q to close application
+; !w::Send("^w")
+; !h::Send("{LWin down}{Down}{LWin up}")
+
+/* ------------------------------- PDIC ------------------------------- */
+
+/* ポップアップ画面での操作 */
+#HotIf WinActive("ahk_class TPopupWindow.UnicodeClass")
+{
+	;^c::^w
+	^c:: Send("^{w 1}") ; word copy
+	!Left:: Send("{Space}") ; next definition
+	!Right:: Send("+{Space}") ; prev definition
+	!NumpadLeft:: Send("{Space}")
+	!NumpadRight:: Send("+{Space}")
+	MButton::Tab ; bookmark word
+}
+#HotIf
+
+/* 単語を引いた時に同時に単語をコピーする */
 /*
 Alt & RButton::
 NumLock::
-	Send, !{RButton}
-	Sleep, 60
-	IfWinActive, ahk_class TPopupWindow.UnicodeClass
+{
+	Send("!{RButton}")
+
+	Loop 5
 	{
-		Send, ^{w 3}
+		Sleep(25)
+		if WinActive("ahk_class TPopupWindow.UnicodeClass")
+		{
+			Send("^{w 1}")
+			break
+		}
 	}
-return
-*/
-
-
-; Pdicのポップアップ画面での操作を定義
-#IfWinActive, ahk_class TPopupWindow.UnicodeClass
-	;^c::^w
-	^c::Send ^{w 1}
-	!Left::Send {Space}
-	!Right::Send +{Space}
-	!NumpadLeft::Send {Space}
-	!NumpadRight::Send +{Space}
-	MButton::Tab
-#IfWinActive
-
-
-/*
-  左手トラックボール用
-*/
-NumLock::Send !{RButton}
-; これなに？
-^NumLock::Send !^{RButton}
-
-/*
-DevDocs
-*/
-/* ; not working?
-+^Space::
-	IfWinExist, DevDocs ahk_class Chrome_WidgetWin_1 ahk_exe msedge.exe
-		IfWinActive
-			WinMinimize
-		else
-			WinActivate
-	else
-		Run, "C:\Program Files (x86)\Microsoft\Edge\Application\msedge_proxy.exe"  --profile-directory=Default --app-id=ahiigpfcghkbjfcibpojancebdfjmoop --app-url=https://devdocs.io/ --app-run-on-os-login-mode=windowed --app-launch-source=19
-*/
-
-/*
-Task bar hide
-*/
-^LWin:: ;Ctrl + left Win key
-If WinExist("ahk_class Shell_TrayWnd")
-{
-	WinHide, ahk_class Shell_TrayWnd
-	WinHide, ahk_class Shell_SecondaryTrayWnd
 }
+*/
 
-Else
-{
-	WinShow, ahk_class Shell_TrayWnd
-	WinShow, ahk_class Shell_SecondaryTrayWnd
-}
+/* 左手トラックボール */
+NumLock:: Send("!{RButton}") ; 右クリック
+^NumLock:: Send("!^{RButton}") ; CTRL+右クリックでDokopop
 
-
-
--------------------------------------------  Emacs keybinding  ------------------------------------------------
-
-#If WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Code - Insiders.exe")
-	; send F13-F24 for Vim keybinding
-	F14 & a::Send {F13}
-	F14 & b::Send {F14}
-	F14 & c::Send {F15}
-	F14 & d::Send {F16}
-	F14 & e::Send {F17}
-	F14 & f::Send {F18}
-	F14 & g::Send {F19}
-	F14 & h::Send {F20}
-	F14 & i::Send {F21}
-	F14 & j::Send {F22}
-	F14 & k::Send {F23}
-	F14 & l::Send {F24}
-	F14 & m::Send ^{F13}
-	F14 & n::Send ^{F14}
-	F14 & o::Send ^{F15}
-	F14 & p::Send ^{F16}
-	F14 & q::Send ^{F17}
-	F14 & r::Send ^{F18}
-	F14 & s::Send ^{F19}
-	F14 & t::Send ^{F20}
-	F14 & u::Send ^{F21}
-	F14 & v::Send ^{F22}
-	F14 & w::Send ^{F23}
-	F14 & x::Send ^{F24}
-	F14 & y::Send +{F13}
-	F14 & z::Send +{F14}
-	F14 & {::Send +{F15}
-	F14 & }::Send +{F16}
-	F14 & 6::Send +{F17}
-#If
+/* ------------------------------- Emacs keybinding  ------------------------------- */
 
 ; Applications you want to disable emacs-like keybindings
 ; (Please comment out applications you don't use)
 is_terminal()
 {
-	IfWinActive,ahk_exe WindowsTerminal.exe ; Windows Terminal
-		Return 1
-	IfWinActive,ahk_exe WezTerm.exe ; WezTerm
-		Return 1
-	IfWinActive,ahk_exe wezterm-gui.exe ; WezTerm
-		Return 1
-	IfWinActive,ahk_exe alacritty.exe
-		Return 1
-	IfWinActive,ahk_exe gvim.exe
-		Return 1
-	IfWinActive,ahk_exe neovide.exe
-		Return 1
-	IfWinActive,ahk_class VMwareUnityHostWndClass
-		Return 1
-	Return 0
+	if WinActive("ahk_exe WindowsTerminal.exe") ; Windows Terminal
+		return 1
+	if WinActive("ahk_exe WezTerm.exe") ; WezTerm
+		return 1
+	if WinActive("ahk_exe wezterm-gui.exe") ; WezTerm
+		return 1
+	if WinActive("ahk_exe alacritty.exe")
+		return 1
+	if WinActive("ahk_exe emacs.exe")
+		return 1
+	if WinActive("ahk_exe gvim.exe")
+		return 1
+	if WinActive("ahk_exe vmware.exe")
+		return 1
+	return 0
 }
 
-; 複数行のテキストを1行にしてコピー 改行文字を\nに変換 Vimに貼り付けるときに便利
-#v::
-	Clip0 = %ClipBoardAll%
-	ClipBoard = %ClipBoard%       ; Convert to text
-	ClipBoard := StrReplace(StrReplace(ClipBoard, "`r`n", "\n"), "`n", "\n")  ; 改行文字を\nに変換
-	If is_terminal()
-		Send ^+v
-	Else
-		Send ^v
-	Return
-	Sleep 50                      ; Don't change clipboard while it is pasted! (Sleep > 0)
-	ClipBoard = %Clip0%           ; Restore original ClipBoard
-	VarSetCapacity(Clip0, 0)      ; Free memory
-Return
+/*
+Emacs keybind
+@from https://mag.nioufuku.net/2020/04/26/programming/00043-autohotkey/
+*/
+;;
+;; An autohotkey script that provides emacs-like keybinding on Windows
+;;
+; The following line is a contribution of NTEmacs wiki http://www49.atwiki.jp/ntemacs/pages/20.html
+;SetKeyDelay 0
 
-#If !WinActive("ahk_exe Code.exe") and !WinActive("ahk_exe Code - Insiders.exe")
-	/*
-	Emacs keybind
-	@from https://mag.nioufuku.net/2020/04/26/programming/00043-autohotkey/
-	*/
-	;;
-	;; An autohotkey script that provides emacs-like keybinding on Windows
-	;;
-	;#InstallKeybdHook
-	;#UseHook
+keep_shift()
+{
+	if GetKeyState("Shift")
+		return 1
+	return 0
+}
+key_del()
+{
+	if is_terminal()
+		Send("{Blind}^d")
+	else
+		Send("{Blind}{Del}")
+}
+key_backspace()
+{
+	if is_terminal()
+		Send("{Blind}^h")
+	else
+		Send("{Blind}{BS}")
+}
+kill_home()
+{
+	if is_terminal()
+	{
+		Send("{Blind}^u")
+	}
+	else
+	{
+		Send("{ShiftDown}{Home}{ShiftUp}")
+		Sleep(10)
+		;Send ^x      ; with copy
+		Send("{Del}") ; without copy
+	}
+}
+kill_line()
+{
+	if is_terminal()
+	{
+		Send("{Blind}^k")
+	}
+	else
+	{
+		Send("{ShiftDown}{END}{ShiftUp}")
+		Sleep(10)
+		Send("^x")
+	}
+}
+; quit()
+; {
+; 	if is_terminal()
+; 		Send("{Blind}^g")
+; 	else
+; 		Send("{Blind}{ESC}")
+; }
+key_home()
+{
+	if is_terminal()
+		Send("{Blind}^a")
+	else
+		Send("{Blind}{HOME}")
+}
+key_end()
+{
+	if is_terminal()
+		Send("{Blind}^e")
+	else
+		Send("{Blind}{END}")
+}
+key_up()
+{
+	if is_terminal()
+		Send("{Blind}^p")
+	else
+		Send("{Blind}{Up}")
+}
+key_down()
+{
+	if is_terminal()
+		Send("{Blind}^n")
+	else
+		Send("{Blind}{Down}")
+}
+key_right()
+{
+	if is_terminal()
+		Send("{Blind}^f")
+	else
+		Send("{Blind}{Right}")
+}
+key_left()
+{
+	if is_terminal()
+		Send("{Blind}^b")
+	else
+		Send("{Blind}{Left}")
+}
+key_enter()
+{
+	if is_terminal()
+		Send("{Blind}^j")
+	else
+		Send("{Blind}{Enter}")
+}
+; modified_backspace()
+; {
+; 	if is_terminal() {
+; 		Send("{Blind}^{BS}")
+; 		return
+; 	}
 
-	; The following line is a contribution of NTEmacs wiki http://www49.atwiki.jp/ntemacs/pages/20.html
-	;SetKeyDelay 0
+; 	if keep_shift()
+; 		backspace_line()
+; 	else
+; 		backspace_word()
+; }
+; backspace_line()
+; {
+; 	Send("{End}{ShiftDown}{Home}{Home}{ShiftUp}")
+; 	Sleep(10)
+; 	Send("{BS}{BS}")
+; }
+; backspace_word()
+; {
+; 	Send("{ShiftDown}{CtrlDown}{Left}{CtrlUp}{ShiftUp}")
+; 	Sleep(10)
+; 	Send("{BS}")
+; }
+backspace_word()
+{
+	if is_terminal()
+		Send("{Blind}^w")
+	else
+		Send("^{BS}")
+}
+; modified_delete()
+; {
+; 	if is_terminal() {
+; 		Send("{Blind}^{Del}")
+; 		return
+; 	}
 
-	keep_shift()
-	{
-		If GetKeyState("Shift")
-			Return 1
-		Return 0
-	}
+; 	if keep_shift()
+; 		delete_line()
+; 	else
+; 		delete_word()
+; }
+; delete_line()
+; {
+; 	Send("{Home}{Home}{ShiftDown}{End}{ShiftUp}")
+; 	Sleep(10)
+; 	Send("{Del}{Del}")
+; }
+; delete_word()
+; {
+; 	Send("{ShiftDown}{CtrlDown}{Right}{CtrlUp}{ShiftUp}")
+; 	Sleep(10)
+; 	Send("{Del}")
+; }
 
-	key_del()
-	{
-		If is_terminal()
-			Send {Blind}^d
-		Else
-			Send {Blind}{Del}
-		Return
-	}
-	key_backspace()
-	{
-		If is_terminal()
-			Send {Blind}^h
-		Else
-			Send {Blind}{BS}
-		Return
-	}
-	kill_home()
-	{
-		If is_terminal()
-			Send {Blind}^u
-		Else {
-			Send {ShiftDown}{Home}{ShiftUp}
-			Sleep 10
-			;Send ^x
-			Send {Del}
-		}
-		Return
-	}
-	kill_line()
-	{
-		If is_terminal()
-			Send {Blind}^k
-		Else {
-			Send {ShiftDown}{END}{ShiftUp}
-			Sleep 10
-			Send ^x
-		}
-		Return
-	}
-	quit()
-	{
-		If is_terminal()
-			Send {Blind}^g
-		Else
-			Send {Blind}{ESC}
-		Return
-		}
-	key_home()
-	{
-		If is_terminal()
-			Send {Blind}^a
-		Else
-			Send {Blind}{HOME}
-		Return
-	}
-	key_end()
-	{
-		If is_terminal()
-			Send {Blind}^e
-		Else
-			Send {Blind}{END}
-		Return
-	}
-	key_up()
-	{
-		If is_terminal()
-			Send {Blind}^p
-		Else
-			Send {Blind}{Up}
-		Return
-	}
-	key_down()
-	{
-		If is_terminal()
-			Send {Blind}^n
-		Else
-			Send {Blind}{Down}
-		Return
-	}
-	key_right()
-	{
-		If is_terminal()
-			Send {Blind}^f
-		Else
-			Send {Blind}{Right}
-		Return
-	}
-	key_left()
-	{
-		If is_terminal()
-			Send {Blind}^b
-		Else
-			Send {Blind}{Left}
-		Return
-	}
-	modified_backspace()
-	{
-		If keep_shift()
-			backspace_line()
-		Else
-			backspace_word()
-		Return
-	}
-	backspace_line()
-	{
-		Send {End}{ShiftDown}{Home}{Home}{ShiftUp}
-		Sleep 10
-		Send {BS}{BS}
-		Return
-	}
-	backspace_word()
-	{
-		Send {ShiftDown}{CtrlDown}{Left}{CtrlUp}{ShiftUp}
-		Sleep 10
-		Send {BS}
-		Return
-	}
-	backspace_word_my()
-	{
-		If is_terminal()
-			Send {Blind}^w
-		Else
-			Send ^{BS}
-		Return
-	}
-	modified_delete()
-	{
-		If keep_shift()
-			delete_line()
-		Else
-			delete_word()
-	}
-	delete_line()
-	{
-		Send {Home}{Home}{ShiftDown}{End}{ShiftUp}
-		Sleep 10
-		Send {Del}{Del}
-		Return
-	}
-	delete_word()
-	{
-		Send {ShiftDown}{CtrlDown}{Right}{CtrlUp}{ShiftUp}
-		Sleep 10
-		Send {Del}
-		Return
-	}
-	F14 & a::key_home()
-	F14 & b::key_left()
-	F14 & c::Send {Blind}^c
-	F14 & d::key_del()
-	F14 & e::key_end()
-	F14 & f::key_right()
-	;F14 & g::quit()
-	F14 & g::Send {Blind}^g
-	F14 & h::key_backspace()
-	F14 & i::Send {Blind}^i
-	; F14 & j::Send {Blind}!{sc029} ; IME toggle
-	F14 & j::Send {Blind}^j
-	F14 & k::kill_line()
-	F14 & l::Send {Blind}^l
-	;F14 & m::Send {Blind}{Enter}
-	F14 & m::Send {Blind}^m
-	F14 & n::key_down()
-	F14 & o::Send {Blind}^o
-	F14 & p::key_up()
-	F14 & q::Send {Blind}^q
-	F14 & r::Send {Blind}^r
-	F14 & s::Send {Blind}^s
-	F14 & t::Send {Blind}^t
-	F14 & u::kill_home()
-	;F14 & u::Send {Blind}^u
-	F14 & v::Send {Blind}^v
-	;F14 & w::Send {Blind}^w
-	F14 & w::backspace_word_my()
-	F14 & x::Send {Blind}^x
-	F14 & y::Send {Blind}^y
-	F14 & z::Send {Blind}^z
+; VSCodeではemacs keybindingを無効化し、vimプラグイン用のキーバインドを使うため
+; F13-F24 を送る
+#HotIf WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Code - Insiders.exe")
+{
+	F14 & a:: Send("{F13}")
+	F14 & b:: Send("{F14}")
+	F14 & c:: Send("{F15}")
+	F14 & d:: Send("{F16}")
+	F14 & e:: Send("{F17}")
+	F14 & f:: Send("{F18}")
+	F14 & g:: Send("{F19}")
+	F14 & h:: Send("{F20}")
+	F14 & i:: Send("{F21}")
+	F14 & j:: Send("{F22}")
+	F14 & k:: Send("{F23}")
+	F14 & l:: Send("{F24}")
+	F14 & m:: Send("^{F13}")
+	F14 & n:: Send("^{F14}")
+	F14 & o:: Send("^{F15}")
+	F14 & p:: Send("^{F16}")
+	F14 & q:: Send("^{F17}")
+	F14 & r:: Send("^{F18}")
+	F14 & s:: Send("^{F19}")
+	F14 & t:: Send("^{F20}")
+	F14 & u:: Send("^{F21}")
+	F14 & v:: Send("^{F22}")
+	F14 & w:: Send("^{F23}")
+	F14 & x:: Send("^{F24}")
+	F14 & y:: Send("+{F13}")
+	F14 & z:: Send("+{F14}")
+	F14 & {:: Send("+{F15}")
+	F14 & }:: Send("+{F16}")
+	F14 & 6:: Send("+{F17}")
+}
+#HotIf
 
-	F14 & 6::Send {Blind}^6
-	F14 & {::Send {Blind}^{[}
-	F14 & }::Send {Blind}^{]}
-#If
+; VSCode以外はemacs keybindingを使う
+; 上のVSCodeで定義しているところだけをHotIfの中で定義する (共通のものは外で定義)
+#HotIf !(WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Code - Insiders.exe"))
+{
 
-#If is_terminal()
-	; ターミナルでF14 & vと CTRL+vを区別するための設定
-	^v::Send ^+v
-        ^c::Send ^+c
-#If
+	F14 & a:: key_home()
+	F14 & b:: key_left()
+	F14 & c:: Send("{Blind}^c")
+	F14 & d:: key_del()
+	F14 & e:: key_end()
+	F14 & f:: key_right()
+	; F14 & g::quit()
+	F14 & g:: Send("{Blind}^g")
+	F14 & h:: key_backspace()
+	F14 & i:: Send("{Blind}^i")
+	; F14 & j:: Send("{Blind}!{sc029}") ; IME toggle
+	F14 & j:: key_enter()
+	F14 & k:: kill_line()
+	F14 & l:: Send("{Blind}^l")
+	; F14 & m:: Send("{Blind}{Enter}")
+	F14 & m:: Send("{Blind}^m")
+	F14 & n:: key_down()
+	F14 & o:: Send("{Blind}^o")
+	F14 & p:: key_up()
+	F14 & q:: Send("{Blind}^q")
+	F14 & r:: Send("{Blind}^r")
+	F14 & s:: Send("{Blind}^s")
+	F14 & t:: Send("{Blind}^t")
+	F14 & u:: kill_home()
+	F14 & v:: Send("{Blind}^v")
+	F14 & w:: backspace_word()
+	F14 & x:: Send("{Blind}^x")
+	F14 & y:: Send("{Blind}^y")
+	F14 & z:: Send("{Blind}^z")
+	F14 & {:: Send("{Blind}^{[}")
+	F14 & }:: Send("{Blind}^{]}")
+	F14 & 6:: Send("{Blind}^6")
+}
+#HotIf
 
-; Capslock to F14 to Ctrl & Emacs cursor
-F14 & Enter::Send {Blind}^{Enter}
-F14 & Space::Send {Blind}^{Space}
-;F14 & Tab::Send {Blind}^{Tab}
+; Capslock to F14 to Ctrl
+F14 & Enter:: Send("{Blind}^{Enter}")
+F14 & Space:: Send("{Blind}^{Space}")
 
 ; F14 + Tab -> Ctrl + Tab (work for Firefox)
-; https://stackoverflow.com/a/66664204
-SendMode Input
-#MaxThreads 255
-#MaxThreadsPerHotkey 255
+; ref: https://stackoverflow.com/a/66664204
+#MaxThreads 255 ; set globally
+#MaxThreadsPerHotkey 255 ; set by hotkey
 F14 & Tab::
-	Send {Blind}{LCtrl down}{Tab} ; blindをつけるとshiftで逆もできるようになる
-	Keywait F14
-	Send {LCtrl up}
-	return
-#MaxThreadsPerHotkey
+#MaxThreadsPerHotkey 1 ; go back to default
+{
+	Send("{Blind}{LCtrl down}{Tab}")
+	KeyWait("F14")
+	Send("{Blind}{LCtrl up}")
+}
 
-;F14 & BS::modified_backspace()
-;F14 & Del::modified_delete()
-F14 & BS::Send {Blind}^{BS}
-F14 & Del::Send {Blind}^{Del}
-F14 & Ins::Send {Blind}^{Ins}
-F14 & Up::Send {Blind}^{Up}
-F14 & Down::Send {Blind}^{Down}
-F14 & Left::Send {Blind}^{Left}
-F14 & Right::Send {Blind}^{Right}
-F14 & Home::Send {Blind}^{Home}
-F14 & End::Send {Blind}^{End}
-F14 & PgUp::Send {Blind}^{PgUp}
-F14 & PgDn::Send {Blind}^{PgDn}
-F14 & AppsKey::Send {Blind}^{AppsKey}
-F14 & PrintScreen::Send {Blind}^{PrintScreen}
-F14 & CtrlBreak::Send {Blind}^{CtrlBreak}
-F14 & Pause::Send {Blind}^{Pause}
-;F14 & Esc::Send {Blind}^{Esc}  ; disable for tilde
-F14 & F1::Send {Blind}^F1
-F14 & F2::Send {Blind}^F2
-F14 & F3::Send {Blind}^F3
-F14 & F4::Send {Blind}^F4
-F14 & F5::Send {Blind}^F5
-F14 & F6::Send {Blind}^F6
-F14 & F7::Send {Blind}^F7
-F14 & F8::Send {Blind}^F8
-F14 & F9::Send {Blind}^F9
-F14 & F10::Send {Blind}^F10
-F14 & F11::Send {Blind}^F11
-F14 & F12::Send {Blind}^F12
-F14 & sc029::Send {Blind}^{sc029} ; `
-F14 & 1::Send {Blind}^1
-F14 & 2::Send {Blind}^2
-F14 & 3::Send {Blind}^3
-F14 & 4::Send {Blind}^4
-F14 & 5::Send {Blind}^5
-; F14 & 6::Send {Blind}^6
-F14 & 7::Send {Blind}^7
-F14 & 8::Send {Blind}^8
-F14 & 9::Send {Blind}^9
-F14 & 0::Send {Blind}^0
-F14 & -::Send {Blind}^-
-F14 & =::Send {Blind}^=
-F14 & \::Send {Blind}^{\}
-F14 & sc027::Send {Blind}^{sc027}
-F14 & '::Send {Blind}^'
-F14 & ,::Send {Blind}^,
-F14 & .::Send {Blind}^.
-; F14 & {::Send {Blind}^{[}
-; F14 & }::Send {Blind}^{]}
-F14 & /::Send {Blind}^/
-F14 & LButton::Send {Blind}^{LButton}
-F14 & RButton::Send {Blind}^{RButton}
-F14 & MButton::Send {Blind}^{MButton}
-F14 & WheelDown::Send {Blind}^{WheelDown}
-F14 & WheelUp::Send {Blind}^{WheelUp}
-F14 & WheelLeft::Send {Blind}^{WheelLeft}
-F14 & WheelRight::Send {Blind}^{WheelRight}
-
-; チルダを入力可能にする
+F14 & BS:: Send("{Blind}^{BS}")
+F14 & Del:: Send("{Blind}^{Del}")
+; F14 & BS::modified_backspace()
+; F14 & Del::modified_delete()
+F14 & Ins:: Send("{Blind}^{Ins}")
+F14 & Up:: Send("{Blind}^{Up}")
+F14 & Down:: Send("{Blind}^{Down}")
+F14 & Left:: Send("{Blind}^{Left}")
+F14 & Right:: Send("{Blind}^{Right}")
+F14 & Home:: Send("{Blind}^{Home}")
+F14 & End:: Send("{Blind}^{End}")
+F14 & PgUp:: Send("{Blind}^{PgUp}")
+F14 & PgDn:: Send("{Blind}^{PgDn}")
+F14 & AppsKey:: Send("{Blind}^{AppsKey}")
+F14 & PrintScreen:: Send("{Blind}^{PrintScreen}")
+F14 & CtrlBreak:: Send("{Blind}^{CtrlBreak}")
+F14 & Pause:: Send("{Blind}^{Pause}")
+; F14 & Esc:: Send("{Blind}^{Esc}")
 F14 & Esc::~
+F14 & F1:: Send("{Blind}^F1")
+F14 & F2:: Send("{Blind}^F2")
+F14 & F3:: Send("{Blind}^F3")
+F14 & F4:: Send("{Blind}^F4")
+F14 & F5:: Send("{Blind}^F5")
+F14 & F6:: Send("{Blind}^F6")
+F14 & F7:: Send("{Blind}^F7")
+F14 & F8:: Send("{Blind}^F8")
+F14 & F9:: Send("{Blind}^F9")
+F14 & F10:: Send("{Blind}^F10")
+F14 & F11:: Send("{Blind}^F11")
+F14 & F12:: Send("{Blind}^F12")
+F14 & 1:: Send("{Blind}^1")
+F14 & 2:: Send("{Blind}^2")
+F14 & 3:: Send("{Blind}^3")
+F14 & 4:: Send("{Blind}^4")
+F14 & 5:: Send("{Blind}^5")
+; F14 & 6::Send("{Blind}^6") ; vscode vim
+F14 & 7:: Send("{Blind}^7")
+F14 & 8:: Send("{Blind}^8")
+F14 & 9:: Send("{Blind}^9")
+F14 & 0:: Send("{Blind}^0")
+F14 & -:: Send("{Blind}^-")
+F14 & =:: Send("{Blind}^=")
+F14 & \:: Send("{Blind}^{\}")
+F14 & ':: Send("{Blind}^'")
+F14 & ,:: Send("{Blind}^,")
+F14 & .:: Send("{Blind}^.")
+; F14 & {::Send("{Blind}^{[}") ; vscode vim
+; F14 & }::Send("{Blind}^{]}") ; vscode vim
+F14 & /:: Send("{Blind}^/")
+F14 & LButton:: Send("{Blind}^{LButton}")
+F14 & RButton:: Send("{Blind}^{RButton}")
+F14 & MButton:: Send("{Blind}^{MButton}")
+F14 & WheelDown:: Send("{Blind}^{WheelDown}")
+F14 & WheelUp:: Send("{Blind}^{WheelUp}")
+F14 & WheelLeft:: Send("{Blind}^{WheelLeft}")
+F14 & WheelRight:: Send("{Blind}^{WheelRight}")
 
-------------------------------------- Mac Like -----------------------------------------
-; Alt+Q to close application like mac
-!q::Send,!{F4}
-;!w::Send,^w
-; !h::Send,{LWin down}{Down}{LWin up}
-;
+/* ------------------------------- Terminal  ------------------------------- */
 
---------------------------------------------- Ctrl IME ----------------------------------------------------------
+#HotIf is_terminal()
+{
+	; ターミナルでF14とCTRLを区別するための設定
+	^v:: Send("^+v") ; CTRL+SHIFT+V paste from clipboard
+	^c:: Send("^+c") ; CTRL+SHIFT+C copy to clipboard
+}
+#HotIf
 
+; 複数行のテキストを1行にしてコピー 改行文字を\nに変換 Vimで複数行検索する時に便利
+#v::
+{
+	ClipSaved := ClipboardAll() ; Save the entire clipboard to a variable.
+	A_Clipboard := A_Clipboard ; Converts any copied files, HTML, or other formatted text to plain text.
+	A_Clipboard := StrReplace(StrReplace(A_Clipboard, "`r`n", "\n"), "`n", "\n")  ; 改行文字を\nに変換
+	if is_terminal()
+		Send("^+v")
+	else
+		Send("^v")
+	Sleep(50)                 ; Don't change clipboard while it is pasted! (Sleep > 0)
+	A_Clipboard := ClipSaved  ; Restore the original clipboard. Note the use of A_Clipboard (not ClipboardAll).
+	ClipSaved := ""           ; Free the memory in case the clipboard was very large.
+}
+
+/* ------------------------------- IME switch  ------------------------------- */
 
 ; 左右 Ctrl キーの空打ちで IME の OFF/ON を切り替える
 ;
@@ -461,10 +456,136 @@ F14 & Esc::~
 ; Author:     karakaram   http://www.karakaram.com/alt-ime-on-off
 ; Author:     moremorefor  https://github.com/moremorefor/ctrl-ime-ahk
 
-; Razer Synapseなど、キーカスタマイズ系のツールを併用しているときのエラー対策
-#MaxHotkeysPerInterval 350
+; #Include IMEv2.ahk/IMEv2.ahk
+; copy from https://github.com/k-ayaki/IMEv2.ahk/blob/master/IMEv2.ahk
+
+;-----------------------------------------------------------
+; IMEの状態をセット
+;   SetSts          1:ON / 0:OFF
+;   WinTitle="A"    対象Window
+;   戻り値          0:成功 / 0以外:失敗
+;-----------------------------------------------------------
+IME_SET(SetSts, WinTitle := "A") {
+	hwnd := WinExist(WinTitle)
+	if (WinActive(WinTitle)) {
+		ptrSize := !A_PtrSize ? 4 : A_PtrSize
+		cbSize := 4 + 4 + (PtrSize * 6) + 16
+		stGTI := Buffer(cbSize, 0)
+		NumPut("Uint", cbSize, stGTI.Ptr, 0)   ;   DWORD   cbSize;
+		hwnd := DllCall("GetGUIThreadInfo", "Uint", 0, "Uint", stGTI.Ptr)
+			? NumGet(stGTI.Ptr, 8 + PtrSize, "Uint") : hwnd
+	}
+	return DllCall("SendMessage"
+		, "UInt", DllCall("imm32\ImmGetDefaultIMEWnd", "Uint", hwnd)
+		, "UInt", 0x0283  ;Message : WM_IME_CONTROL
+		, "Int", 0x006   ;wParam  : IMC_SETOPENSTATUS
+		, "Int", SetSts) ;lParam  : 0 or 1
+}
+
+
+;---------------------------------------------------------------------------
+;  IMEの種類を選ぶかもしれない関数
+
+;==========================================================================
+;  IME 文字入力の状態を返す
+;  (パクリ元 : http://sites.google.com/site/agkh6mze/scripts#TOC-IME- )
+;    標準対応IME : ATOK系 / MS-IME2002 2007 / WXG / SKKIME
+;    その他のIMEは 入力窓/変換窓を追加指定することで対応可能
+;
+;       WinTitle="A"   対象Window
+;       ConvCls=""     入力窓のクラス名 (正規表現表記)
+;       CandCls=""     候補窓のクラス名 (正規表現表記)
+;       戻り値      1 : 文字入力中 or 変換中
+;                   2 : 変換候補窓が出ている
+;                   0 : その他の状態
+;
+;   ※ MS-Office系で 入力窓のクラス名 を正しく取得するにはIMEのシームレス表示を
+;      OFFにする必要がある
+;      オプション-編集と日本語入力-編集中の文字列を文書に挿入モードで入力する
+;      のチェックを外す
+;==========================================================================
+IME_GetConverting(WinTitle := "A", ConvCls := "", CandCls := "") {
+
+	;IME毎の 入力窓/候補窓Class一覧 ("|" 区切りで適当に足してけばOK)
+	ConvCls .= (ConvCls ? "|" : "")                 ;--- 入力窓 ---
+		. "ATOK\d+CompStr"                     ; ATOK系
+		. "|imejpstcnv\d+"                     ; MS-IME系
+		. "|WXGIMEConv"                        ; WXG
+		. "|SKKIME\d+\.*\d+UCompStr"           ; SKKIME Unicode
+		. "|MSCTFIME Composition"              ; SKKIME for Windows Vista, Google日本語入力
+
+	CandCls .= (CandCls ? "|" : "")                 ;--- 候補窓 ---
+		. "ATOK\d+Cand"                        ; ATOK系
+		. "|imejpstCandList\d+|imejpstcand\d+" ; MS-IME 2002(8.1)XP付属
+		. "|mscandui\d+\.candidate"            ; MS Office IME-200
+		. "|WXGIMECand"                        ; WXG
+		. "|SKKIME\d+\.*\d+UCand"              ; SKKIME Unicode
+
+	CandGCls := "GoogleJapaneseInputCandidateWindow" ;Google日本語入力
+
+	hwnd := WinExist(WinTitle)
+	if (WinActive(WinTitle)) {
+		ptrSize := !A_PtrSize ? 4 : A_PtrSize
+		cbSize := 4 + 4 + (PtrSize * 6) + 16
+		stGTI := Buffer(cbSize, 0)
+		NumPut("Uint", cbSize, stGTI.Ptr, 0)   ;   DWORD   cbSize;
+		hwnd := DllCall("GetGUIThreadInfo", "Uint", 0, "Ptr", stGTI.Ptr)
+			? NumGet(stGTI.Ptr, 8 + PtrSize, "UInt") : hwnd
+	}
+	ret := 0
+	pid := 0
+	if (hwnd) {
+		pid := WinGetPID("ahk_id " . hwnd)	;WinGet, pid, PID,% "ahk_id " hwnd
+	}
+	tmm := A_TitleMatchMode
+	SetTitleMatchMode "RegEx"
+	ret := WinExist("ahk_class " . CandCls . " ahk_pid " pid) ? 2
+		: WinExist("ahk_class " . CandGCls) ? 2
+			: WinExist("ahk_class " . ConvCls . " ahk_pid " pid) ? 1
+			: 0
+	;; 推測変換(atok)や予想入力(msime)中は候補窓が出ていないものとして取り扱う
+	if (2 == ret) {
+		if (WinExist("ahk_class " . CandCls . " ahk_pid " pid))
+		{
+			;; atok だと仮定して再度ウィンドウを検出する
+			WinGetPos(&X, &Y, &Width, &Height, "ahk_class " . CandCls . " ahk_pid " pid)
+		} else
+			if (WinExist("ahk_class " . CandGCls))
+			{
+				;; Google IME だと仮定して再度ウィンドウを検出する
+				WinGetPos(&X, &Y, &Width, &Height, "ahk_class " . CandGCls)
+			}
+		X1 := X
+		Y1 := Y
+		X2 := X + Width
+		Y2 := Y + Height
+
+		CoordMode "Pixel", "Screen"
+		;; ATOK については 推測変換中か否かを確実に検出できる
+		;; MS-IME は変換候補窓の表示中のみを検出できる
+		;; Google IME も変換候補窓の表示中のみを検出できる
+		;; そこで変換候補窓が表示されていないと仮定して処理を進めてみる
+		ret := 1
+		not_auto_cand_list := [0xFFE1C4  ; ATOK
+			, 0xF6E8CB  ; MS-IME
+			, 0xFFEAD1] ; Google IME
+		for index, ColorID in not_auto_cand_list {
+			elevel := PixelSearch(&OutputVarX, &OutputVarY, X1, Y1, X2, Y2, ColorID)
+			;;  the color was not found
+			if (0 == elevel) {
+				ret := 2
+				break
+			}
+		}
+		CoordMode "Pixel", "Window"
+	}
+	SetTitleMatchMode tmm
+	return ret
+}
+
 
 ; 主要なキーを HotKey に設定し、何もせずパススルーする
+; CTRL+Xを実行した時にIME切り替えが発火しないようにするために必要
 *~a::
 *~b::
 *~c::
@@ -563,305 +684,29 @@ F14 & Esc::~
 *~LCtrl::
 *~RCtrl::
 *~Backspace::
-	Return
+{
+	return
+}
 
 ; 左 Ctrl 空打ちで IME を OFF
 LCtrl up::
+{
 	if (A_PriorHotkey == "*~LCtrl")
 	{
-		if IME_GetConverting() >= 1 {   ; IME on状態で入力途中（日本語入力途中）に押した場合には、無反応になるように設定
-			Return
+		; IME on状態で入力途中（日本語入力途中）に押した場合には、無反応になるように設定
+		if IME_GetConverting() >= 1
+		{
+			return
 		}
 		IME_SET(0)
 	}
-	Return
+}
 
 ; 右 Ctrl 空打ちで IME を ON
 RCtrl up::
+{
 	if (A_PriorHotkey == "*~RCtrl")
 	{
 		IME_SET(1)
 	}
-	Return
-
-
-
-/*****************************************************************************
-  IME制御用 関数群 (IME.ahk)
-
-	グローバル変数 : なし
-	各関数の依存性 : なし(必要関数だけ切出してコピペでも使えます)
-
-	AutoHotkey:     L 1.1.08.01
-	Language:       Japanease
-	Platform:       NT系
-	Author:         eamat.      http://www6.atwiki.jp/eamat/
-*****************************************************************************
-履歴
-	2008.07.11 v1.0.47以降の 関数ライブラリスクリプト対応用にファイル名を変更
-	2008.12.10 コメント修正
-	2009.07.03 IME_GetConverting() 追加
-			   Last Found Windowが有効にならない問題修正、他。
-	2009.12.03
-	  ・IME 状態チェック GUIThreadInfo 利用版 入れ込み
-	   （IEや秀丸8βでもIME状態が取れるように）
-		http://blechmusik.xrea.jp/resources/keyboard_layout/DvorakJ/inc/IME.ahk
-	  ・Google日本語入力β 向け調整
-		入力モード 及び 変換モードは取れないっぽい
-		IME_GET/SET() と IME_GetConverting()は有効
-
-	2012.11.10 x64 & Unicode対応
-	  実行環境を AHK_L U64に (本家およびA32,U32版との互換性は維持したつもり)
-	  ・LongPtr対策：ポインタサイズをA_PtrSizeで見るようにした
-
-				;==================================
-				;  GUIThreadInfo
-				;=================================
-				; 構造体 GUITreadInfo
-				;typedef struct tagGUITHREADINFO {(x86) (x64)
-				;    DWORD   cbSize;                 0    0
-				;    DWORD   flags;                  4    4   ※
-				;    HWND    hwndActive;             8    8
-				;    HWND    hwndFocus;             12    16  ※
-				;    HWND    hwndCapture;           16    24
-				;    HWND    hwndMenuOwner;         20    32
-				;    HWND    hwndMoveSize;          24    40
-				;    HWND    hwndCaret;             28    48
-				;    RECT    rcCaret;               32    56
-				;} GUITHREADINFO, *PGUITHREADINFO;
-
-	  ・WinTitleパラメータが実質無意味化していたのを修正
-		対象がアクティブウィンドウの時のみ GetGUIThreadInfoを使い
-		そうでないときはControlハンドルを使用
-		一応バックグラウンドのIME情報も取れるように戻した
-		(取得ハンドルをWindowからControlに変えたことでブラウザ以外の大半の
-		アプリではバックグラウンドでも正しく値が取れるようになった。
-		※ブラウザ系でもアクティブ窓のみでの使用なら問題ないと思う、たぶん)
-
-*/
-
-;---------------------------------------------------------------------------
-;  汎用関数 (多分どのIMEでもいけるはず)
-
-;-----------------------------------------------------------
-; IMEの状態の取得
-;   WinTitle="A"    対象Window
-;   戻り値          1:ON / 0:OFF
-;-----------------------------------------------------------
-IME_GET(WinTitle="A")  {
-	ControlGet,hwnd,HWND,,,%WinTitle%
-	if    (WinActive(WinTitle))    {
-		ptrSize := !A_PtrSize ? 4 : A_PtrSize
-		VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-		NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
-		hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-				 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-	}
-
-	return DllCall("SendMessage"
-		  , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
-		  , UInt, 0x0283  ;Message : WM_IME_CONTROL
-		  ,  Int, 0x0005  ;wParam  : IMC_GETOPENSTATUS
-		  ,  Int, 0)      ;lParam  : 0
-}
-
-;-----------------------------------------------------------
-; IMEの状態をセット
-;   SetSts          1:ON / 0:OFF
-;   WinTitle="A"    対象Window
-;   戻り値          0:成功 / 0以外:失敗
-;-----------------------------------------------------------
-IME_SET(SetSts, WinTitle="A")    {
-	ControlGet,hwnd,HWND,,,%WinTitle%
-	if    (WinActive(WinTitle))    {
-		ptrSize := !A_PtrSize ? 4 : A_PtrSize
-		VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-		NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
-		hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-				 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-	}
-
-	return DllCall("SendMessage"
-		  , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
-		  , UInt, 0x0283  ;Message : WM_IME_CONTROL
-		  ,  Int, 0x006   ;wParam  : IMC_SETOPENSTATUS
-		  ,  Int, SetSts) ;lParam  : 0 or 1
-}
-
-;===========================================================================
-; IME 入力モード (どの IMEでも共通っぽい)
-;   DEC  HEX    BIN
-;     0 (0x00  0000 0000) かな    半英数
-;     3 (0x03  0000 0011)         半ｶﾅ
-;     8 (0x08  0000 1000)         全英数
-;     9 (0x09  0000 1001)         ひらがな
-;    11 (0x0B  0000 1011)         全カタカナ
-;    16 (0x10  0001 0000) ローマ字半英数
-;    19 (0x13  0001 0011)         半ｶﾅ
-;    24 (0x18  0001 1000)         全英数
-;    25 (0x19  0001 1001)         ひらがな
-;    27 (0x1B  0001 1011)         全カタカナ
-
-;  ※ 地域と言語のオプション - [詳細] - 詳細設定
-;     - 詳細なテキストサービスのサポートをプログラムのすべてに拡張する
-;    が ONになってると値が取れない模様
-;    (Google日本語入力βはここをONにしないと駄目なので値が取れないっぽい)
-
-;-------------------------------------------------------
-; IME 入力モード取得
-;   WinTitle="A"    対象Window
-;   戻り値          入力モード
-;--------------------------------------------------------
-IME_GetConvMode(WinTitle="A")   {
-	ControlGet,hwnd,HWND,,,%WinTitle%
-	if    (WinActive(WinTitle))    {
-		ptrSize := !A_PtrSize ? 4 : A_PtrSize
-		VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-		NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
-		hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-				 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-	}
-	return DllCall("SendMessage"
-		  , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
-		  , UInt, 0x0283  ;Message : WM_IME_CONTROL
-		  ,  Int, 0x001   ;wParam  : IMC_GETCONVERSIONMODE
-		  ,  Int, 0)      ;lParam  : 0
-}
-
-;-------------------------------------------------------
-; IME 入力モードセット
-;   ConvMode        入力モード
-;   WinTitle="A"    対象Window
-;   戻り値          0:成功 / 0以外:失敗
-;--------------------------------------------------------
-IME_SetConvMode(ConvMode,WinTitle="A")   {
-	ControlGet,hwnd,HWND,,,%WinTitle%
-	if    (WinActive(WinTitle))    {
-		ptrSize := !A_PtrSize ? 4 : A_PtrSize
-		VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-		NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
-		hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-				 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-	}
-	return DllCall("SendMessage"
-		  , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
-		  , UInt, 0x0283      ;Message : WM_IME_CONTROL
-		  ,  Int, 0x002       ;wParam  : IMC_SETCONVERSIONMODE
-		  ,  Int, ConvMode)   ;lParam  : CONVERSIONMODE
-}
-
-;===========================================================================
-; IME 変換モード (ATOKはver.16で調査、バージョンで多少違うかも)
-
-;   MS-IME  0:無変換 / 1:人名/地名                    / 8:一般    /16:話し言葉
-;   ATOK系  0:固定   / 1:複合語              / 4:自動 / 8:連文節
-;   WXG              / 1:複合語  / 2:無変換  / 4:自動 / 8:連文節
-;   SKK系            / 1:ノーマル (他のモードは存在しない？)
-;   Googleβ                                          / 8:ノーマル
-;------------------------------------------------------------------
-; IME 変換モード取得
-;   WinTitle="A"    対象Window
-;   戻り値 MS-IME  0:無変換 1:人名/地名               8:一般    16:話し言葉
-;          ATOK系  0:固定   1:複合語           4:自動 8:連文節
-;          WXG4             1:複合語  2:無変換 4:自動 8:連文節
-;------------------------------------------------------------------
-IME_GetSentenceMode(WinTitle="A")   {
-	ControlGet,hwnd,HWND,,,%WinTitle%
-	if    (WinActive(WinTitle))    {
-		ptrSize := !A_PtrSize ? 4 : A_PtrSize
-		VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-		NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
-		hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-				 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-	}
-	return DllCall("SendMessage"
-		  , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
-		  , UInt, 0x0283  ;Message : WM_IME_CONTROL
-		  ,  Int, 0x003   ;wParam  : IMC_GETSENTENCEMODE
-		  ,  Int, 0)      ;lParam  : 0
-}
-
-;----------------------------------------------------------------
-; IME 変換モードセット
-;   SentenceMode
-;       MS-IME  0:無変換 1:人名/地名               8:一般    16:話し言葉
-;       ATOK系  0:固定   1:複合語           4:自動 8:連文節
-;       WXG              1:複合語  2:無変換 4:自動 8:連文節
-;   WinTitle="A"    対象Window
-;   戻り値          0:成功 / 0以外:失敗
-;-----------------------------------------------------------------
-IME_SetSentenceMode(SentenceMode,WinTitle="A")  {
-	ControlGet,hwnd,HWND,,,%WinTitle%
-	if    (WinActive(WinTitle))    {
-		ptrSize := !A_PtrSize ? 4 : A_PtrSize
-		VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-		NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
-		hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-				 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-	}
-	return DllCall("SendMessage"
-		  , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
-		  , UInt, 0x0283          ;Message : WM_IME_CONTROL
-		  ,  Int, 0x004           ;wParam  : IMC_SETSENTENCEMODE
-		  ,  Int, SentenceMode)   ;lParam  : SentenceMode
-}
-
-
-;---------------------------------------------------------------------------
-;  IMEの種類を選ぶかもしれない関数
-
-;==========================================================================
-;  IME 文字入力の状態を返す
-;  (パクリ元 : http://sites.google.com/site/agkh6mze/scripts#TOC-IME- )
-;    標準対応IME : ATOK系 / MS-IME2002 2007 / WXG / SKKIME
-;    その他のIMEは 入力窓/変換窓を追加指定することで対応可能
-;
-;       WinTitle="A"   対象Window
-;       ConvCls=""     入力窓のクラス名 (正規表現表記)
-;       CandCls=""     候補窓のクラス名 (正規表現表記)
-;       戻り値      1 : 文字入力中 or 変換中
-;                   2 : 変換候補窓が出ている
-;                   0 : その他の状態
-;
-;   ※ MS-Office系で 入力窓のクラス名 を正しく取得するにはIMEのシームレス表示を
-;      OFFにする必要がある
-;      オプション-編集と日本語入力-編集中の文字列を文書に挿入モードで入力する
-;      のチェックを外す
-;==========================================================================
-IME_GetConverting(WinTitle="A",ConvCls="",CandCls="") {
-
-	;IME毎の 入力窓/候補窓Class一覧 ("|" 区切りで適当に足してけばOK)
-	ConvCls .= (ConvCls ? "|" : "")                 ;--- 入力窓 ---
-			.  "ATOK\d+CompStr"                     ; ATOK系
-			.  "|imejpstcnv\d+"                     ; MS-IME系
-			.  "|WXGIMEConv"                        ; WXG
-			.  "|SKKIME\d+\.*\d+UCompStr"           ; SKKIME Unicode
-			.  "|MSCTFIME Composition"              ; Google日本語入力
-
-	CandCls .= (CandCls ? "|" : "")                 ;--- 候補窓 ---
-			.  "ATOK\d+Cand"                        ; ATOK系
-			.  "|imejpstCandList\d+|imejpstcand\d+" ; MS-IME 2002(8.1)XP付属
-			.  "|mscandui\d+\.candidate"            ; MS Office IME-2007
-			.  "|WXGIMECand"                        ; WXG
-			.  "|SKKIME\d+\.*\d+UCand"              ; SKKIME Unicode
-   CandGCls := "GoogleJapaneseInputCandidateWindow" ;Google日本語入力
-
-	ControlGet,hwnd,HWND,,,%WinTitle%
-	if    (WinActive(WinTitle))    {
-		ptrSize := !A_PtrSize ? 4 : A_PtrSize
-		VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
-		NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
-		hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
-				 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
-	}
-
-	WinGet, pid, PID,% "ahk_id " hwnd
-	tmm:=A_TitleMatchMode
-	SetTitleMatchMode, RegEx
-	ret := WinExist("ahk_class " . CandCls . " ahk_pid " pid) ? 2
-		:  WinExist("ahk_class " . CandGCls                 ) ? 2
-		:  WinExist("ahk_class " . ConvCls . " ahk_pid " pid) ? 1
-		:  0
-	SetTitleMatchMode, %tmm%
-	return ret
 }
