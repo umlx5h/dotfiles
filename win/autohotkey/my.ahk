@@ -266,6 +266,40 @@ backspace_word()
 ; 	Send("{Del}")
 ; }
 
+; VSCode以外はemacs keybindingを使う
+F14 & a:: key_home()
+F14 & b:: key_left()
+F14 & c:: Send("{Blind}^c")
+F14 & d:: key_del()
+F14 & e:: key_end()
+F14 & f:: key_right()
+; F14 & g::quit()
+F14 & g:: Send("{Blind}^g")
+F14 & h:: key_backspace()
+F14 & i:: Send("{Blind}^i")
+; F14 & j:: Send("{Blind}!{sc029}") ; IME toggle
+F14 & j:: key_enter()
+F14 & k:: kill_line()
+F14 & l:: Send("{Blind}^l")
+; F14 & m:: Send("{Blind}{Enter}")
+F14 & m:: Send("{Blind}^m")
+F14 & n:: key_down()
+F14 & o:: Send("{Blind}^o")
+F14 & p:: key_up()
+F14 & q:: Send("{Blind}^q")
+F14 & r:: Send("{Blind}^r")
+F14 & s:: Send("{Blind}^s")
+F14 & t:: Send("{Blind}^t")
+F14 & u:: kill_home()
+F14 & v:: Send("{Blind}^v")
+F14 & w:: backspace_word()
+F14 & x:: Send("{Blind}^x")
+F14 & y:: Send("{Blind}^y")
+F14 & z:: Send("{Blind}^z")
+F14 & {:: Send("{Blind}^{[}")
+F14 & }:: Send("{Blind}^{]}")
+F14 & 6:: Send("{Blind}^6")
+
 ; VSCodeではemacs keybindingを無効化し、vimプラグイン用のキーバインドを使うため
 ; F13-F24 を送る
 #HotIf WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Code - Insiders.exe")
@@ -299,46 +333,6 @@ backspace_word()
 	F14 & {:: Send("+{F15}")
 	F14 & }:: Send("+{F16}")
 	F14 & 6:: Send("+{F17}")
-}
-#HotIf
-
-; VSCode以外はemacs keybindingを使う
-; 上のVSCodeで定義しているところだけをHotIfの中で定義する (共通のものは外で定義)
-#HotIf !(WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Code - Insiders.exe"))
-{
-
-	F14 & a:: key_home()
-	F14 & b:: key_left()
-	F14 & c:: Send("{Blind}^c")
-	F14 & d:: key_del()
-	F14 & e:: key_end()
-	F14 & f:: key_right()
-	; F14 & g::quit()
-	F14 & g:: Send("{Blind}^g")
-	F14 & h:: key_backspace()
-	F14 & i:: Send("{Blind}^i")
-	; F14 & j:: Send("{Blind}!{sc029}") ; IME toggle
-	F14 & j:: key_enter()
-	F14 & k:: kill_line()
-	F14 & l:: Send("{Blind}^l")
-	; F14 & m:: Send("{Blind}{Enter}")
-	F14 & m:: Send("{Blind}^m")
-	F14 & n:: key_down()
-	F14 & o:: Send("{Blind}^o")
-	F14 & p:: key_up()
-	F14 & q:: Send("{Blind}^q")
-	F14 & r:: Send("{Blind}^r")
-	F14 & s:: Send("{Blind}^s")
-	F14 & t:: Send("{Blind}^t")
-	F14 & u:: kill_home()
-	F14 & v:: Send("{Blind}^v")
-	F14 & w:: backspace_word()
-	F14 & x:: Send("{Blind}^x")
-	F14 & y:: Send("{Blind}^y")
-	F14 & z:: Send("{Blind}^z")
-	F14 & {:: Send("{Blind}^{[}")
-	F14 & }:: Send("{Blind}^{]}")
-	F14 & 6:: Send("{Blind}^6")
 }
 #HotIf
 
