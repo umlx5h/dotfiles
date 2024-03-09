@@ -97,43 +97,79 @@ is_terminal()
 	return 0
 }
 
+is_vscode()
+{
+	if WinActive("ahk_exe Code.exe")
+		return 1
+	if WinActive("ahk_exe Code - Insiders.exe")
+		return 1
+	return 0
+}
+
+; F14(CapsLock) 空打ちでエスケープを送りつつ、組み合わせの場合はCTRLとして使用する
+; ref: https://www.autohotkey.com/boards/viewtopic.php?f=82&t=126963
+;      https://vim.fandom.com/wiki/Map_caps_lock_to_escape_in_Windows
+;      https://gist.github.com/volks73/1e889e01ad0a736159a5d56268a300a8
+
+; * をつけることでどの修飾キーがついていようが発火するようになる
+; このキーマップは押し下げした瞬間に発火するので、他のF14 & XX より前に発火される
+*F14::
+{
+	; 空打ち用のタイマー
+	start := A_TickCount
+
+	if GetKeyState("Ctrl") { ; do nothing if already pressed
+		return
+	}
+
+	; MEMO: {Blind}は必要なさそうだけど念のためつける
+	; 'down' だと下のVSCodeでF13-24単体を送る時にCTRL+F13で送られてしまうので 'downR' にする
+	Send("{Blind}{LControl downR}") ; send modifier down, DownR prevents modifier being sent with other Send functions that don't use {Blind}
+	KeyWait("F14") ; F14がリリースされるまで待つ
+	Send("{Blind}{LControl up}")
+
+	; F14を空打ちした上で300ms以内で離した時のみエスケープを送る
+	if A_PriorKey == "F14" and (A_TickCount - start) < 300 { ; 300 = escape timeout ms
+		Send("{Esc}")
+	}
+}
+
+; VSCode以外はemacs keybindingを使う
 /*
 Emacs keybind
 @from https://mag.nioufuku.net/2020/04/26/programming/00043-autohotkey/
 */
-;;
-;; An autohotkey script that provides emacs-like keybinding on Windows
-;;
-; The following line is a contribution of NTEmacs wiki http://www49.atwiki.jp/ntemacs/pages/20.html
-;SetKeyDelay 0
+#HotIf !is_terminal() and !is_vscode()
+{
+	; F14+SHIFT+a を CTRL+SHIFT+aとして送りたい場合
+	; コンビネーションキー (&をつかったもの)は余計な修飾キーをつけても発火するので、キーマップ内で修飾キーをチェックして処理を分岐してあげる必要がある
+	; ~F14 & a::
+	; {
+	; 	if GetKeyState("Alt") or GetKeyState("Shift") { ; 修飾キーをみて、押されてたらemacsキーを使わない
+	; 		return Send("{Blind}a") ; 修飾キーと同時に送るのでBlindをつける
+	; 	}
 
-keep_shift()
-{
-	if GetKeyState("Shift")
-		return 1
-	return 0
-}
-key_del()
-{
-	if is_terminal()
-		Send("{Blind}^d")
-	else
-		Send("{Blind}{Del}")
-}
-key_backspace()
-{
-	if is_terminal()
-		Send("{Blind}^h")
-	else
-		Send("{Blind}{BS}")
-}
-kill_home()
-{
-	if is_terminal()
+	; 	Send("{HOME}") ; 修飾キーはいらないのでBlindなし, *F14でLControl downRでホールドしているので、CTRL+HOMEではなくHOMEとして扱われる
+	; }
+
+	; ~ をつけているのは 上の単体の*F14が押下した時点で発火するようにするため, 全てのコンビネーションキーにつける必要がある
+	~F14 & a:: Send("{Blind^}{HOME}") ; F14+SHIFT+a を実行したとすると、SHIFT+HOMEが送られる仕様
+	~F14 & e:: Send("{Blind^}{END}")  ; {Blind^} の^はCTRLを出力キーから除外するために必要 これがないとCTRL+ENDが送られてしまう
+	~F14 & p:: Send("{Blind^}{Up}")
+	~F14 & n:: Send("{Blind^}{Down}")
+	~F14 & b:: Send("{Blind^}{Left}")
+	~F14 & f:: Send("{Blind^}{Right}")
+	~F14 & d:: Send("{Blind^}{Del}")
+	~F14 & h:: Send("{Blind^}{BS}")
+	~F14 & j:: Send("{Blind^}{Enter}")
+	~F14 & w:: Send("{Blind}^{BS}") ; delete by word
+	~F14 & k:: ; delete line after cursor
 	{
-		Send("{Blind}^u")
+		Send("{ShiftDown}{END}{ShiftUp}")
+		Sleep(10)
+		Send("^x")
 	}
-	else
+	~F14 & u:: ; delete line before cursor
 	{
 		Send("{ShiftDown}{Home}{ShiftUp}")
 		Sleep(10)
@@ -141,205 +177,11 @@ kill_home()
 		Send("{Del}") ; without copy
 	}
 }
-kill_line()
-{
-	if is_terminal()
-	{
-		Send("{Blind}^k")
-	}
-	else
-	{
-		Send("{ShiftDown}{END}{ShiftUp}")
-		Sleep(10)
-		Send("^x")
-	}
-}
-; quit()
-; {
-; 	if is_terminal()
-; 		Send("{Blind}^g")
-; 	else
-; 		Send("{Blind}{ESC}")
-; }
-key_home()
-{
-	if is_terminal()
-		Send("{Blind}^a")
-	else
-		Send("{Blind}{HOME}")
-}
-key_end()
-{
-	if is_terminal()
-		Send("{Blind}^e")
-	else
-		Send("{Blind}{END}")
-}
-key_up()
-{
-	if is_terminal()
-		Send("{Blind}^p")
-	else
-		Send("{Blind}{Up}")
-}
-key_down()
-{
-	if is_terminal()
-		Send("{Blind}^n")
-	else
-		Send("{Blind}{Down}")
-}
-key_right()
-{
-	if is_terminal()
-		Send("{Blind}^f")
-	else
-		Send("{Blind}{Right}")
-}
-key_left()
-{
-	if is_terminal()
-		Send("{Blind}^b")
-	else
-		Send("{Blind}{Left}")
-}
-key_enter()
-{
-	if is_terminal()
-		Send("{Blind}^j")
-	else
-		Send("{Blind}{Enter}")
-}
-; modified_backspace()
-; {
-; 	if is_terminal() {
-; 		Send("{Blind}^{BS}")
-; 		return
-; 	}
-
-; 	if keep_shift()
-; 		backspace_line()
-; 	else
-; 		backspace_word()
-; }
-; backspace_line()
-; {
-; 	Send("{End}{ShiftDown}{Home}{Home}{ShiftUp}")
-; 	Sleep(10)
-; 	Send("{BS}{BS}")
-; }
-; backspace_word()
-; {
-; 	Send("{ShiftDown}{CtrlDown}{Left}{CtrlUp}{ShiftUp}")
-; 	Sleep(10)
-; 	Send("{BS}")
-; }
-backspace_word()
-{
-	if is_terminal()
-		Send("{Blind}^w")
-	else
-		Send("^{BS}")
-}
-; modified_delete()
-; {
-; 	if is_terminal() {
-; 		Send("{Blind}^{Del}")
-; 		return
-; 	}
-
-; 	if keep_shift()
-; 		delete_line()
-; 	else
-; 		delete_word()
-; }
-; delete_line()
-; {
-; 	Send("{Home}{Home}{ShiftDown}{End}{ShiftUp}")
-; 	Sleep(10)
-; 	Send("{Del}{Del}")
-; }
-; delete_word()
-; {
-; 	Send("{ShiftDown}{CtrlDown}{Right}{CtrlUp}{ShiftUp}")
-; 	Sleep(10)
-; 	Send("{Del}")
-; }
-
-; VSCode以外はemacs keybindingを使う
-F14 & a:: key_home()
-F14 & b:: key_left()
-F14 & c:: Send("{Blind}^c")
-F14 & d:: key_del()
-F14 & e:: key_end()
-F14 & f:: key_right()
-; F14 & g::quit()
-F14 & g:: Send("{Blind}^g")
-F14 & h:: key_backspace()
-F14 & i:: Send("{Blind}^i")
-; F14 & j:: Send("{Blind}!{sc029}") ; IME toggle
-F14 & j:: key_enter()
-F14 & k:: kill_line()
-F14 & l:: Send("{Blind}^l")
-; F14 & m:: Send("{Blind}{Enter}")
-F14 & m:: Send("{Blind}^m")
-F14 & n:: key_down()
-F14 & o:: Send("{Blind}^o")
-F14 & p:: key_up()
-F14 & q:: Send("{Blind}^q")
-F14 & r:: Send("{Blind}^r")
-F14 & s:: Send("{Blind}^s")
-F14 & t:: Send("{Blind}^t")
-F14 & u:: kill_home()
-F14 & v:: Send("{Blind}^v")
-F14 & w:: backspace_word()
-F14 & x:: Send("{Blind}^x")
-F14 & y:: Send("{Blind}^y")
-F14 & z:: Send("{Blind}^z")
-F14 & {:: Send("{Blind}^{[}")
-F14 & }:: Send("{Blind}^{]}")
-F14 & 6:: Send("{Blind}^6")
-
-; VSCodeではemacs keybindingを無効化し、vimプラグイン用のキーバインドを使うため
-; F13-F24 を送る
-#HotIf WinActive("ahk_exe Code.exe") or WinActive("ahk_exe Code - Insiders.exe")
-{
-	F14 & a:: Send("{F13}")
-	F14 & b:: Send("{F14}")
-	F14 & c:: Send("{F15}")
-	F14 & d:: Send("{F16}")
-	F14 & e:: Send("{F17}")
-	F14 & f:: Send("{F18}")
-	F14 & g:: Send("{F19}")
-	F14 & h:: Send("{F20}")
-	F14 & i:: Send("{F21}")
-	F14 & j:: Send("{F22}")
-	F14 & k:: Send("{F23}")
-	F14 & l:: Send("{F24}")
-	F14 & m:: Send("^{F13}")
-	F14 & n:: Send("^{F14}")
-	F14 & o:: Send("^{F15}")
-	F14 & p:: Send("^{F16}")
-	F14 & q:: Send("^{F17}")
-	F14 & r:: Send("^{F18}")
-	F14 & s:: Send("^{F19}")
-	F14 & t:: Send("^{F20}")
-	F14 & u:: Send("^{F21}")
-	F14 & v:: Send("^{F22}")
-	F14 & w:: Send("^{F23}")
-	F14 & x:: Send("^{F24}")
-	F14 & y:: Send("+{F13}")
-	F14 & z:: Send("+{F14}")
-	F14 & {:: Send("+{F15}")
-	F14 & }:: Send("+{F16}")
-	F14 & 6:: Send("+{F17}")
-}
 #HotIf
 
-; Capslock to F14 to Ctrl
-F14 & Enter:: Send("{Blind}^{Enter}")
-F14 & Space:: Send("{Blind}^{Space}")
+~F14 & Esc:: Send("{Blind^}~")
 
+/* F14をCTRL or ESCにした時点で不要になったのでコメントアウト
 ; F14 + Tab -> Ctrl + Tab (work for Firefox)
 ; ref: https://stackoverflow.com/a/66664204
 #MaxThreads 255 ; set globally
@@ -351,68 +193,48 @@ F14 & Tab::
 	KeyWait("F14")
 	Send("{Blind}{LCtrl up}")
 }
+*/
 
-F14 & BS:: Send("{Blind}^{BS}")
-F14 & Del:: Send("{Blind}^{Del}")
-; F14 & BS::modified_backspace()
-; F14 & Del::modified_delete()
-F14 & Ins:: Send("{Blind}^{Ins}")
-F14 & Up:: Send("{Blind}^{Up}")
-F14 & Down:: Send("{Blind}^{Down}")
-F14 & Left:: Send("{Blind}^{Left}")
-F14 & Right:: Send("{Blind}^{Right}")
-F14 & Home:: Send("{Blind}^{Home}")
-F14 & End:: Send("{Blind}^{End}")
-F14 & PgUp:: Send("{Blind}^{PgUp}")
-F14 & PgDn:: Send("{Blind}^{PgDn}")
-F14 & AppsKey:: Send("{Blind}^{AppsKey}")
-F14 & PrintScreen:: Send("{Blind}^{PrintScreen}")
-F14 & CtrlBreak:: Send("{Blind}^{CtrlBreak}")
-F14 & Pause:: Send("{Blind}^{Pause}")
-; F14 & Esc:: Send("{Blind}^{Esc}")
-F14 & Esc::~
-F14 & F1:: Send("{Blind}^F1")
-F14 & F2:: Send("{Blind}^F2")
-F14 & F3:: Send("{Blind}^F3")
-F14 & F4:: Send("{Blind}^F4")
-F14 & F5:: Send("{Blind}^F5")
-F14 & F6:: Send("{Blind}^F6")
-F14 & F7:: Send("{Blind}^F7")
-F14 & F8:: Send("{Blind}^F8")
-F14 & F9:: Send("{Blind}^F9")
-F14 & F10:: Send("{Blind}^F10")
-F14 & F11:: Send("{Blind}^F11")
-F14 & F12:: Send("{Blind}^F12")
-F14 & 1:: Send("{Blind}^1")
-F14 & 2:: Send("{Blind}^2")
-F14 & 3:: Send("{Blind}^3")
-F14 & 4:: Send("{Blind}^4")
-F14 & 5:: Send("{Blind}^5")
-; F14 & 6::Send("{Blind}^6") ; vscode vim
-F14 & 7:: Send("{Blind}^7")
-F14 & 8:: Send("{Blind}^8")
-F14 & 9:: Send("{Blind}^9")
-F14 & 0:: Send("{Blind}^0")
-F14 & -:: Send("{Blind}^-")
-F14 & =:: Send("{Blind}^=")
-F14 & \:: Send("{Blind}^{\}")
-F14 & ':: Send("{Blind}^'")
-F14 & ,:: Send("{Blind}^,")
-F14 & .:: Send("{Blind}^.")
-; F14 & {::Send("{Blind}^{[}") ; vscode vim
-; F14 & }::Send("{Blind}^{]}") ; vscode vim
-F14 & /:: Send("{Blind}^/")
-F14 & LButton:: Send("{Blind}^{LButton}")
-F14 & RButton:: Send("{Blind}^{RButton}")
-F14 & MButton:: Send("{Blind}^{MButton}")
-F14 & WheelDown:: Send("{Blind}^{WheelDown}")
-F14 & WheelUp:: Send("{Blind}^{WheelUp}")
-F14 & WheelLeft:: Send("{Blind}^{WheelLeft}")
-F14 & WheelRight:: Send("{Blind}^{WheelRight}")
+; VSCodeではemacs keybindingを無効化し、vimプラグイン用のキーバインドを使うため
+; F13-F24 を送る
+; 上で定義したキーをすべて上書きする
+#HotIf is_vscode()
+{
+	~F14 & a:: Send("{F13}")
+	~F14 & b:: Send("{F14}")
+	~F14 & c:: Send("{F15}")
+	~F14 & d:: Send("{F16}")
+	~F14 & e:: Send("{F17}")
+	~F14 & f:: Send("{F18}")
+	~F14 & g:: Send("{F19}")
+	~F14 & h:: Send("{F20}")
+	~F14 & i:: Send("{F21}")
+	~F14 & j:: Send("{F22}")
+	~F14 & k:: Send("{F23}")
+	~F14 & l:: Send("{F24}")
+	~F14 & m:: Send("^{F13}")
+	~F14 & n:: Send("^{F14}")
+	~F14 & o:: Send("^{F15}")
+	~F14 & p:: Send("^{F16}")
+	~F14 & q:: Send("^{F17}")
+	~F14 & r:: Send("^{F18}")
+	~F14 & s:: Send("^{F19}")
+	~F14 & t:: Send("^{F20}")
+	~F14 & u:: Send("^{F21}")
+	~F14 & v:: Send("^{F22}")
+	~F14 & w:: Send("^{F23}")
+	~F14 & x:: Send("^{F24}")
+	~F14 & y:: Send("+{F13}")
+	~F14 & z:: Send("+{F14}")
+	~F14 & {:: Send("+{F15}")
+	~F14 & }:: Send("+{F16}")
+	~F14 & 6:: Send("+{F17}")
+}
+#HotIf
 
 /* ------------------------------- Terminal  ------------------------------- */
 
-#HotIf is_terminal()
+#HotIf is_terminal() and GetKeyState("Ctrl", "P") ; F14+c, vを押した時に発火しないようにするためにPhysicalなCTRL押下状態を見る
 {
 	; ターミナルでF14とCTRLを区別するための設定
 	^v:: Send("^+v") ; CTRL+SHIFT+V paste from clipboard
@@ -577,115 +399,12 @@ IME_GetConverting(WinTitle := "A", ConvCls := "", CandCls := "") {
 	return ret
 }
 
-
-; 主要なキーを HotKey に設定し、何もせずパススルーする
-; CTRL+Xを実行した時にIME切り替えが発火しないようにするために必要
-*~a::
-*~b::
-*~c::
-*~d::
-*~e::
-*~f::
-*~g::
-*~h::
-*~i::
-*~j::
-*~k::
-*~l::
-*~m::
-*~n::
-*~o::
-*~p::
-*~q::
-*~r::
-*~s::
-*~t::
-*~u::
-*~v::
-*~w::
-*~x::
-*~y::
-*~z::
-*~1::
-*~2::
-*~3::
-*~4::
-*~5::
-*~6::
-*~7::
-*~8::
-*~9::
-*~0::
-*~F1::
-*~F2::
-*~F3::
-*~F4::
-*~F5::
-*~F6::
-*~F7::
-*~F8::
-*~F9::
-*~F10::
-*~F11::
-*~F12::
-*~`::
-*~~::
-*~!::
-*~@::
-*~#::
-*~$::
-*~%::
-*~^::
-*~&::
-*~*::
-*~(::
-*~)::
-*~-::
-*~_::
-*~=::
-*~+::
-*~[::
-*~{::
-*~]::
-*~}::
-*~\::
-*~|::
-*~;::
-*~'::
-*~"::
-*~,::
-*~<::
-*~.::
-*~>::
-*~/::
-*~?::
-*~Esc::
-*~Tab::
-*~Space::
-*~LAlt::
-*~RAlt::
-*~Left::
-*~Right::
-*~Up::
-*~Down::
-*~Enter::
-*~PrintScreen::
-*~Delete::
-*~Home::
-*~End::
-*~PgUp::
-*~PgDn::
-*~LCtrl::
-*~RCtrl::
-*~Backspace::
+; 左 Ctrl 空打ちで IME を ON
+; ~をつけることでCtrl自体の機能が上書きされず、そのまま使われるようになる
+~LCtrl up::
 {
-	return
-}
-
-; 左 Ctrl 空打ちで IME を OFF
-LCtrl up::
-{
-	if (A_PriorHotkey == "*~LCtrl")
+	; 空打ちした場合はPriorKeyにLControlが入っている
+	if (A_PriorKey == "LControl")
 	{
 		; IME on状態で入力途中（日本語入力途中）に押した場合には、無反応になるように設定
 		if IME_GetConverting() >= 1
@@ -697,9 +416,9 @@ LCtrl up::
 }
 
 ; 右 Ctrl 空打ちで IME を ON
-RCtrl up::
+~RCtrl up::
 {
-	if (A_PriorHotkey == "*~RCtrl")
+	if (A_PriorKey == "RControl")
 	{
 		IME_SET(1)
 	}
