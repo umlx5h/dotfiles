@@ -115,9 +115,6 @@ is_vscode()
 ; このキーマップは押し下げした瞬間に発火するので、他のF14 & XX より前に発火される
 *F14::
 {
-	; 空打ち用のタイマー
-	start := A_TickCount
-
 	if GetKeyState("Ctrl") { ; do nothing if already pressed
 		return
 	}
@@ -129,7 +126,8 @@ is_vscode()
 	Send("{Blind}{LControl up}")
 
 	; F14を空打ちした上で300ms以内で離した時のみエスケープを送る
-	if A_PriorKey == "F14" and (A_TickCount - start) < 300 { ; 300 = escape timeout ms
+	if A_PriorKey == "F14" and A_TimeSinceThisHotkey < 300 { ; 300 = escape timeout ms
+		IME_SET(0)
 		Send("{Esc}")
 	}
 }
