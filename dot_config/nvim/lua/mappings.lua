@@ -30,10 +30,10 @@ map("n", "<leader>dd", [["+dd]], { desc = "Delete line with clipboard" })
 
 -- Alternative to VSCode Ctrl+D
 map(
-  "x",
-  "gs",
-  [[y:let @/ = '\V\C' . substitute(escape(@0, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn]],
-  { desc = "Replace word under cursor" }
+	"x",
+	"gs",
+	[[y:let @/ = '\V\C' . substitute(escape(@0, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn]],
+	{ desc = "Replace word under cursor" }
 )
 map("n", "gs", [[:let @/ = '\C\<'.expand('<cword>').'\>'<CR>:set hls<CR>cgn]], { desc = "Replace word under cursor" })
 -- 検索履歴に入るver (大文字小文字無視)
@@ -52,7 +52,7 @@ map("i", "<C-d>", "<Delete>", { desc = "Emacs Delete" }) -- Conflict indent dele
 map("i", "<C-h>", "<BS>", { desc = "Emacs Backspace" })
 -- disable for conflict (enter digraph)
 -- map("i", "<C-k>", function()
---   return "<C-o>D"
+-- 	return "<C-o>D"
 -- end, { desc = "Emacs Cut line", silent = true, expr = true })
 
 -- コマンドモードでCTRL-P,Nの挙動を矢印と入れ替える
@@ -76,20 +76,20 @@ map("n", "<A-a>", "ggVG", { desc = "Select all" })
 
 -- 完全一致検索
 map(
-  "n",
-  "<leader>s",
-  -- [[<cmd>let search = input('Search literally: ') | redraw | execute '/\V' . escape(search, '/\') <CR>]],
-  [[<cmd>let search = input('Search literally: ') | redraw | execute '/\V' . substitute(escape(search, '/\'), '\\n', 'n', 'g') <CR>]], -- 複数行の検索に対応 \nだけ改行文字として認識させる
-  { desc = "Literal Search" }
+	"n",
+	"<leader>s",
+	-- [[<cmd>let search = input('Search literally: ') | redraw | execute '/\V' . escape(search, '/\') <CR>]],
+	[[<cmd>let search = input('Search literally: ') | redraw | execute '/\V' . substitute(escape(search, '/\'), '\\n', 'n', 'g') <CR>]], -- 複数行の検索に対応 \nだけ改行文字として認識させる
+	{ desc = "Literal Search" }
 )
 
 -- コマンドラインモードでCTRL-% (CTRL-])で %:h に展開してくれる、現在開いているファイルを基準にパスを作成可能
 -- :h filename-modifiers
 map(
-  "c",
-  "<C-]>",
-  "getcmdtype() == ':' ? expand('%:~:.:h').'/' : '%%'",
-  { silent = false, expr = true, desc = "Expand current file dir" }
+	"c",
+	"<C-]>",
+	"getcmdtype() == ':' ? expand('%:~:.:h').'/' : '%%'",
+	{ silent = false, expr = true, desc = "Expand current file dir" }
 )
 
 -----------------------------------------------------------------------------------------------
@@ -160,35 +160,35 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window w
 
 -- auto insert semicolon (shift+Enter)
 map("i", "<S-CR>", function()
-  local line = vim.fn.getline(".")
-  if not line:match(";$") then
-    return vim.api.nvim_replace_termcodes("<C-o>A;", true, true, true)
-  else
-    return vim.api.nvim_replace_termcodes("<C-o>A", true, true, true)
-  end
+	local line = vim.fn.getline(".")
+	if not line:match(";$") then
+		return vim.api.nvim_replace_termcodes("<C-o>A;", true, true, true)
+	else
+		return vim.api.nvim_replace_termcodes("<C-o>A", true, true, true)
+	end
 end, { expr = true, desc = "Insert semicolon at end of line" })
 
 map("n", "<S-CR>", function()
-  local line = vim.fn.getline(".")
-  if not line:match(";$") then
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("A;<ESC>", true, false, true), "n", true)
-  else
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("$", true, false, true), "n", true)
-  end
+	local line = vim.fn.getline(".")
+	if not line:match(";$") then
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("A;<ESC>", true, false, true), "n", true)
+	else
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("$", true, false, true), "n", true)
+	end
 end, { noremap = true, desc = "Insert semicolon at end of line" })
 
 -- projects
 map(
-  "n",
-  "<A-/>",
-  "<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>",
-  { desc = "Open project in new window" }
+	"n",
+	"<A-/>",
+	"<cmd>silent !tmux neww zsh -ic 'open-recent-project; exec zsh' <CR>",
+	{ desc = "Open project in new window" }
 )
 map(
-  "n",
-  "<A-?>",
-  "<cmd>silent !tmux neww zsh -ic 'open-recent-project-session; exec zsh' <CR>",
-  { desc = "Open project in new session" }
+	"n",
+	"<A-?>",
+	"<cmd>silent !tmux neww zsh -ic 'open-recent-project-session; exec zsh' <CR>",
+	{ desc = "Open project in new session" }
 )
 map("n", "<leader>at", "<cmd> SetTermTab <CR>", { desc = "Set cwd to terminal tab name" })
 
@@ -198,7 +198,7 @@ map("n", "<leader>at", "<cmd> SetTermTab <CR>", { desc = "Set cwd to terminal ta
 
 --------------------------------- nvim-tree/nvim-tree.lua -------------------------------------
 map("n", "<C-n>", function()
-  require("nvim-tree.api").tree.toggle(false, true) -- do not focus
+	require("nvim-tree.api").tree.toggle(false, true) -- do not focus
 end, { desc = "Toggle nvimtree" })
 map("n", "<leader>e", "<cmd> NvimTreeFocus <CR>", { desc = "Focus nvimtree" })
 
@@ -213,7 +213,7 @@ map("n", "<leader>fh", "<cmd> Telescope help_tags <CR>", { desc = "Help page" })
 map("n", "<leader>fo", "<cmd> Telescope oldfiles <CR>", { desc = "Find oldfiles" })
 map("n", "<leader>f/", "<cmd> Telescope current_buffer_fuzzy_find <CR>", { desc = "Find in current buffer" })
 map("n", "<leader><space>", function()
-  require("telescope.builtin").buffers({ sort_mru = true })
+	require("telescope.builtin").buffers({ sort_mru = true })
 end, { desc = "Find buffers" })
 map("n", "<leader>#", "<cmd> Telescope grep_string <CR>", { desc = "Find all word under cursor" })
 map("n", "<leader>*", "<cmd> Telescope grep_string word_match=-w <CR>", { desc = "Find word under cursor" })
@@ -247,53 +247,53 @@ map("n", "<leader>bh", "<cmd> BufferLineMovePrev <CR>", { desc = "Move buffer le
 map("n", "<leader>bl", "<cmd> BufferLineMoveNext <CR>", { desc = "Move buffer right" })
 
 map("n", "<leader>j", function()
-  require("bufferline").go_to(1, true)
+	require("bufferline").go_to(1, true)
 end, { desc = "Buffer 1" })
 map("n", "<leader>k", function()
-  require("bufferline").go_to(2, true)
+	require("bufferline").go_to(2, true)
 end, { desc = "Buffer 2" })
 map("n", "<leader>l", function()
-  require("bufferline").go_to(3, true)
+	require("bufferline").go_to(3, true)
 end, { desc = "Buffer 3" })
 map("n", "<leader>;", function()
-  require("bufferline").go_to(4, true)
+	require("bufferline").go_to(4, true)
 end, { desc = "Buffer 4" })
 map("n", "<leader>'", function()
-  require("bufferline").go_to(5, true)
+	require("bufferline").go_to(5, true)
 end, { desc = "Buffer 5" })
 
 --------------------------------- numToStr/Comment.nvim -------------------------------------
 
 map("n", "<leader>/", function()
-  require("Comment.api").toggle.linewise.current()
+	require("Comment.api").toggle.linewise.current()
 end, { desc = "Toggle comment" })
 map(
-  "x",
-  "<leader>/",
-  "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-  { desc = "Toggle comment" }
+	"x",
+	"<leader>/",
+	"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+	{ desc = "Toggle comment" }
 )
 
 --------------------------------- stevearc/conform.nvim -------------------------------------
 
 -- format
 map("n", "<leader>fm", function()
-  require("conform").format({
-    lsp_fallback = true, -- LSPでもformat
-  })
+	require("conform").format({
+		lsp_fallback = true, -- LSPでもformat
+	})
 end, { desc = "Format code" })
 
 --------------------------------- folke/which-key.nvim -------------------------------------
 
 map("n", "<leader>wk", function()
-  vim.cmd("WhichKey")
+	vim.cmd("WhichKey")
 end, { desc = "Which-key all keymaps" })
 
 --------------------------------- nvim-treesitter -------------------------------------
 
 -- nvim-treesitter/nvim-treesitter-context
 map("n", "[x", function()
-  require("treesitter-context").go_to_context()
+	require("treesitter-context").go_to_context()
 end, { desc = "Jump to treesitter context", silent = true })
 
 --------------------------------- DAP -------------------------------------
@@ -301,9 +301,9 @@ end, { desc = "Jump to treesitter context", silent = true })
 -- dap
 map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>", { desc = "Add breakpoint at line" })
 map("n", "<leader>du", function()
-  local widgets = require("dap.ui.widgets")
-  local sidebar = widgets.sidebar(widgets.scopes)
-  sidebar.open()
+	local widgets = require("dap.ui.widgets")
+	local sidebar = widgets.sidebar(widgets.scopes)
+	sidebar.open()
 end, { desc = "Open debugging UI sidebar" })
 
 map("n", "<leader>dr", "<cmd> DapContinue <CR>", { desc = "Start or continue the debugging" })
@@ -314,11 +314,11 @@ map("n", "<F12>", "<cmd> DapStepOver <CR>", { desc = "debug: Step Over" })
 
 -- dap Go
 map("n", "<leader>dgt", function()
-  require("dap-go").debug_test()
+	require("dap-go").debug_test()
 end, { desc = "Debug go test" })
 
 map("n", "<leader>dgl", function()
-  require("dap-go").debug_last()
+	require("dap-go").debug_last()
 end, { desc = "Debug last go test" })
 
 --------------------------------- git stuffs -------------------------------------
@@ -352,7 +352,7 @@ map("n", "<leader>ut", "<cmd> UndotreeToggle <CR>", { desc = "Toggle Undotree" }
 
 -- nvim-pack/nvim-spectre
 map("n", "<leader>us", function()
-  require("spectre").toggle()
+	require("spectre").toggle()
 end, { desc = "Toggle Spectre" })
 
 -- tpope/vim-fugitive
@@ -367,22 +367,22 @@ map("n", "<leader>ul", "<cmd> Lazy <CR>", { desc = "Open Lazy" })
 -- lukas-reineke/indent-blankline.nvim
 local indent_blankline_loaded = true
 map("n", "<leader>uI", function()
-  if not indent_blankline_loaded then
-    vim.cmd("IBLEnable")
-    indent_blankline_loaded = true
-  else
-    vim.cmd("IBLToggle")
-  end
+	if not indent_blankline_loaded then
+		vim.cmd("IBLEnable")
+		indent_blankline_loaded = true
+	else
+		vim.cmd("IBLToggle")
+	end
 end, { desc = "Toggle indent-blankline" })
 
 -- echasnovski/mini.indentscope
 map("n", "<leader>ui", function()
-  vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
-  if vim.g.miniindentscope_disable then
-    MiniIndentscope.undraw()
-  else
-    MiniIndentscope.draw()
-  end
+	vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
+	if vim.g.miniindentscope_disable then
+		MiniIndentscope.undraw()
+	else
+		MiniIndentscope.draw()
+	end
 end, { desc = "Toggle indentscope" })
 
 -- RRethy/vim-illuminate

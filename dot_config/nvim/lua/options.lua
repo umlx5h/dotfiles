@@ -66,18 +66,18 @@ opt.foldlevelstart = 99 -- デフォルトで全て開く
 
 -- diffモードではtreesitterのfoldtextを使わずデフォルトに戻す
 vim.api.nvim_create_autocmd({ "OptionSet" }, {
-  group = vim.api.nvim_create_augroup("reset_foldtext_when_diffmode", { clear = true }),
-  desc = "Reset 'foldtext' to default when diff mode",
-  pattern = "diff",
-  callback = function()
-    vim.cmd([[
-      if v:option_new
-        setlocal foldtext&
-      else
-        setlocal foldtext=v:lua.vim.treesitter.foldtext()
-      endif
-    ]])
-  end,
+	group = vim.api.nvim_create_augroup("reset_foldtext_when_diffmode", { clear = true }),
+	desc = "Reset 'foldtext' to default when diff mode",
+	pattern = "diff",
+	callback = function()
+		vim.cmd([[
+			if v:option_new
+				setlocal foldtext&
+			else
+				setlocal foldtext=v:lua.vim.treesitter.foldtext()
+			endif
+		]])
+	end,
 })
 
 ------------------------ Variable -----------------------------

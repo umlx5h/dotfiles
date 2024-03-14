@@ -1,17 +1,17 @@
 require("ibl").setup({
-  indent = {
-    -- char = "▏",
-    char = "│",
-    highlight = "IblIndent",
-    smart_indent_cap = false,
-  },
-  scope = {
-    enabled = false, -- use mini-indentscope
-    -- char = "▏",
-    -- show_start = false,
-    -- show_end = false,
-    -- highlight = "IblScope",
-  },
+	indent = {
+		-- char = "▏",
+		char = "│",
+		highlight = "IblIndent",
+		smart_indent_cap = false,
+	},
+	scope = {
+		enabled = false, -- use mini-indentscope
+		-- char = "▏",
+		-- show_start = false,
+		-- show_end = false,
+		-- highlight = "IblScope",
+	},
 })
 
 -- -- theme

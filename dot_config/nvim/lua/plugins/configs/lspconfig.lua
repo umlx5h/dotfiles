@@ -13,39 +13,39 @@ vim.keymap.set("n", "<leader>Q", vim.diagnostic.setqflist, { desc = "LSP diagnos
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    -- Disable for nvim-cmp-lsp
-    -- > As these candidates are sent on each request, adding these capabilities will break the built-in omnifunc support for neovim's language server client
-    -- vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	callback = function(ev)
+		-- Enable completion triggered by <c-x><c-o>
+		-- Disable for nvim-cmp-lsp
+		-- > As these candidates are sent on each request, adding these capabilities will break the built-in omnifunc support for neovim's language server client
+		-- vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    local map = function(mode, keys, func, desc)
-      vim.keymap.set(mode, keys, func, { buffer = ev.buf, desc = desc })
-    end
+		local map = function(mode, keys, func, desc)
+			vim.keymap.set(mode, keys, func, { buffer = ev.buf, desc = desc })
+		end
 
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    map("n", "gD", vim.lsp.buf.declaration, "LSP declaration")
-    map("n", "gd", vim.lsp.buf.definition, "LSP definition")
-    map("n", "gI", vim.lsp.buf.implementation, "LSP implementation") -- giだと標準のと被る
-    map("n", "gy", vim.lsp.buf.type_definition, "LSP type definition")
-    map("n", "gr", vim.lsp.buf.references, "LSP references")
+		-- Buffer local mappings.
+		-- See `:help vim.lsp.*` for documentation on any of the below functions
+		map("n", "gD", vim.lsp.buf.declaration, "LSP declaration")
+		map("n", "gd", vim.lsp.buf.definition, "LSP definition")
+		map("n", "gI", vim.lsp.buf.implementation, "LSP implementation") -- giだと標準のと被る
+		map("n", "gy", vim.lsp.buf.type_definition, "LSP type definition")
+		map("n", "gr", vim.lsp.buf.references, "LSP references")
 
-    map("n", "K", vim.lsp.buf.hover, "LSP hover")
-    map("n", "gK", vim.lsp.buf.signature_help, "LSP signature help")
-    map("i", "<C-k>", vim.lsp.buf.signature_help, "LSP signature help")
-    -- remap Enter digraph
-    map("i", "<C-x><C-k>", "<C-k>", "Insert digraph")
+		map("n", "K", vim.lsp.buf.hover, "LSP hover")
+		map("n", "gK", vim.lsp.buf.signature_help, "LSP signature help")
+		map("i", "<C-k>", vim.lsp.buf.signature_help, "LSP signature help")
+		-- remap Enter digraph
+		map("i", "<C-x><C-k>", "<C-k>", "Insert digraph")
 
-    map("n", "<leader>cr", vim.lsp.buf.rename, "LSP rename")
-    map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "LSP code action")
-    map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "LSP add workspace")
-    map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "LSP remove workspace")
-    map("n", "<leader>wl", function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, "LSP list workspace")
-  end,
+		map("n", "<leader>cr", vim.lsp.buf.rename, "LSP rename")
+		map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "LSP code action")
+		map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "LSP add workspace")
+		map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "LSP remove workspace")
+		map("n", "<leader>wl", function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, "LSP list workspace")
+	end,
 })
 
 -------------------------------------- LSP setup -----------------------------------
@@ -65,118 +65,118 @@ local lspconfig = require("lspconfig")
 
 -- Lua
 lspconfig.lua_ls.setup({
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      diagnostics = { globals = { "vim" } },
-      workspace = {
-        library = {
-          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-          [vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
-        },
-      },
-    },
-  },
+	capabilities = capabilities,
+	settings = {
+		Lua = {
+			diagnostics = { globals = { "vim" } },
+			workspace = {
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+					[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
+				},
+			},
+		},
+	},
 })
 
 -- Go
 lspconfig.gopls.setup({
-  capabilities = capabilities,
-  settings = {
-    -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-    gopls = {
-      completeUnimported = true,
-      -- usePlaceholders = true,
-      -- analyses = {
-      --   unusedparams = true,
-      -- },
-    },
-  },
+	capabilities = capabilities,
+	settings = {
+		-- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+		gopls = {
+			completeUnimported = true,
+			-- usePlaceholders = true,
+			-- analyses = {
+			-- 	unusedparams = true,
+			-- },
+		},
+	},
 })
 
 -- Ansible
 -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/ansiblels.lua
 lspconfig.ansiblels.setup({
-  capabilities = capabilities,
-  filetypes = { "yaml.ansible" }, -- default
-  -- MEMO: filetypeでansibleを検出することにしたのでコメントアウト
-  -- filetypes = { "yaml", "yaml.ansible" }, -- Add yaml
-  -- single_file_support = false, -- only attach if root_dir detected
+	capabilities = capabilities,
+	filetypes = { "yaml.ansible" }, -- default
+	-- MEMO: filetypeでansibleを検出することにしたのでコメントアウト
+	-- filetypes = { "yaml", "yaml.ansible" }, -- Add yaml
+	-- single_file_support = false, -- only attach if root_dir detected
 })
 
 -- JSON
 lspconfig.jsonls.setup({
-  capabilities = capabilities,
-  -- @ref: https://www.lazyvim.org/extras/lang/json
+	capabilities = capabilities,
+	-- @ref: https://www.lazyvim.org/extras/lang/json
 
-  -- lazy-load schemastore when needed
-  on_new_config = function(new_config)
-    new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-    vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
-  end,
-  settings = {
-    json = {
-      format = {
-        enable = true,
-      },
-      validate = { enable = true },
-    },
-  },
+	-- lazy-load schemastore when needed
+	on_new_config = function(new_config)
+		new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+		vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+	end,
+	settings = {
+		json = {
+			format = {
+				enable = true,
+			},
+			validate = { enable = true },
+		},
+	},
 })
 
 -- MEMO: setup() in lua/plugins/configs/yaml-companion.lua
 -- -- YAML
 -- lspconfig.yamlls.setup({
---   capabilities = capabilities,
---   filetypes = { "yaml", "yaml.docker-compose", "yaml.ansible" }, -- attach yamlls and other LSP simultaneously
+-- 	capabilities = capabilities,
+-- 	filetypes = { "yaml", "yaml.docker-compose", "yaml.ansible" }, -- attach yamlls and other LSP simultaneously
 --
---   -- @ref: https://www.lazyvim.org/extras/lang/yaml
+-- 	-- @ref: https://www.lazyvim.org/extras/lang/yaml
 --
---   -- lazy-load schemastore when needed
---   on_new_config = function(new_config)
---     new_config.settings.yaml.schemas =
---       vim.tbl_deep_extend("force", new_config.settings.yaml.schemas or {}, require("schemastore").yaml.schemas())
---   end,
+-- 	-- lazy-load schemastore when needed
+-- 	on_new_config = function(new_config)
+-- 		new_config.settings.yaml.schemas =
+-- 			vim.tbl_deep_extend("force", new_config.settings.yaml.schemas or {}, require("schemastore").yaml.schemas())
+-- 	end,
 --
---   settings = {
---     redhat = { telemetry = { enabled = false } },
---     yaml = {
---       keyOrdering = false,
---       format = {
---         enable = true,
---       },
---       validate = true,
---       schemaStore = {
---         -- Must disable built-in schemaStore support to use
---         -- schemas from SchemaStore.nvim plugin
---         enable = false,
---         -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
---         url = "",
---       },
---     },
---   },
+-- 	settings = {
+-- 		redhat = { telemetry = { enabled = false } },
+-- 		yaml = {
+-- 			keyOrdering = false,
+-- 			format = {
+-- 				enable = true,
+-- 			},
+-- 			validate = true,
+-- 			schemaStore = {
+-- 				-- Must disable built-in schemaStore support to use
+-- 				-- schemas from SchemaStore.nvim plugin
+-- 				enable = false,
+-- 				-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+-- 				url = "",
+-- 			},
+-- 		},
+-- 	},
 -- })
---
+
 -- setup multiple servers with same default options
 local servers = {
-  "html",
-  "cssls",
-  "tsserver",
-  "clangd",
-  "dockerls",
-  "docker_compose_language_service",
-  "bashls",
-  "pyright",
-  "intelephense",
-  "rust_analyzer",
-  "eslint",
+	"html",
+	"cssls",
+	"tsserver",
+	"clangd",
+	"dockerls",
+	"docker_compose_language_service",
+	"bashls",
+	"pyright",
+	"intelephense",
+	"rust_analyzer",
+	"eslint",
 }
 
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup({
-    capabilities = capabilities,
-  })
+	lspconfig[lsp].setup({
+		capabilities = capabilities,
+	})
 end
 
 -------------------------------------- LSP other config -----------------------------------
@@ -184,23 +184,23 @@ end
 -- adjust popup menu width and height
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  -- opts.border = opts.border or "single"
-  -- 画面の大きさに対して%指定でサイズを調整
-  opts.max_height = opts.max_height or math.floor(vim.api.nvim_win_get_height(0) * 0.5)
-  opts.max_width = opts.max_width or math.floor(vim.api.nvim_win_get_width(0) * 0.7)
+	opts = opts or {}
+	-- opts.border = opts.border or "single"
+	-- 画面の大きさに対して%指定でサイズを調整
+	opts.max_height = opts.max_height or math.floor(vim.api.nvim_win_get_height(0) * 0.5)
+	opts.max_width = opts.max_width or math.floor(vim.api.nvim_win_get_width(0) * 0.7)
 
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+	return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
 -- setup signcolumn's icon
 vim.diagnostic.config({
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = "󰅙",
-      [vim.diagnostic.severity.WARN] = "",
-      [vim.diagnostic.severity.INFO] = "󰋼",
-      [vim.diagnostic.severity.HINT] = "󰌵",
-    },
-  },
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "󰅙",
+			[vim.diagnostic.severity.WARN] = "",
+			[vim.diagnostic.severity.INFO] = "󰋼",
+			[vim.diagnostic.severity.HINT] = "󰌵",
+		},
+	},
 })
