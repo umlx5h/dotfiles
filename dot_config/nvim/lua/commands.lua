@@ -30,6 +30,22 @@ vim.api.nvim_create_user_command("DiffOrig", function()
   ]])
 end, { desc = "Compare Active File with Saved" })
 
+-- j, kとgj, gkを入れ替えるコマンド
+vim.api.nvim_create_user_command("WrapCursorToggle", function()
+  if vim.fn.mapcheck("j", "n") ~= "" then
+    vim.api.nvim_del_keymap("n", "j")
+    vim.api.nvim_del_keymap("n", "k")
+  else
+    -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
+    -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
+    -- empty mode is same as using <cmd> :map
+    -- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
+    local map = vim.keymap.set
+    map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = "Move down", expr = true })
+    map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = "Move up", expr = true })
+  end
+end, { desc = "Toggle cursor movement mode when text wraps" })
+
 vim.api.nvim_create_user_command("QFToggle", function()
   local function qf_exist()
     for _, w in ipairs(vim.fn.getwininfo()) do

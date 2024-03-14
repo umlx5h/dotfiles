@@ -17,10 +17,12 @@ opt.tabstop = 8 -- default
 opt.softtabstop = -1 -- same as 'shiftwidth'
 opt.shiftwidth = 2 -- default: indent is 2
 opt.expandtab = true -- default: tab is not used
+opt.breakindent = true -- indent when text wraps
 
 opt.fillchars = { eob = " " } -- disable ~ after EOF
 opt.ignorecase = true
 opt.smartcase = true
+opt.inccommand = "split" -- interactive substitution
 
 opt.number = true
 opt.relativenumber = true
@@ -53,8 +55,10 @@ opt.pumheight = 12 -- set completion max rows
 
 -- treesitter fold
 opt.foldmethod = "expr"
+-- :h vim.treesitter.foldexpr()
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- treesitterで自動的に折り畳みを作成
-opt.foldtext = "v:lua.vim.treesitter.foldtext()" -- 折り畳みを見やすくする
+-- ref: https://github.com/neovim/neovim/pull/20750
+opt.foldtext = "" -- 折り畳みを見やすくする
 opt.foldlevelstart = 99 -- デフォルトで全て開く
 -- TODO: 最初に全て開く時にzR か foldopenを使わないとzmが動かない問題がある
 -- vim.cmd [[autocmd BufWinEnter * silent! :%foldopen!]]

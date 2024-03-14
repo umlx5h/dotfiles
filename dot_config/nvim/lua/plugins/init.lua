@@ -23,8 +23,35 @@ local plugins = {
   -- file explorer replacing netrrw
   {
     "stevearc/oil.nvim",
-    event = "VeryLazy",
     cmd = { "Oil" },
+    -- lazy load
+    -- ref: https://github.com/stevearc/oil.nvim/issues/300
+    init = function(p)
+      if vim.fn.argc() == 1 then
+        local argv = tostring(vim.fn.argv(0))
+        local stat = vim.loop.fs_stat(argv)
+
+        local remote_dir_args = vim.startswith(argv, "oil-ssh")
+          or vim.startswith(argv, "oil-sftp")
+          or vim.startswith(argv, "oil-scp")
+
+        if stat and stat.type == "directory" or remote_dir_args then
+          require("lazy").load({ plugins = { p.name } })
+        end
+      end
+      if not require("lazy.core.config").plugins[p.name]._.loaded then
+        vim.api.nvim_create_autocmd("BufNew", {
+          callback = function()
+            if vim.fn.isdirectory(vim.fn.expand("<afile>")) == 1 then
+              require("lazy").load({ plugins = { "oil.nvim" } })
+              -- Once oil is loaded, we can delete this autocmd
+              return true
+            end
+          end,
+        })
+      end
+    end,
+
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("plugins.configs.oil")
@@ -46,23 +73,27 @@ local plugins = {
     cmd = { "TSUpdate", "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-context",
-      opts = {
-        multiline_threshold = 1, -- Maximum number of lines to show for a single context
-      },
       {
-        -- replaceing matchit, matchparen
-        "andymass/vim-matchup",
+        "nvim-treesitter/nvim-treesitter-context",
+        opts = {
+          multiline_threshold = 1, -- Maximum number of lines to show for a single context
+        },
       },
+      -- {
+      --   -- replaceing matchit, matchparen
+      --   -- TODO: ステータスバー(lualine)あたりがちらつく問題があるで一時的に無効化
+      --   "andymass/vim-matchup",
+      -- },
     },
     config = function()
       require("plugins.configs.treesitter")
       require("nvim-treesitter.configs").setup({
-        matchup = {
-          enable = true, -- mandatory, false will disable the whole extension
-          disable = {}, -- optional, list of language that will be disabled
-          disable_virtual_text = true,
-        },
+        -- TODO: ステータスバー(lualine)あたりがちらつく問題があるで一時的に無効化
+        -- matchup = {
+        --   enable = true, -- mandatory, false will disable the whole extension
+        --   disable = {}, -- optional, list of language that will be disabled
+        --   disable_virtual_text = true,
+        -- },
       })
     end,
   },
@@ -552,7 +583,7 @@ local plugins = {
 
   {
     "kevinhwang91/nvim-hlslens",
-    keys = { "n", "N", "*", "#", "g*", "g#" },
+    keys = { "/", "n", "N", "*", "#", "g*", "g#" },
     config = function()
       require("hlslens").setup({
         nearest_only = true,

@@ -4,20 +4,22 @@ local map = vim.keymap.set
 -----------------------------------  Vim Core mapping -----------------------------------------
 -----------------------------------------------------------------------------------------------
 
+-- -- EscapeをCtrl-Cに割り当てる
+-- -- 従来のC-cはInsertLeave autocommandを発火しないので、copilotなどでバグが起きる
+-- -- これを設定すると count i foo や visual block modeでキャンセルすることができなくなるが許容する
+-- map("i", "<C-c>", "<Esc>", { desc = "Escape insert-mode" })
+
 -- Relative numberで行番号を見やすくする
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll window downwards with centering" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwards with centering" })
 
--- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
--- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
--- empty mode is same as using <cmd> :map
--- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
-map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = "Move down", expr = true })
-map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = "Move up", expr = true })
-
 -- "0pを打ちやすく
 map({ "n", "x" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
 map("n", "<leader>P", [["0P]], { desc = "Paste from yank register" })
+
+-- v_p と v_P を入れ替える
+-- map("x", "p", "P")
+-- map("x", "P", "p")
 
 -- system clipboard
 map({ "n", "x" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
@@ -46,7 +48,7 @@ map("i", "<C-b>", "<Left>", { desc = "Emacs Left" })
 map("i", "<C-f>", "<Right>", { desc = "Emacs Right" })
 map("i", "<C-a>", "<Home>", { desc = "Emacs Home" })
 map("i", "<C-e>", "<End>", { desc = "Emacs End" })
--- map("i", "<C-d>", "<Delete>", { desc = "Emacs Delete" }) -- Conflict indent delete
+map("i", "<C-d>", "<Delete>", { desc = "Emacs Delete" }) -- Conflict indent delete
 map("i", "<C-h>", "<BS>", { desc = "Emacs Backspace" })
 -- disable for conflict (enter digraph)
 -- map("i", "<C-k>", function()
@@ -340,6 +342,7 @@ map("n", "<leader>gf", "<cmd> Flog <CR>", { desc = "Open flog" })
 
 map("n", "<leader>un", "<cmd> bufdo set relativenumber! <CR>", { desc = "Toggle relative line number" })
 map("n", "<leader>uw", "<cmd> set wrap! <CR>", { desc = "Toggle wrap" })
+map("n", "<leader>uW", "<cmd> WrapCursorToggle <CR>", { desc = "Toggle j,k <-> gj,gk" })
 map("n", "<leader>uq", "<cmd> QFToggle <CR>", { desc = "Toggle Quickfix window" })
 -- Toggle diagnostic (linter)
 map("n", "<leader>ud", "<cmd> DiagnosticsToggle <CR>", { desc = "Toggle diagnostics" })
