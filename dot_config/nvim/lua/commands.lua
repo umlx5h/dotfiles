@@ -88,8 +88,8 @@ end, { desc = "Set current project name to wezterm tab name" })
 
 vim.api.nvim_create_user_command("ShowIndentOpt", function()
 	vim.cmd([[
-    verbose setlocal ts? sts? sw? et?
-  ]])
+		verbose setlocal ts? sts? sw? et?
+	]])
 end, { desc = "Show current indent options" })
 
 local toggle_diagnostics_enabled = true
