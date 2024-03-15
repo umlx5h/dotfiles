@@ -8,7 +8,7 @@ set rulerformat=%=%P
 
 " vimdiffを見やすく
 if &diff
-  colorscheme industry
+	colorscheme industry
 endif
 
 " 5 -> 3に少し小さく
@@ -45,10 +45,10 @@ set ttimeoutlen=50
 
 " tmux経由の時にCTRL-Left, Rightが動くようにする
 if &term =~ '^screen' || &term =~ '^tmux'
-  execute "set <xUp>=\e[1;*A"
-  execute "set <xDown>=\e[1;*B"
-  execute "set <xRight>=\e[1;*C"
-  execute "set <xLeft>=\e[1;*D"
+	execute "set <xUp>=\e[1;*A"
+	execute "set <xDown>=\e[1;*B"
+	execute "set <xRight>=\e[1;*C"
+	execute "set <xLeft>=\e[1;*D"
 endif
 
 " F2で'paste'をトグル
@@ -93,10 +93,10 @@ nnoremap <leader>s :execute '/\V' . substitute(escape(input('Search literally: '
 xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
 xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 function! s:VSetSearch(cmdtype)
-  let temp = @s
-  norm! gv"sy
-  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
-  let @s = temp
+	let temp = @s
+	norm! gv"sy
+	let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+	let @s = temp
 endfunction
 
 xnoremap gs y:let @/ = '\V' . substitute(escape(@0, '/\'), '\n', '\\n', 'g')<CR>:set hls<CR>cgn

@@ -13,9 +13,9 @@ alias tig="TERM=xterm-256color tig"
 
 # PATH
 path=(
-    $HOME/Library/Android/sdk/platform-tools
-    /Applications/WezTerm.app/Contents/MacOS
-    /Applications/MySQLWorkbench.app/Contents/MacOS
-    $path
+	$HOME/Library/Android/sdk/platform-tools
+	/Applications/WezTerm.app/Contents/MacOS
+	/Applications/MySQLWorkbench.app/Contents/MacOS
+	$path
 )
 export PATH

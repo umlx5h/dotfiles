@@ -24,12 +24,18 @@ alias cmd.exe="/mnt/c/Windows/System32/cmd.exe"
 #
 
 function firefox() {
-  [ "$#" -ne 1 ] && { echo "Usage: firefox /path/to/file"; return 1; }
+	[ "$#" -ne 1 ] && {
+		echo "Usage: firefox /path/to/file"
+		return 1
+	}
 
-  /mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe "$(wslpath -w $1)"
+	/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe "$(wslpath -w $1)"
 }
 
 function fork() {
-  [ "$#" -ne 1 ] && { echo "Usage: fork /path/to/repo"; return 1; }
-  /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe start-process "C:\Users\\$WINUSER\AppData\Local\Fork\fork.exe" "$(wslpath -w $1)"
+	[ "$#" -ne 1 ] && {
+		echo "Usage: fork /path/to/repo"
+		return 1
+	}
+	/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe start-process "C:\Users\\$WINUSER\AppData\Local\Fork\fork.exe" "$(wslpath -w $1)"
 }

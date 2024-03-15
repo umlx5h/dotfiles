@@ -144,10 +144,10 @@ setw -g pane-base-index 1
 # セッションの番号を1から始める
 set-option -g @first-run 1
 set-hook -g session-created {
-    if-shell -F '#{?@first-run,1,0}' {
-        set-option -g @first-run 0
-        if-shell -F '#{==:#{session_name},0}' { rename-session 1 }
-    }
+	if-shell -F '#{?@first-run,1,0}' {
+		set-option -g @first-run 0
+		if-shell -F '#{==:#{session_name},0}' { rename-session 1 }
+	}
 }
 
 # マウス操作を有効にする
@@ -185,4 +185,3 @@ bind-key C-p paste-buffer
 
 # ウィンドウ番号の連番を振りなおす
 set-option -g renumber-windows on
-

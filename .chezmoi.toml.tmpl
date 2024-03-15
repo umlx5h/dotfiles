@@ -11,24 +11,24 @@
 {{- $win_user := "" -}}
 
 {{- if $isWSL }}
-    {{- $win_user = promptString "win_user" -}}
+	{{- $win_user = promptString "win_user" -}}
 {{- end -}}
 
 [data]
-    isWSL = {{ $isWSL }}
-    isLinux = {{ $isLinux }}
-    isMac = {{ $isMac }}
-    isLocal = {{ $isLocal }}
-    isWork = {{ $isWork }}
-    isCentOS = {{ $isCentOS }}
+	isWSL = {{ $isWSL }}
+	isLinux = {{ $isLinux }}
+	isMac = {{ $isMac }}
+	isLocal = {{ $isLocal }}
+	isWork = {{ $isWork }}
+	isCentOS = {{ $isCentOS }}
 
-    git_user = "{{ $git_user }}"
-    git_email = "{{ $git_email }}"
+	git_user = "{{ $git_user }}"
+	git_email = "{{ $git_email }}"
 
 {{- if $isWSL }}
-    win_user = "{{ $win_user }}"
+	win_user = "{{ $win_user }}"
 {{- end }}
 
 [merge]
-    command = "nvim"
-    args = ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Source }}", "{{ .Target }}`}}"]
+	command = "nvim"
+	args = ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Source }}", "{{ .Target }}`}}"]

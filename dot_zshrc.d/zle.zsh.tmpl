@@ -3,9 +3,9 @@ bindkey '\e/' open-recent-project
 
 function open-recent-project-session() {
 {{- if .isLocal }}
-  open-recent-project-tab
+	open-recent-project-tab
 {{- else }}
-  open-recent-project-tmux
+	open-recent-project-tmux
 {{- end }}
 }
 

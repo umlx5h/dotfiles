@@ -22,13 +22,12 @@ alias G="nvim -c 'vert Git' ."
 # Neovim
 #
 if [ -n "$NVIM" ]; then
-  # Open file in curent neovim
-  if type nvr &>/dev/null; then
-    alias nvim='nvr -l'
-    alias vim='nvr -l'
-  else
-    alias nvim='echo "No nesting!"'
-    alias vim='echo "No nesting!"'
-  fi
+	# Open file in curent neovim
+	if type nvr &>/dev/null; then
+		alias nvim='nvr -l'
+		alias vim='nvr -l'
+	else
+		alias nvim='echo "No nesting!"'
+		alias vim='echo "No nesting!"'
+	fi
 fi
-

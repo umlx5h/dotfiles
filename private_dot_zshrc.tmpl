@@ -4,35 +4,35 @@ TMUX_AUTO_START="on"
 
 # tmux autostart
 if [[ "$TERM_PROGRAM" == "WezTerm" && -z "$TMUX" && "$TMUX_AUTO_START" == "on" ]]; then
-    tmux_running=$(pgrep tmux)
-    if [[ -z "$tmux_running" ]]; then
-      tmux new
-    else
-      attach_session=$(tmux 2> /dev/null ls -F \
-          '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' |
-          awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')
+	tmux_running=$(pgrep tmux)
+	if [[ -z "$tmux_running" ]]; then
+		tmux new
+	else
+		attach_session=$(tmux 2>/dev/null ls -F \
+			'#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' |
+			awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')
 
-      # アタッチされていないセッションがすでにあった場合は一番若い番号のセッションにアタッチ
-      if [ -n "$attach_session" ]; then
-        tmux attach -t "$attach_session"
-      else
-        if [[ "$PWD" =~ ^/mnt/c/Users/.* ]]; then
-          # wezterm&tmux経由だとカレントディレクトリがおかしくなるので対策
-          cd $HOME
-        fi
-        # アタッチされていないセッションがなかったので、セッションを立ち上げる
-        tmux new
-      fi
-    fi
+		# アタッチされていないセッションがすでにあった場合は一番若い番号のセッションにアタッチ
+		if [ -n "$attach_session" ]; then
+			tmux attach -t "$attach_session"
+		else
+			if [[ "$PWD" =~ ^/mnt/c/Users/.* ]]; then
+				# wezterm&tmux経由だとカレントディレクトリがおかしくなるので対策
+				cd $HOME
+			fi
+			# アタッチされていないセッションがなかったので、セッションを立ち上げる
+			tmux new
+		fi
+	fi
 fi
 
 # Set the list of directories that Zsh searches for programs.
 fpath=(
-    $HOME/.asdf/completions
-    $HOME/.local/lib/python3.8/site-packages/argcomplete/bash_completion.d
-    $HOME/.local/share/zsh/cmd_completions
-    $fpath
-    $HOME/.local/share/zsh/generated_man_completions
+	$HOME/.asdf/completions
+	$HOME/.local/lib/python3.8/site-packages/argcomplete/bash_completion.d
+	$HOME/.local/share/zsh/cmd_completions
+	$fpath
+	$HOME/.local/share/zsh/generated_man_completions
 )
 
 # Import all zsh settings
@@ -59,7 +59,7 @@ source $ZSHHOME/theme.zsh
 source $ZSHHOME/zle.zsh
 
 if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
-  source $ZSHHOME/wezterm.sh
+	source $ZSHHOME/wezterm.sh
 fi
 
 complete -C '/usr/local/bin/aws_completer' aws # AWS completion
