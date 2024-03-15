@@ -70,6 +70,8 @@ alias vim-lazy="NVIM_APPNAME=nvim_lazy nvim"
 alias vim-chad="NVIM_APPNAME=nvim_nvchad nvim"
 alias vim-kickstart="NVIM_APPNAME=nvim_kickstart nvim"
 alias vim-tiny="NVIM_APPNAME=nvim_tiny nvim"
+alias vim-old="NVIM_APPNAME=nvim_old nvim"
+alias vim-modern="NVIM_APPNAME=nvim_modern nvim"
 alias vim-default="NVIM_APPNAME=nvim_default nvim"
 
 function vims() {

@@ -21,11 +21,9 @@ function bcc() {
 # Alias
 #
 
-alias gm="gomi"
-function rm() {
-	echo "WARNING: Do not use rm directly\n"
-	gomi "$@"
-}
+alias gm="gtrash put"
+# rmはエイリアスで禁止にしておく
+alias rm="echo -e 'WARNING: Do not use rm directly'; false"
 
 #
 # Path
