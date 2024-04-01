@@ -79,21 +79,23 @@ local plugins = {
 					multiline_threshold = 1, -- Maximum number of lines to show for a single context
 				},
 			},
-			-- {
-			-- 	-- replaceing matchit, matchparen
-			-- 	-- TODO: ステータスバー(lualine)あたりがちらつく問題があるで一時的に無効化
-			-- 	"andymass/vim-matchup",
-			-- },
+			{
+				-- replaceing matchit, matchparen
+				"andymass/vim-matchup",
+				config = function()
+					-- TODO: ステータスバー(lualine)あたりがちらつく問題があるので無効化
+					vim.g.matchup_matchparen_offscreen = {}
+				end,
+			},
 		},
 		config = function()
 			require("plugins.configs.treesitter")
 			require("nvim-treesitter.configs").setup({
-				-- TODO: ステータスバー(lualine)あたりがちらつく問題があるで一時的に無効化
-				-- matchup = {
-				-- 	enable = true, -- mandatory, false will disable the whole extension
-				-- 	disable = {}, -- optional, list of language that will be disabled
-				-- 	disable_virtual_text = true,
-				-- },
+				matchup = {
+					enable = true, -- mandatory, false will disable the whole extension
+					disable = {}, -- optional, list of language that will be disabled
+					disable_virtual_text = true,
+				},
 			})
 		end,
 	},
@@ -248,6 +250,7 @@ local plugins = {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			"nvim-telescope/telescope-live-grep-args.nvim",
 		},
 		cmd = "Telescope",
 		config = function()
@@ -371,11 +374,13 @@ local plugins = {
 			require("guess-indent").setup({
 				-- auto_cmd = false,
 				on_tab_options = {
+					["tabstop"] = 4,
 					["expandtab"] = false,
 					["softtabstop"] = 0,
 					["shiftwidth"] = 0,
 				},
 				on_space_options = {
+					["tabstop"] = 8, -- スペースの時は8に設定
 					["expandtab"] = true,
 					["shiftwidth"] = "detected",
 					["softtabstop"] = -1,
@@ -406,15 +411,6 @@ local plugins = {
 					enable = false,
 				},
 			})
-		end,
-	},
-	{
-		"kevinhwang91/nvim-bqf",
-		ft = "qf",
-		event = "QuickFixCmdPost",
-		dependencies = "junegunn/fzf",
-		config = function()
-			require("plugins.configs.bqf")
 		end,
 	},
 	{

@@ -13,6 +13,17 @@ local map = vim.keymap.set
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll window downwards with centering" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwards with centering" })
 
+-- Allow moving the cursor through wrapped lines with <Up> and <Down>
+-- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
+-- empty mode is ame as using <cmd> :map
+-- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
+map("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = "Move down", expr = true })
+map("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = "Move up", expr = true })
+
+-- HとLを行移動に上書き
+map("", "H", "^", { desc = "Line Start" })
+map("", "L", "$", { desc = "Line End" })
+
 -- "0pを打ちやすく
 map({ "n", "x" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
 map("n", "<leader>P", [["0P]], { desc = "Paste from yank register" })
@@ -25,8 +36,7 @@ map("n", "<leader>P", [["0P]], { desc = "Paste from yank register" })
 map({ "n", "x" }, "<leader>y", [["+y]], { desc = "yank system clipboard" })
 map("x", "<F3>", [["+y]], { desc = "yank system clipboard" }) -- <F3> = CTRL+C or CMD+C
 map("n", "<leader>Y", [["+y$]], { desc = "Yank system clipboard" })
-map("x", "<leader>d", [["+d]], { desc = "delete with clipboard" })
-map("n", "<leader>dd", [["+dd]], { desc = "Delete line with clipboard" })
+map({ "n", "x" }, "<leader>d", [["+d]], { desc = "delete with clipboard" })
 
 -- Alternative to VSCode Ctrl+D
 map(
@@ -208,7 +218,10 @@ map("n", "<C-p>", "<cmd> Telescope find_files <CR>", { desc = "Find Project file
 map("n", "<leader>ff", "<cmd> Telescope find_files <CR>", { desc = "Find files" })
 map("n", "<leader>fa", "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", { desc = "Find all" })
 map("n", "<leader>fg", "<cmd> Telescope git_files <CR>", { desc = "Find git files" })
-map("n", "<leader>fw", "<cmd> Telescope live_grep <CR>", { desc = "Live grep" })
+-- map("n", "<leader>fw", "<cmd> Telescope live_grep <CR>", { desc = "Live grep" })
+map("n", "<leader>fw", function()
+	require("telescope").extensions.live_grep_args.live_grep_args()
+end, { desc = "Live grep" })
 map("n", "<leader>fh", "<cmd> Telescope help_tags <CR>", { desc = "Help page" })
 map("n", "<leader>fo", "<cmd> Telescope oldfiles <CR>", { desc = "Find oldfiles" })
 map("n", "<leader>f/", "<cmd> Telescope current_buffer_fuzzy_find <CR>", { desc = "Find in current buffer" })
@@ -223,7 +236,7 @@ map("n", "<leader>fk", "<cmd> Telescope keymaps <CR>", { desc = "Find keymaps" }
 map("n", "<leader>fs", "<cmd> Telescope lsp_document_symbols <CR>", { desc = "Find symbol" })
 map("n", "<leader>fS", "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", { desc = "Find workspace Symbol" })
 map("n", "<leader>fq", "<cmd> Telescope diagnostics <CR>", { desc = "Find diagnostics" })
-map("n", "<leader>fr", "<cmd> Telescope resume <CR>", { desc = "Resume telescope" })
+map("n", "<leader>fl", "<cmd> Telescope resume <CR>", { desc = "Telescope Last" })
 
 --------------------------------- folke/todo-comments.nvim -------------------------------------
 
@@ -340,33 +353,39 @@ map("n", "<leader>gf", "<cmd> Flog <CR>", { desc = "Open flog" })
 
 --------------------------------- ui stuffs -------------------------------------
 
-map("n", "<leader>un", "<cmd> bufdo set relativenumber! <CR>", { desc = "Toggle relative line number" })
-map("n", "<leader>uw", "<cmd> set wrap! <CR>", { desc = "Toggle wrap" })
-map("n", "<leader>uW", "<cmd> WrapCursorToggle <CR>", { desc = "Toggle j,k <-> gj,gk" })
-map("n", "<leader>uq", "<cmd> QFToggle <CR>", { desc = "Toggle Quickfix window" })
+-- UI系は<leader>uXと \Xの両方を定義する
+local uimap = function(mode, lhs, rhs, opts)
+	vim.keymap.set(mode, lhs, rhs, opts)
+	vim.keymap.set(mode, lhs:gsub("^<leader>u", "\\"), rhs, opts)
+end
+
+uimap("n", "<leader>un", "<cmd> bufdo set relativenumber! <CR>", { desc = "Toggle relative line number" })
+uimap("n", "<leader>uw", "<cmd> set wrap! | set wrap? <CR>", { desc = "Toggle wrap" })
+uimap("n", "<leader>uW", "<cmd> WrapCursorToggle <CR>", { desc = "Toggle j,k <-> gj,gk" })
+uimap("n", "<leader>uq", "<cmd> QFToggle <CR>", { desc = "Toggle Quickfix window" })
 -- Toggle diagnostic (linter)
-map("n", "<leader>ud", "<cmd> DiagnosticsToggle <CR>", { desc = "Toggle diagnostics" })
+uimap("n", "<leader>ud", "<cmd> DiagnosticsToggle <CR>", { desc = "Toggle diagnostics" })
 
 -- mbbill/undotree
-map("n", "<leader>ut", "<cmd> UndotreeToggle <CR>", { desc = "Toggle Undotree" })
+uimap("n", "<leader>ut", "<cmd> UndotreeToggle <CR>", { desc = "Toggle Undotree" })
 
 -- nvim-pack/nvim-spectre
-map("n", "<leader>us", function()
+uimap("n", "<leader>us", function()
 	require("spectre").toggle()
 end, { desc = "Toggle Spectre" })
 
 -- tpope/vim-fugitive
-map("n", "<leader>ug", "<cmd> vertical G <CR>", { desc = "Open Git fugitive" })
+uimap("n", "<leader>ug", "<cmd> vertical G <CR>", { desc = "Open Git fugitive" })
 
 -- stevearc/aerial.nvim
-map("n", "<leader>uo", "<cmd> AerialToggle <CR>", { desc = "Toggle Aerial (Symbol Outline)" })
+uimap("n", "<leader>ua", "<cmd> AerialToggle <CR>", { desc = "Toggle Aerial (Symbol Outline)" })
 
 -- lazy
-map("n", "<leader>ul", "<cmd> Lazy <CR>", { desc = "Open Lazy" })
+uimap("n", "<leader>ul", "<cmd> Lazy <CR>", { desc = "Open Lazy" })
 
 -- lukas-reineke/indent-blankline.nvim
 local indent_blankline_loaded = true
-map("n", "<leader>uI", function()
+uimap("n", "<leader>uI", function()
 	if not indent_blankline_loaded then
 		vim.cmd("IBLEnable")
 		indent_blankline_loaded = true
@@ -376,20 +395,22 @@ map("n", "<leader>uI", function()
 end, { desc = "Toggle indent-blankline" })
 
 -- echasnovski/mini.indentscope
-map("n", "<leader>ui", function()
+uimap("n", "<leader>ui", function()
 	vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
 	if vim.g.miniindentscope_disable then
 		MiniIndentscope.undraw()
+		vim.api.nvim_echo({ { "Disabled mini.indentscope" } }, false, {})
 	else
 		MiniIndentscope.draw()
+		vim.api.nvim_echo({ { "Enabled mini.indentscope" } }, false, {})
 	end
 end, { desc = "Toggle indentscope" })
 
 -- RRethy/vim-illuminate
-map("n", "<leader>uh", "<cmd> IlluminateToggle <CR>", { desc = "Toggle highlight (vim-illuminate)" })
+uimap("n", "<leader>uh", "<cmd> IlluminateToggle <CR>", { desc = "Toggle highlight (vim-illuminate)" })
 
 -- nvim-treesitter/nvim-treesitter-context
-map("n", "<leader>uc", "<cmd> TSContextToggle <CR>", { desc = "Toggle treesitter context" })
+uimap("n", "<leader>uc", "<cmd> TSContextToggle <CR>", { desc = "Toggle treesitter context" })
 
 -- copilot
-map("n", "<leader>uC", "<cmd> Copilot toggle <CR>", { desc = "Toggle Copilot" })
+uimap("n", "<leader>uC", "<cmd> Copilot toggle <CR>", { desc = "Toggle Copilot" })

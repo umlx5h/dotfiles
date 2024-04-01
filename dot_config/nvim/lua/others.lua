@@ -21,7 +21,7 @@ for _, provider in ipairs({ "node", "perl", "python3", "ruby" }) do
 	vim.g["loaded_" .. provider .. "_provider"] = 0
 end
 
--- editorconfigでindent_sizeのみ指定された時にtabstopが書き換えられるのを無効化する
+-- editorconfigでindent_sizeのみ指定された時にtabstopが同じ値に書き換えられるのを止める
 -- copy from https://github.com/neovim/neovim/blob/e6d38c7dac2e079d9b0f1621fef193bca858664f/runtime/lua/editorconfig.lua#L59-L71
 require("editorconfig").properties.indent_size = function(bufnr, val, opts)
 	if val == "tab" then
@@ -32,10 +32,11 @@ require("editorconfig").properties.indent_size = function(bufnr, val, opts)
 		vim.bo[bufnr].shiftwidth = n
 		vim.bo[bufnr].softtabstop = -1
 
-		-- MEMO: comment out for keeping tabstop to 8
-		-- if not opts.tab_width then
-		-- 	vim.bo[bufnr].tabstop = n
-		-- end
+		-- MEMO: spaceの場合でtab_widthが指定されていないときは8に固定する, スペースタブの区別をわかりやすくするため
+		if not opts.tab_width then
+			-- vim.bo[bufnr].tabstop = n
+			vim.bo[bufnr].tabstop = 8
+		end
 	end
 end
 

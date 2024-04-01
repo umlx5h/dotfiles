@@ -23,6 +23,15 @@ require("lualine").setup({
 		},
 		lualine_x = { "diagnostics", "filetype" },
 		lualine_y = { { "%{fnamemodify(getcwd(), ':t')}", icon = "" } },
-		lualine_z = { "progress" },
+		lualine_z = {
+			{
+				"location",
+				cond = function()
+					-- rulerオプションが有効になっているときだけ表示
+					return vim.o.ruler == true
+				end,
+			},
+			"progress",
+		},
 	},
 })

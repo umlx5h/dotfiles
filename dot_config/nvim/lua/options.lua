@@ -8,16 +8,16 @@ opt.showmode = false
 opt.showcmd = false
 
 -- Indenting
--- set tab   :set ts=4 sw=0 noet
--- set space :set sw=4
+-- set tab   :set ts=X (sw=0 sts=0 noet)
+-- set space :set ts=8 sw=X sts=-1 et
 opt.autoindent = true -- default
 opt.smartindent = true
 opt.smarttab = true -- default
-opt.tabstop = 8 -- default
-opt.softtabstop = -1 -- same as 'shiftwidth'
-opt.shiftwidth = 2 -- default: indent is 2
-opt.expandtab = true -- default: tab is not used
-opt.breakindent = true -- indent when text wraps
+opt.tabstop = 4 -- default
+opt.softtabstop = 0 -- off
+opt.shiftwidth = 0 -- same as tabstop
+opt.expandtab = false -- tab used
+-- opt.breakindent = true -- indent when text wraps
 
 opt.fillchars = { eob = " " } -- disable ~ after EOF
 opt.ignorecase = true

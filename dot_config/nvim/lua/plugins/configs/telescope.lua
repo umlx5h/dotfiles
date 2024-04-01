@@ -1,3 +1,4 @@
+local lga_actions = require("telescope-live-grep-args.actions")
 local telescope = require("telescope")
 
 telescope.setup({
@@ -38,9 +39,21 @@ telescope.setup({
 			},
 		},
 	},
+
+	extensions = {
+		-- ref: https://github.com/nvim-telescope/telescope-live-grep-args.nvim?tab=readme-ov-file#configuration
+		live_grep_args = {
+			auto_quoting = true,
+			mappings = {
+				i = {
+					["<C-k>"] = lga_actions.quote_prompt(),
+				},
+			},
+		},
+	},
 })
 
-local telescope_extensions = { "fzf" }
+local telescope_extensions = { "fzf", "live_grep_args" }
 
 for _, extension in ipairs(telescope_extensions) do
 	telescope.load_extension(extension)

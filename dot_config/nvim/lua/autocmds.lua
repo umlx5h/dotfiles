@@ -38,6 +38,20 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
+-- カーソルポジションを復元する
+-- :h last-position-jump
+vim.cmd([[
+	augroup RestoreCursor
+		autocmd!
+		autocmd BufRead * autocmd FileType <buffer> ++once
+		\ let s:line = line("'\"")
+		\ | if s:line >= 1 && s:line <= line("$") && &filetype !~# 'commit'
+		\      && index(['xxd', 'gitrebase'], &filetype) == -1
+		\ |   execute "normal! g`\""
+		\ | endif
+	augroup END
+]])
+
 -- -- netrwとbufferlineを組み合わせる時にゴミが残るのを対策
 -- -- pluginの中で行うことにした
 -- vim.api.nvim_create_autocmd({ "FileType" }, {
