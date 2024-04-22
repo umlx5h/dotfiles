@@ -27,11 +27,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Buffer local mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		map("n", "gD", vim.lsp.buf.declaration, "LSP declaration")
-		map("n", "gd", vim.lsp.buf.definition, "LSP definition")
-		map("n", "gI", vim.lsp.buf.implementation, "LSP implementation") -- giだと標準のと被る
-		map("n", "gy", vim.lsp.buf.type_definition, "LSP type definition")
-		map("n", "gr", vim.lsp.buf.references, "LSP references")
-
+		map("n", "gd", require("telescope.builtin").lsp_definitions, "LSP definition")
+		map("n", "gI", require("telescope.builtin").lsp_implementations, "LSP implementation") -- giだと標準のと被る
+		map("n", "gy", require("telescope.builtin").lsp_type_definitions, "LSP type definition")
+		map("n", "gr", require("telescope.builtin").lsp_references, "LSP references")
 		map("n", "K", vim.lsp.buf.hover, "LSP hover")
 		map("n", "gK", vim.lsp.buf.signature_help, "LSP signature help")
 		map("i", "<C-k>", vim.lsp.buf.signature_help, "LSP signature help")

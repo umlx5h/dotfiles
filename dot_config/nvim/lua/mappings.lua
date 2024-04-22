@@ -235,8 +235,9 @@ map("n", "<leader>fc", "<cmd> Telescope commands <CR>", { desc = "Find commands"
 map("n", "<leader>fk", "<cmd> Telescope keymaps <CR>", { desc = "Find keymaps" })
 map("n", "<leader>fs", "<cmd> Telescope lsp_document_symbols <CR>", { desc = "Find symbol" })
 map("n", "<leader>fS", "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", { desc = "Find workspace Symbol" })
-map("n", "<leader>fq", "<cmd> Telescope diagnostics <CR>", { desc = "Find diagnostics" })
+map("n", "<leader>fd", "<cmd> Telescope diagnostics <CR>", { desc = "Find diagnostics" })
 map("n", "<leader>fl", "<cmd> Telescope resume <CR>", { desc = "Telescope Last" })
+map("n", "<leader>fq", "<cmd> Telescope quickfix <CR>", { desc = "Find quickfix" })
 
 --------------------------------- folke/todo-comments.nvim -------------------------------------
 
@@ -339,7 +340,7 @@ end, { desc = "Debug last go test" })
 -- lewis6991/gitsigns.nvim
 map("n", "<leader>gr", "<cmd> Gitsigns reset_hunk <CR>", { desc = "Reset hunk" })
 map("n", "<leader>gp", "<cmd> Gitsigns preview_hunk <CR>", { desc = "Preview hunk" })
-map("n", "<leader>gl", "<cmd> Gitsigns blame_line <CR>", { desc = "Blame line" })
+map("n", "<leader>gB", "<cmd> Gitsigns blame_line <CR>", { desc = "Blame line" })
 
 -- tpope/vim-fugitive
 map("n", "<leader>go", "<cmd> GBrowse <CR>", { desc = "Open in GitHub" })
@@ -347,6 +348,8 @@ map("x", "<leader>go", ":'<,'>GBrowse <CR>", { desc = "Open lines in GitHub" })
 map("n", "<leader>gd", "<cmd> vertical Gdiffsplit! <CR>", { desc = "Git diff split (three way)" })
 map("n", "<leader>gb", "<cmd> G blame <CR>", { desc = "Blame fugitive" })
 map("n", "<leader>gh", "<cmd> leftabove vs | 0Gclog <CR>", { desc = "Git history of current file" })
+map("n", "<leader>gl", ":G log -100 ", { desc = "Git Log" })
+map("n", "<leader>gw", "<cmd> Gwrite <CR>", { desc = "Stage current file" })
 
 -- rbong/vim-flog
 map("n", "<leader>gf", "<cmd> Flog <CR>", { desc = "Open flog" })
@@ -359,7 +362,7 @@ local uimap = function(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs:gsub("^<leader>u", "\\"), rhs, opts)
 end
 
-uimap("n", "<leader>un", "<cmd> bufdo set relativenumber! <CR>", { desc = "Toggle relative line number" })
+uimap("n", "<leader>un", "<cmd> tabdo windo set relativenumber! <CR>", { desc = "Toggle relative line number" })
 uimap("n", "<leader>uw", "<cmd> set wrap! | set wrap? <CR>", { desc = "Toggle wrap" })
 uimap("n", "<leader>uW", "<cmd> WrapCursorToggle <CR>", { desc = "Toggle j,k <-> gj,gk" })
 uimap("n", "<leader>uq", "<cmd> QFToggle <CR>", { desc = "Toggle Quickfix window" })
