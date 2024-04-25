@@ -11,3 +11,6 @@ function open-recent-project-session() {
 
 zle -N open-recent-project-session
 bindkey '\e?' open-recent-project-session
+
+# vimでコマンドラインを編集 CTRL-X CTRL-Eでもいいが ALT-Eでもできるようにする
+bindkey '\ee' edit-command-line
