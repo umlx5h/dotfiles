@@ -2,8 +2,8 @@
 # Alias
 #
 
-alias rm="mv2trash"
-alias gm="mv2trash"
+alias rm="gtrash put"
+alias gm="gtrash put"
 alias grep="ggrep"
 alias tig="TERM=xterm-256color tig"
 
