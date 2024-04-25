@@ -118,6 +118,10 @@ map("n", "<C-k>", "<C-w>k", { desc = "Window up" })
 map({ "n", "i" }, "<C-s>", "<cmd> w <CR>", { desc = "Save file" })
 map("n", "<leader>ww", "<cmd> noautocmd w <CR>", { desc = "Save without format" })
 
+-- comment
+map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
+map("x", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
+
 -- manpage
 map("n", "<leader>K", "<cmd> Man <CR>", { desc = "Search in Manpage" })
 map("x", "<leader>K", 'y:Man <c-r>" <CR>', { desc = "Search in Manpage" })
@@ -276,18 +280,6 @@ map("n", "<leader>'", function()
 	require("bufferline").go_to(5, true)
 end, { desc = "Buffer 5" })
 
---------------------------------- numToStr/Comment.nvim -------------------------------------
-
-map("n", "<leader>/", function()
-	require("Comment.api").toggle.linewise.current()
-end, { desc = "Toggle comment" })
-map(
-	"x",
-	"<leader>/",
-	"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-	{ desc = "Toggle comment" }
-)
-
 --------------------------------- stevearc/conform.nvim -------------------------------------
 
 -- format
@@ -348,7 +340,7 @@ map("x", "<leader>go", ":'<,'>GBrowse <CR>", { desc = "Open lines in GitHub" })
 map("n", "<leader>gd", "<cmd> vertical Gdiffsplit! <CR>", { desc = "Git diff split (three way)" })
 map("n", "<leader>gb", "<cmd> G blame <CR>", { desc = "Blame fugitive" })
 map("n", "<leader>gh", "<cmd> leftabove vs | 0Gclog <CR>", { desc = "Git history of current file" })
-map("n", "<leader>gl", ":G log -100 ", { desc = "Git Log" })
+map("n", "<leader>gl", ":G log -50 ", { desc = "Git Log" })
 map("n", "<leader>gw", "<cmd> Gwrite <CR>", { desc = "Stage current file" })
 
 -- rbong/vim-flog
