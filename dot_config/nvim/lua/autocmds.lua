@@ -12,12 +12,12 @@ local autoInsertTerminal = vim.api.nvim_create_augroup("auto_insert_terminal", {
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = autoInsertTerminal,
 	pattern = "*",
-	callback = function()
-		vim.cmd([[
-			setlocal nonumber norelativenumber
-			startinsert
-		]])
-	end,
+	-- redrawはnonumberはターミナル幅を変化させるので実行しないとターミナル幅がおかしくなる
+	command = [[
+		setlocal nonumber norelativenumber
+		redraw
+		startinsert
+	]],
 })
 vim.api.nvim_create_autocmd("BufEnter", {
 	group = autoInsertTerminal,

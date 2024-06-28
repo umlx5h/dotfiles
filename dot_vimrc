@@ -127,6 +127,7 @@ set expandtab
 " ----------------------- filetype  ------------------------ "
 
 runtime ftplugin/man.vim
+runtime! macros/matchit.vim
 
 " ----------------------- autocmd  ------------------------ "
 
@@ -179,6 +180,7 @@ command! PackClean call minpac#clean()
 
 call minpac#add('tpope/vim-scriptease', {'type': 'opt'})
 call minpac#add('tpope/vim-sleuth')
+call minpac#add('tpope/vim-commentary')
 call minpac#add('ojroques/vim-oscyank')
 call minpac#add('mbbill/undotree')
 call minpac#add('tpope/vim-fugitive')

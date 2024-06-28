@@ -6,6 +6,13 @@ cmp.setup({
 			require("luasnip").lsp_expand(args.body)
 		end,
 	},
+	formatting = {
+		format = function(entry, vim_item)
+			-- clangd のcompletion popup (K)の引数表示が邪魔なので一時的に無効にする
+			vim_item.menu = nil
+			return vim_item
+		end,
+	},
 	completion = {
 		completeopt = "menu,menuone,noinsert", -- 最初の候補を自動的に選択
 	},

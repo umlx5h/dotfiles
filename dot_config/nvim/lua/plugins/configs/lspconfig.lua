@@ -33,6 +33,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "gr", require("telescope.builtin").lsp_references, "LSP references")
 		map("n", "K", vim.lsp.buf.hover, "LSP hover")
 		map("n", "gK", vim.lsp.buf.signature_help, "LSP signature help")
+		vim.keymap.set("n", "g]", "<C-w>}", { remap = true, buffer = ev.buf, desc = "LSP signature preview" })
+
 		map("i", "<C-k>", vim.lsp.buf.signature_help, "LSP signature help")
 		-- remap Enter digraph
 		map("i", "<C-x><C-k>", "<C-k>", "Insert digraph")
@@ -170,6 +172,8 @@ local servers = {
 	"intelephense",
 	"rust_analyzer",
 	"eslint",
+	"autotools_ls",
+	"csharp_ls",
 }
 
 for _, lsp in ipairs(servers) do

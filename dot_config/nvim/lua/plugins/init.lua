@@ -399,7 +399,7 @@ local plugins = {
 	},
 	{
 		"stevearc/aerial.nvim", -- Symbol outline
-		cmd = { "AerialToggle", "AerialNext", "AerialPrev" },
+		cmd = { "AerialToggle", "AerialOpen", "AerialNext", "AerialPrev" },
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-tree/nvim-web-devicons",
@@ -600,6 +600,22 @@ local plugins = {
 			vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
 			vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
 			vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+		end,
+	},
+
+	-- comment plugin
+	{
+		"numToStr/Comment.nvim",
+		keys = {
+			{ "gcc", mode = "n", desc = "Comment toggle current line" },
+			{ "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
+			{ "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
+			{ "gbc", mode = "n", desc = "Comment toggle current block" },
+			{ "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
+			{ "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
+		},
+		config = function()
+			require("Comment").setup()
 		end,
 	},
 }

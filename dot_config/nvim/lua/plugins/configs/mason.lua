@@ -58,6 +58,12 @@ local ensure_installed = {
 
 	-- Rust
 	"rust-analyzer",
+
+	-- C#
+	"csharp-language-server",
+
+	-- Makefile
+	"autotools-language-server",
 }
 
 -- custom command to install all mason binaries listed

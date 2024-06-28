@@ -20,10 +20,6 @@ map("n", "<C-u>", "<C-u>zz", { desc = "Scroll window upwards with centering" })
 map("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = "Move down", expr = true })
 map("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = "Move up", expr = true })
 
--- HとLを行移動に上書き
-map("", "H", "^", { desc = "Line Start" })
-map("", "L", "$", { desc = "Line End" })
-
 -- "0pを打ちやすく
 map({ "n", "x" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
 map("n", "<leader>P", [["0P]], { desc = "Paste from yank register" })
@@ -118,10 +114,6 @@ map("n", "<C-k>", "<C-w>k", { desc = "Window up" })
 map({ "n", "i" }, "<C-s>", "<cmd> w <CR>", { desc = "Save file" })
 map("n", "<leader>ww", "<cmd> noautocmd w <CR>", { desc = "Save without format" })
 
--- comment
-map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
-map("x", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
-
 -- manpage
 map("n", "<leader>K", "<cmd> Man <CR>", { desc = "Search in Manpage" })
 map("x", "<leader>K", 'y:Man <c-r>" <CR>', { desc = "Search in Manpage" })
@@ -142,9 +134,9 @@ map("t", "<C-v><C-k>", "<C-k>", { desc = "Sent <C-k> in Terminal" })
 map("t", "<C-v><C-l>", "<C-l>", { desc = "Sent <C-l> in Terminal" })
 
 -- terminal
-map("n", "<leader>ts", "<cmd> split | redraw! | terminal <cr>", { desc = "Horizontal terminal" })
-map("n", "<leader>tv", "<cmd> vsplit | redraw! | terminal <cr>", { desc = "Vertical terminal" })
-map("n", "<leader>tn", "<cmd> tabedit | redraw! | terminal <cr>", { desc = "Terminal in New tab" })
+map("n", "<leader>ts", "<cmd> split | terminal <cr>", { desc = "Horizontal terminal" })
+map("n", "<leader>tv", "<cmd> vsplit | terminal <cr>", { desc = "Vertical terminal" })
+map("n", "<leader>tn", "<cmd> tabedit | terminal <cr>", { desc = "Terminal in New tab" })
 map("n", "<leader>te", "<cmd> terminal <cr>", { desc = "Open terminal in current window" })
 
 -- map("n", "<leader>up", vim.cmd.Ex, { desc = "Go back to parent directory" })
@@ -280,12 +272,25 @@ map("n", "<leader>'", function()
 	require("bufferline").go_to(5, true)
 end, { desc = "Buffer 5" })
 
+--------------------------------- numToStr/Comment.nvim -------------------------------------
+
+map("n", "<leader>/", function()
+	require("Comment.api").toggle.linewise.current()
+end, { desc = "Toggle comment" })
+
+map(
+	"v",
+	"<leader>/",
+	"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+	{ desc = "Toggle comment" }
+)
+
 --------------------------------- stevearc/conform.nvim -------------------------------------
 
 -- format
 map("n", "<leader>fm", function()
 	require("conform").format({
-		lsp_fallback = true, -- LSPでもformat
+		lsp_format = "fallback", -- LSPでもformat
 	})
 end, { desc = "Format code" })
 

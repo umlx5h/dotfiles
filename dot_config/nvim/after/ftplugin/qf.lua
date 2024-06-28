@@ -25,8 +25,8 @@ map("n", "<C-x>", "<C-w><CR><C-w>K", opt)
 map("n", "<C-t>", "<C-w><CR><C-w>T", opt)
 
 -- replace
-map("n", "R", ":cdo s///g<Left><Left><Left>", opt)
-map("n", "U", ":cdo update", opt)
+map("n", "r", ":cdo s///g<Left><Left><Left>", opt)
+map("n", "u", ":cdo update", opt)
 
 -- help message
 map("n", "gh", function()
