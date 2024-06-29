@@ -1,0 +1,97 @@
+let mapleader=" "
+
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+set scrolloff=5
+
+set number
+set relativenumber
+set backspace=indent,eol,start
+
+map <C-S-A-a> <C-a>
+" map <C-S-A-b> <C-b>
+" map <C-S-A-c> <C-c>
+map <C-S-A-d> <C-d>zz
+map <C-S-A-e> <C-e>
+" map <C-S-A-f> <C-f>
+map <C-S-A-g> <C-g>
+" map <C-S-A-h> <C-h>
+map <C-S-A-i> :vsc View.NavigateForward<CR>
+" map <C-S-A-j> <C-j>
+" map <C-S-A-k> <C-k>
+" map <C-S-A-l> <C-l>
+" map <C-S-A-m> <C-m>
+" map <C-S-A-n> <C-n>
+map <C-S-A-o> :vsc View.NavigateBackward<CR>
+" map <C-S-A-p> <C-p>
+" map <C-S-A-q> <C-q>
+map <C-S-A-r> <C-r>
+" map <C-S-A-s> <C-s>
+map <C-S-A-t> <C-t>
+map <C-S-A-u> <C-u>zz
+map <C-S-A-v> <C-v>
+map <C-S-A-w> <C-w>
+map <C-S-A-x> <C-x>
+map <C-S-A-y> <C-y>
+" map <C-S-A-z> <C-z>
+" map <C-S-A-[> <C-[>
+map <C-S-A-]> <C-]>
+map <C-S-A-6> <C-6>
+
+" map <C-S-A-[> <Esc>
+imap <C-S-A-a> <C-o>0
+" imap <C-S-A-a> <Home> " not working
+imap <C-S-A-e> <End>
+" imap <C-S-A-b> <Left>
+" imap <C-S-A-f> <Right>
+imap <C-S-A-d> <Del>
+" imap <C-S-A-h> <BS>
+" imap <C-S-A-j> <CR>
+imap <C-S-A-w> <C-w>
+" imap <C-S-A-u> <C-u> " not working
+imap <C-S-A-u> <C-o>d^
+
+xnoremap gc :vsc Edit.CommentSelection<cr>
+nnoremap gcc V:vsc Edit.CommentSelection<cr>
+nnoremap K :vsc Edit.QuickInfo<CR>
+nnoremap gD :vsc Edit.GoToDeclaration<CR>
+nnoremap gd :vsc Edit.GoToDefinition<CR>
+nnoremap <C-]> :vsc Edit.GoToDefinition<CR>
+nnoremap gI :vsc Edit.GoToImplementation<CR>
+nnoremap gr :vsc Edit.FindAllReferences<CR>
+
+nnoremap cr :vsc Refactor.Rename<CR>
+nnoremap ca :vsc EditorContextMenus.CodeWindow.QuickActionsForPosition<CR>
+
+nnoremap <leader>fm :vsc Edit.FormatDocument<CR>
+
+nnoremap <leader>ff :vsc Edit.GoToFile<CR>
+nnoremap <leader>fw :vsc Edit.FindInFiles<CR>
+nnoremap <leader>fo :vsc Edit.GoToRecentFile<CR>
+" nnoremap <leader><leader> :vsc Window.NextDocumentWindow<CR>
+nnoremap <leader>fs :vsc Edit.GoToSymbol<CR>
+
+nnoremap [d :vsc View.PreviousError<CR>
+nnoremap ]d :vsc View.NextError<CR>
+
+" paste from 0 register
+nnoremap <leader>p "0p
+xnoremap <leader>p "0p
+nnoremap <leader>P "0P
+xnoremap <leader>P "0P
+
+" TODO: 消す https://github.com/VsVim/VsVim/pull/3095
+xnoremap P "_dP
+
+" &でフラグを維持するように変更 (Neovimと同じ)
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+" ESC x 2でハイライトリセット
+nnoremap <ESC><ESC> :nohlsearch<CR>
+
+" visual starが動かないのでxnoremapは使えない
+" xnoremap gs *Ncgn
+nnoremap gs *Ncgn

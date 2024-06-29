@@ -42,10 +42,12 @@ end
 
 ---------------------------------------- lua functions ----------------------------------------
 
--- MacかWSL2の場合はローカルと判定、それ以外はリモート扱い
+-- MacかWindowsかWSL2の場合はローカルと判定、それ以外はリモート扱い
 function Is_local()
 	local uname = vim.loop.os_uname()
-	local isLocal = uname.sysname == "Darwin" or uname.sysname == "Linux" and uname.release:find("microsoft")
+	local isLocal = uname.sysname == "Darwin"
+		or uname.sysname == "Windows_NT"
+		or (uname.sysname == "Linux" and uname.release:find("microsoft"))
 	return isLocal
 end
 

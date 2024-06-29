@@ -1,0 +1,107 @@
+let mapleader=" "
+
+""" Options --------------------------------
+
+set hlsearch
+set ignorecase
+set incsearch
+
+set smartcase
+set scrolloff=5
+
+set number
+set relativenumber
+
+""" Plugins  --------------------------------
+set commentary
+set surround
+set matchit
+
+""" Vim Mappings -------------------------------
+
+sethandler <C-A> a:ide
+sethandler <C-B> a:ide
+sethandler <C-C> a:ide
+sethandler <C-D> a:ide
+sethandler <C-E> a:ide
+sethandler <C-F> a:ide
+sethandler <C-G> a:ide
+sethandler <C-H> a:ide
+sethandler <C-I> a:ide
+sethandler <C-J> a:ide
+sethandler <C-K> a:ide
+sethandler <C-L> a:ide
+sethandler <C-M> a:ide
+sethandler <C-N> a:ide
+sethandler <C-O> a:ide
+sethandler <C-P> a:ide
+sethandler <C-Q> a:ide
+sethandler <C-R> a:ide
+sethandler <C-S> a:ide
+sethandler <C-T> a:ide
+sethandler <C-U> a:ide
+sethandler <C-V> a:ide
+sethandler <C-W> a:ide
+sethandler <C-X> a:ide
+sethandler <C-Y> a:ide
+sethandler <C-Z> a:ide
+sethandler <C-[> a:ide
+sethandler <C-]> a:ide
+sethandler <C-6> a:ide
+
+nnoremap <C-S-A-a> <C-a>
+" nnoremap <C-S-A-b> <C-b>
+" nnoremap <C-S-A-c> <C-c>
+nnoremap <C-S-A-d> <C-d>zz
+nnoremap <C-S-A-e> <C-e>
+" nnoremap <C-S-A-f> <C-f>
+nnoremap <C-S-A-g> <C-g>
+" nnoremap <C-S-A-h> <C-h>
+nnoremap <C-S-A-i> <C-i>
+" nnoremap <C-S-A-j> <C-j>
+" nnoremap <C-S-A-k> <C-k>
+" nnoremap <C-S-A-l> <C-l>
+" nnoremap <C-S-A-m> <C-m>
+" nnoremap <C-S-A-n> <C-n>
+nnoremap <C-S-A-o> <C-o>
+" nnoremap <C-S-A-p> <C-p>
+" nnoremap <C-S-A-q> <C-q>
+nnoremap <C-S-A-r> <C-r>
+" nnoremap <C-S-A-s> <C-s>
+nnoremap <C-S-A-t> <C-t>
+nnoremap <C-S-A-u> <C-u>zz
+nnoremap <C-S-A-v> <C-v>
+nnoremap <C-S-A-w> <C-w>
+nnoremap <C-S-A-x> <C-x>
+nnoremap <C-S-A-y> <C-y>
+" nnoremap <C-S-A-z> <C-z>
+" nnoremap <C-S-A-[> <C-[>
+nnoremap <C-S-A-]> <C-]>
+nnoremap <C-S-A-6> <C-6>
+
+inoremap <C-S-A-[> <Esc>
+inoremap <C-S-A-a> <Home>
+inoremap <C-S-A-e> <End>
+" inoremap <C-S-A-b> <Left>
+" inoremap <C-S-A-f> <Right>
+inoremap <C-S-A-d> <Del>
+" inoremap <C-S-A-h> <BS>
+" inoremap <C-S-A-j> <CR>
+" inoremap <C-S-A-w> <C-o>db
+" inoremap <C-S-A-u> <C-o>d^
+inoremap <C-S-A-w> <C-w>
+inoremap <C-S-A-u> <C-o>d^
+
+""" Mappings --------------------------------
+
+map <leader>fw <Action>(FindInPath)
+" TODO: CTRL-Pも割り当てたい
+map <leader>ff <Action>(GotoFile)
+map <leader><leader> <Action>(Switcher)
+map <leader>fo <Action>(RecentFiles)
+map <leader>* <Action>(ShowUsages)
+map <leader>fm <Action>(ReformatCode)
+map <leader>= <Action>(ReformatCode)
+
+map [d <Action>(GotoPreviousError)
+map ]d <Action>(GotoNextError)

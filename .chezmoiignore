@@ -6,11 +6,8 @@ ansible
 .p10k.zsh_main
 .p10k.zsh_sub
 
-win/
-
 {{- if not .isWSL }}
 .zshrc.d/wsl.zsh
-win-wezterm.sh
 {{- end }}
 
 {{- if not .isLinux }}
@@ -19,6 +16,9 @@ win-wezterm.sh
 
 {{- if not .isMac }}
 .zshrc.d/mac.zsh
+{{- end }}
+
+{{- if not .isGUI }}
 .wezterm.lua
 {{- end }}
 
@@ -27,6 +27,25 @@ win-wezterm.sh
 .config/nvim/lua/work/
 {{- end }}
 
-{{- if not (and (.isLinux) (not .isCentOS)) }}
-.gdbinit
+{{- if .isWin }}
+**
+
+!AppData/**
+!autohotkey/**
+!.vsvimrc
+!.ideavimrc
+
+!.gitconfig
+!.gitignore_global
+!.editorconfig
+!.config/
+!.config/nvim/**
+
+!.wezterm.lua
+
+{{- else }}
+AppData/**
+autohotkey/**
+.vsvimrc
+.ideavimrc
 {{- end }}

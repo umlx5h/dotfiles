@@ -30,6 +30,9 @@ holdup_key()
 	}
 }
 
+/* DeepL翻訳用、Win+CでEDGEが起動してしまうのでそれを防止する */
+#c::F15
+
 /* ------------------------------- Mac like ------------------------------- */
 
 !q:: Send("!{F4}") ; Alt+Q to close application
@@ -74,6 +77,22 @@ NumLock::
 NumLock:: Send("!{RButton}") ; 右クリック
 ^NumLock:: Send("!^{RButton}") ; CTRL+右クリックでDokopop
 
+
+/* ------------------------------- Flyleaf ------------------------------- */
+
+/* ポップアップ画面での操作 */
+#HotIf MouseIsOver("FlyleafMod")
+{
+	MButton::RButton
+	RButton:: Send("{MButton}p")
+}
+#HotIf
+
+MouseIsOver(WinTitle) {
+	MouseGetPos(, , &Win)
+	return WinExist(WinTitle . " ahk_id " . Win)
+}
+
 /* ------------------------------- Emacs keybinding  ------------------------------- */
 
 ; Applications you want to disable emacs-like keybindings
@@ -102,6 +121,15 @@ is_vscode()
 	if WinActive("ahk_exe Code.exe")
 		return 1
 	if WinActive("ahk_exe Code - Insiders.exe")
+		return 1
+	return 0
+}
+
+is_vimmotion()
+{
+	if WinActive("ahk_exe rider64.exe") ; JetBrains Rider
+		return 1
+	if WinActive("ahk_exe devenv.exe") ; Visual Studio
 		return 1
 	return 0
 }
@@ -137,7 +165,7 @@ is_vscode()
 Emacs keybind
 @from https://mag.nioufuku.net/2020/04/26/programming/00043-autohotkey/
 */
-#HotIf !is_terminal() and !is_vscode()
+#HotIf !is_terminal() and !is_vscode() and !is_vimmotion()
 {
 	; F14+SHIFT+a を CTRL+SHIFT+aとして送りたい場合
 	; コンビネーションキー (&をつかったもの)は余計な修飾キーをつけても発火するので、キーマップ内で修飾キーをチェックして処理を分岐してあげる必要がある
@@ -196,6 +224,7 @@ F14 & Tab::
 ; VSCodeではemacs keybindingを無効化し、vimプラグイン用のキーバインドを使うため
 ; F13-F24 を送る
 ; 上で定義したキーをすべて上書きする
+; VSCodeのターミナル内ではCTRL+キーに全て戻す
 #HotIf is_vscode()
 {
 	~F14 & a:: Send("{F13}")
@@ -227,6 +256,59 @@ F14 & Tab::
 	~F14 & {:: Send("+{F15}")
 	~F14 & }:: Send("+{F16}")
 	~F14 & 6:: Send("+{F17}")
+}
+#HotIf
+
+; Visual Studio or JetbrainsではCTRL+SHIFT+ALT+Xを送る
+; VSもJetbrainsでもF13 - F24のキーには対応していないので修飾気ーを付ける
+; emacs keybindingを無効化し、vimプラグイン用のキーバインドを使うため
+; vimキーバインドとして利用していないものはCTRLキーとして割り当てる (CTRL+Sなど)
+; 一部はemacsキーバインドを使用
+#HotIf is_vimmotion()
+{
+	~F14 & a:: Send("^+!a")
+	; ~F14 & b:: Send("^+!b")
+	; ~F14 & c:: Send("^+!c")
+	~F14 & d:: Send("^+!d")
+	~F14 & e:: Send("^+!e")
+	; ~F14 & f:: Send("^+!f")
+	~F14 & g:: Send("^+!g")
+	; ~F14 & h:: Send("^+!h")
+	~F14 & i:: Send("^+!i")
+	; ~F14 & j:: Send("^+!j")
+	; ~F14 & k:: Send("^+!k")
+	~F14 & l:: Send("{Blind}l")
+	~F14 & m:: Send("{Blind}m")
+	; ~F14 & n:: Send("^+!n")
+	~F14 & o:: Send("^+!o")
+	; ~F14 & p:: Send("^+!p")
+	~F14 & q:: Send("{Blind}q")
+	~F14 & r:: Send("^+!r")
+	~F14 & s:: Send("{Blind}s")
+	~F14 & t:: Send("^+!t")
+	~F14 & u:: Send("^+!u")
+	~F14 & v:: Send("^+!v")
+	~F14 & w:: Send("^+!w")
+	~F14 & x:: Send("^+!x")
+	~F14 & y:: Send("^+!y")
+	~F14 & z:: Send("{Blind}z")
+	~F14 & {:: Send("{Blind}[") ; for ESC
+	~F14 & }:: Send("^+!]") ; Tag Jump
+	~F14 & 6:: Send("^+!6")
+
+	~F14 & c:: Send("{Blind^}{Esc}")
+	~F14 & p:: Send("{Blind^}{Up}")
+	~F14 & n:: Send("{Blind^}{Down}")
+	~F14 & b:: Send("{Blind^}{Left}") ; フルスクロールは使ってないのでカーソルを優先
+	~F14 & f:: Send("{Blind^}{Right}")
+	~F14 & h:: Send("{Blind^}{BS}")
+	~F14 & j:: Send("{Blind^}{Enter}")
+	~F14 & k:: ; delete line after cursor
+	{
+		Send("{ShiftDown}{END}{ShiftUp}")
+		Sleep(10)
+		Send("^x")
+	}
 }
 #HotIf
 
@@ -355,8 +437,7 @@ IME_GetConverting(WinTitle := "A", ConvCls := "", CandCls := "") {
 	SetTitleMatchMode "RegEx"
 	ret := WinExist("ahk_class " . CandCls . " ahk_pid " pid) ? 2
 		: WinExist("ahk_class " . CandGCls) ? 2
-			: WinExist("ahk_class " . ConvCls . " ahk_pid " pid) ? 1
-			: 0
+			: WinExist("ahk_class " . ConvCls . " ahk_pid " pid) ? 1 : 0
 	;; 推測変換(atok)や予想入力(msime)中は候補窓が出ていないものとして取り扱う
 	if (2 == ret) {
 		if (WinExist("ahk_class " . CandCls . " ahk_pid " pid))

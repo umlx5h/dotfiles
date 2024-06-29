@@ -3,14 +3,15 @@
 
 {{- $isLinux := eq .chezmoi.os "linux" }}
 {{- $isWSL := and $isLinux (.chezmoi.kernel.osrelease | lower | contains "microsoft") (ne .chezmoi.fqdnHostname .chezmoi.hostname) }}
+{{- $isWin := eq .chezmoi.os "windows" }}
 {{- $isMac := eq .chezmoi.os "darwin" }}
 {{- $isLocal := or $isMac $isWSL }}
+{{- $isGUI := or $isMac $isWin }}
 {{- $isWork := eq $git_user ($git_email | splitList "@" | first) }}
-{{- $isCentOS := and ($isLinux) (eq .chezmoi.osRelease.id "centos") }}
 
 {{- $win_user := "" -}}
 
-{{- if $isWSL }}
+{{- if or $isWSL $isWin }}
 	{{- $win_user = promptString "win_user" -}}
 {{- end -}}
 
@@ -18,14 +19,15 @@
 	isWSL = {{ $isWSL }}
 	isLinux = {{ $isLinux }}
 	isMac = {{ $isMac }}
-	isLocal = {{ $isLocal }}
 	isWork = {{ $isWork }}
-	isCentOS = {{ $isCentOS }}
+	isWin = {{ $isWin }}
+	isLocal = {{ $isLocal }}
+	isGUI = {{ $isGUI }}
 
 	git_user = "{{ $git_user }}"
 	git_email = "{{ $git_email }}"
 
-{{- if $isWSL }}
+{{- if or $isWSL $isWin }}
 	win_user = "{{ $win_user }}"
 {{- end }}
 
