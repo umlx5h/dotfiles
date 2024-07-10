@@ -288,7 +288,7 @@ map(
 --------------------------------- stevearc/conform.nvim -------------------------------------
 
 -- format
-map("n", "<leader>fm", function()
+map("n", "<leader>m", function()
 	require("conform").format({
 		lsp_format = "fallback", -- LSPでもformat
 	})

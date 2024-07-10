@@ -41,8 +41,8 @@ map("n", "gh", function()
 		["<C-v>"] = "Open entry with vertical split",
 		["<C-x>"] = "Open entry with horizontal split",
 		["<C-t>"] = "Open entry with tab",
-		["R"] = "Replace with cdo",
-		["U"] = "Update with cdo",
+		["r"] = "Replace with cdo",
+		["u"] = "Update with cdo",
 	}
 	vim.api.nvim_echo({ { vim.inspect(help) } }, false, {})
 end)

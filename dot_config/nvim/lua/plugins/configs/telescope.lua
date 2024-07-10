@@ -44,6 +44,17 @@ telescope.setup({
 		-- ref: https://github.com/nvim-telescope/telescope-live-grep-args.nvim?tab=readme-ov-file#configuration
 		live_grep_args = {
 			auto_quoting = true,
+			vimgrep_arguments = { --
+				"rg", -- copy from :h telescope.defaults.vimgrep_arguments
+				"--color=never",
+				"--no-heading",
+				"--with-filename",
+				"--line-number",
+				"--column",
+				"--smart-case",
+				-- ここから追加
+				"--hidden", -- 隠しファイルも表示
+			},
 			mappings = {
 				i = {
 					["<C-k>"] = lga_actions.quote_prompt(),

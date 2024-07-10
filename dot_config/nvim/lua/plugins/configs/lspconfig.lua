@@ -32,12 +32,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "gy", require("telescope.builtin").lsp_type_definitions, "LSP type definition")
 		map("n", "gr", require("telescope.builtin").lsp_references, "LSP references")
 		map("n", "K", vim.lsp.buf.hover, "LSP hover")
+		-- <C-k>はwindow移動と被ってしまう
 		map("n", "gK", vim.lsp.buf.signature_help, "LSP signature help")
-		vim.keymap.set("n", "g]", "<C-w>}", { remap = true, buffer = ev.buf, desc = "LSP signature preview" })
-
 		map("i", "<C-k>", vim.lsp.buf.signature_help, "LSP signature help")
 		-- remap Enter digraph
 		map("i", "<C-x><C-k>", "<C-k>", "Insert digraph")
+
+		vim.keymap.set("n", "g]", "<C-w>}", { remap = true, buffer = ev.buf, desc = "LSP signature preview" })
 
 		map("n", "<leader>cr", vim.lsp.buf.rename, "LSP rename")
 		map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "LSP code action")

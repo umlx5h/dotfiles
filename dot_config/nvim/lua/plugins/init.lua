@@ -351,8 +351,7 @@ local plugins = {
 		end,
 	},
 	{
-		-- "nmac427/guess-indent.nvim",
-		"umlx5h/guess-indent.nvim",
+		"nmac427/guess-indent.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("guess-indent").setup({
@@ -458,7 +457,10 @@ local plugins = {
 		version = false, -- last release is way too old
 	},
 	{
-		"someone-stole-my-name/yaml-companion.nvim", -- YAML LSP + Kubernetes yaml support
+		-- "someone-stole-my-name/yaml-companion.nvim", -- YAML LSP + Kubernetes yaml support
+		-- TODO: 新バージョンのvimに対応していないので一旦forkを使用
+		-- yamlのLSP設定を見直すこと
+		"mosheavni/yaml-companion.nvim",
 		ft = {
 			"yaml",
 			"yaml.docker-compose",

@@ -15,7 +15,7 @@
   "friendly-snippets": { "branch": "main", "commit": "682157939e57bd6a2c86277dfd4d6fbfce63dbac" },
   "gitsigns.nvim": { "branch": "main", "commit": "0595724fa9516a35696ff6b1e3cb95b6462b38b1" },
   "gopher.nvim": { "branch": "main", "commit": "f55c15ada8e02398000c04a96ef44d986cd01051" },
-  "guess-indent.nvim": { "branch": "main", "commit": "30f5b697ce78c221f11b8b69b847deba83875f87" },
+  "guess-indent.nvim": { "branch": "main", "commit": "6cd61f7a600bb756e558627cd2e740302c58e32d" },
   "hydra.nvim": { "branch": "master", "commit": "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0" },
   "indent-blankline.nvim": { "branch": "master", "commit": "65e20ab94a26d0e14acac5049b8641336819dfc7" },
   "keymap-layer.nvim": { "branch": "master", "commit": "e46840f9f377766e856964a49d7f351de3188a38" },
@@ -61,5 +61,5 @@
   "vim-rhubarb": { "branch": "master", "commit": "ee69335de176d9325267b0fd2597a22901d927b1" },
   "which-key.nvim": { "branch": "main", "commit": "0099511294f16b81c696004fa6a403b0ae61f7a0" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
-  "yaml-companion.nvim": { "branch": "main", "commit": "d190d6c0852a1b3fd2798cf1529655f7f68655d3" }
+  "yaml-companion.nvim": { "branch": "main", "commit": "f3aa1a75700653c7a50b14bde38a5d6a5618eb35" }
 }
