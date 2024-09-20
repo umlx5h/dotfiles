@@ -31,6 +31,11 @@ telescope.setup({
 				return { "--hidden" }
 			end,
 		},
+		grep_string = {
+			additional_args = function()
+				return { "--hidden" }
+			end,
+		},
 		buffers = {
 			mappings = {
 				i = {
@@ -44,27 +49,25 @@ telescope.setup({
 		-- ref: https://github.com/nvim-telescope/telescope-live-grep-args.nvim?tab=readme-ov-file#configuration
 		live_grep_args = {
 			auto_quoting = true,
-			vimgrep_arguments = { --
-				"rg", -- copy from :h telescope.defaults.vimgrep_arguments
-				"--color=never",
-				"--no-heading",
-				"--with-filename",
-				"--line-number",
-				"--column",
-				"--smart-case",
-				-- ここから追加
-				"--hidden", -- 隠しファイルも表示
-			},
+			additional_args = function()
+				-- 隠しファイルも表示
+				return { "--hidden" }
+			end,
+
 			mappings = {
 				i = {
 					["<C-k>"] = lga_actions.quote_prompt(),
 				},
 			},
 		},
+
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown(),
+		},
 	},
 })
 
-local telescope_extensions = { "fzf", "live_grep_args" }
+local telescope_extensions = { "fzf", "live_grep_args", "ui-select" }
 
 for _, extension in ipairs(telescope_extensions) do
 	telescope.load_extension(extension)

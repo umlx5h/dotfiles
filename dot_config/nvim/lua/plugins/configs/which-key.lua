@@ -1,20 +1,18 @@
 require("which-key").setup({
-	triggers_blacklist = {
-		n = { "y", "d" },
-	},
-})
+	defer = function(ctx)
+		if vim.list_contains({ "d", "y" }, ctx.operator) then
+			return true
+		end
+	end,
 
--- prefixに名前を付ける
-local wk = require("which-key")
-wk.register({
-	["<leader>"] = {
-		a = { name = "+add" },
-		b = { name = "+buffer" },
-		c = { name = "+code" },
-		d = { name = "+debug" },
-		f = { name = "+find" },
-		g = { name = "+git" },
-		u = { name = "+ui/toggle" },
-		t = { name = "+terminal" },
+	-- prefixに名前を付ける
+	spec = {
+		{ "<leader>a", group = "add" },
+		{ "<leader>b", group = "buffer" },
+		{ "<leader>c", group = "code" },
+		{ "<leader>f", group = "find" },
+		{ "<leader>g", group = "git" },
+		{ "<leader>t", group = "terminal" },
+		{ "<leader>u", group = "ui/toggle" },
 	},
 })

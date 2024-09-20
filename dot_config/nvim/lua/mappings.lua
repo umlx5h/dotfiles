@@ -307,31 +307,6 @@ map("n", "[x", function()
 	require("treesitter-context").go_to_context()
 end, { desc = "Jump to treesitter context", silent = true })
 
---------------------------------- DAP -------------------------------------
-
--- dap
-map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>", { desc = "Add breakpoint at line" })
-map("n", "<leader>du", function()
-	local widgets = require("dap.ui.widgets")
-	local sidebar = widgets.sidebar(widgets.scopes)
-	sidebar.open()
-end, { desc = "Open debugging UI sidebar" })
-
-map("n", "<leader>dr", "<cmd> DapContinue <CR>", { desc = "Start or continue the debugging" })
-map("n", "<F5>", "<cmd> DapContinue <CR>", { desc = "Start or continue the debugging" })
-map("n", "<F10>", "<cmd> DapStepOver <CR>", { desc = "debug: Step Over" })
-map("n", "<F11>", "<cmd> DapStepInto <CR>", { desc = "debug: Step Into" })
-map("n", "<F12>", "<cmd> DapStepOver <CR>", { desc = "debug: Step Over" })
-
--- dap Go
-map("n", "<leader>dgt", function()
-	require("dap-go").debug_test()
-end, { desc = "Debug go test" })
-
-map("n", "<leader>dgl", function()
-	require("dap-go").debug_last()
-end, { desc = "Debug last go test" })
-
 --------------------------------- git stuffs -------------------------------------
 
 -- lewis6991/gitsigns.nvim
@@ -347,9 +322,6 @@ map("n", "<leader>gb", "<cmd> G blame <CR>", { desc = "Blame fugitive" })
 map("n", "<leader>gh", "<cmd> leftabove vs | 0Gclog <CR>", { desc = "Git history of current file" })
 map("n", "<leader>gl", ":G log -50 ", { desc = "Git Log" })
 map("n", "<leader>gw", "<cmd> Gwrite <CR>", { desc = "Stage current file" })
-
--- rbong/vim-flog
-map("n", "<leader>gf", "<cmd> Flog <CR>", { desc = "Open flog" })
 
 --------------------------------- ui stuffs -------------------------------------
 

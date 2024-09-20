@@ -53,8 +53,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -------------------------------------- LSP setup -----------------------------------
 
 -- Setup neovim lua configuration
--- TODO: lazy load only for lua
-require("neodev").setup({})
 
 -- スニペットなどの追加サポート設定
 -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
@@ -70,13 +68,8 @@ lspconfig.lua_ls.setup({
 	capabilities = capabilities,
 	settings = {
 		Lua = {
-			diagnostics = { globals = { "vim" } },
-			workspace = {
-				library = {
-					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-					[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
-				},
+			completion = {
+				callSnippet = "Replace",
 			},
 		},
 	},

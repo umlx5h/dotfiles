@@ -1,8 +1,7 @@
 -- option
 vim.opt_local.buflisted = false
 
--- TODO: 有効にする
--- vim.opt_local.winfixbuf = true
+vim.opt_local.winfixbuf = true
 vim.opt_local.relativenumber = false
 
 -- keymap
@@ -26,7 +25,7 @@ map("n", "<C-t>", "<C-w><CR><C-w>T", opt)
 
 -- replace
 map("n", "r", ":cdo s///g<Left><Left><Left>", opt)
-map("n", "u", ":cdo update", opt)
+map("n", "u", ":cfdo update", opt)
 
 -- help message
 map("n", "gh", function()

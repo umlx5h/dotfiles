@@ -191,8 +191,16 @@ local plugins = {
 
 	-- neovim lua lsp
 	{
-		"folke/neodev.nvim",
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+			},
+		},
 	},
+	{ "Bilal2453/luvit-meta", lazy = true },
 
 	-- formatter
 	{
@@ -250,6 +258,7 @@ local plugins = {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			{ "nvim-telescope/telescope-ui-select.nvim" },
 			"nvim-telescope/telescope-live-grep-args.nvim",
 		},
 		cmd = "Telescope",
@@ -297,19 +306,6 @@ local plugins = {
 		dependencies = {
 			"tpope/vim-rhubarb",
 		},
-	},
-	{
-		"rbong/vim-flog",
-		cmd = { "Flog", "Flogsplit", "Floggit" },
-		dependencies = {
-			"tpope/vim-fugitive",
-		},
-		config = function()
-			vim.g.flog_default_opts = {
-				-- format = "%ad [%h] {%an}%d %s" -- default
-				date = "format:%Y-%m-%d %H:%M",
-			}
-		end,
 	},
 	{
 		"sindrets/diffview.nvim",
@@ -374,13 +370,6 @@ local plugins = {
 	{
 		"mbbill/undotree",
 		cmd = "UndotreeToggle",
-	},
-	{
-		"nvim-pack/nvim-spectre",
-		cmd = "Spectre",
-		config = function()
-			require("plugins.configs.spectre")
-		end,
 	},
 	{
 		"anuvyklack/windows.nvim", -- <leader>Z to zoom like tmux
@@ -475,70 +464,6 @@ local plugins = {
 		end,
 	},
 
-	-- dap debug
-	{
-		"mfussenegger/nvim-dap",
-		cmd = { "DapToggleBreakpoint", "DapContinue" },
-		dependencies = {
-			{
-				"rcarriga/nvim-dap-ui",
-				config = function()
-					local dap = require("dap")
-					local dapui = require("dapui")
-					dapui.setup()
-					dap.listeners.after.event_initialized["dapui_config"] = function()
-						dapui.open()
-						require("hydra").spawn("dap-hydra")
-					end
-					dap.listeners.before.event_terminated["dapui_config"] = function()
-						dapui.close()
-					end
-					dap.listeners.before.event_exited["dapui_config"] = function()
-						dapui.close()
-					end
-				end,
-			},
-			{
-				"jay-babu/mason-nvim-dap.nvim", -- for DAP (C++, Bash)
-				-- ft = { "c", "cpp", "sh" },
-				dependencies = {
-					"williamboman/mason.nvim",
-				},
-				config = function()
-					require("mason-nvim-dap").setup({
-						handlers = {},
-					})
-				end,
-			},
-			{
-				"theHamsta/nvim-dap-virtual-text",
-				config = function()
-					require("nvim-dap-virtual-text").setup()
-				end,
-			},
-			{
-				"leoluz/nvim-dap-go",
-				-- ft = "go",
-				config = function()
-					require("dap-go").setup()
-				end,
-			},
-			{
-				"anuvyklack/hydra.nvim",
-				dependencies = "anuvyklack/keymap-layer.nvim",
-				keys = {
-					{ "<leader>dh", "", { desc = "Dap Hydra" } },
-				},
-				config = function()
-					require("plugins.configs.hydra")
-				end,
-			},
-		},
-		config = function()
-			require("plugins.configs.dap")
-		end,
-	},
-
 	{
 		"olexsmir/gopher.nvim",
 		ft = "go",
@@ -619,6 +544,28 @@ local plugins = {
 		config = function()
 			require("Comment").setup()
 		end,
+	},
+
+	-- copilot
+	{
+		"zbirenbaum/copilot.lua",
+		-- cmd = "Copilot",
+		event = "InsertEnter",
+		opts = {
+			suggestion = {
+				enabled = true,
+				auto_trigger = true,
+				keymap = {
+					accept = "<C-l>",
+					accept_line = "<C-_>",
+				},
+			},
+			panel = {
+				keymap = {
+					open = "<A-c>",
+				},
+			},
+		},
 	},
 }
 

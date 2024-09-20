@@ -75,6 +75,5 @@ require("oil").setup({
 	preview = {
 		update_on_cursor_moved = false,
 	},
-	-- NOTE: experimental
-	experimental_watch_for_changes = true,
+	watch_for_changes = true,
 })

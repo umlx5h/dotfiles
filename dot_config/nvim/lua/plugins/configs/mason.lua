@@ -12,7 +12,6 @@ local ensure_installed = {
 	"shfmt",
 	"shellcheck",
 	"bash-language-server",
-	"bash-debug-adapter",
 
 	-- web dev stuff
 	"css-lsp",
@@ -20,7 +19,6 @@ local ensure_installed = {
 
 	-- javascript
 	"eslint-lsp",
-	"js-debug-adapter",
 	"typescript-language-server",
 	"prettierd",
 

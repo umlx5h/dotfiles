@@ -96,7 +96,7 @@ require("nightfox").setup({
 			-- ["barbar"] = true,
 			["cmp"] = true,
 			-- ["coc"] = true,
-			["dap_ui"] = true,
+			-- ["dap_ui"] = true,
 			-- ["dashboard"] = true,
 			["diagnostic"] = true,
 			-- ["fern"] = true,
