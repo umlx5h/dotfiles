@@ -322,6 +322,7 @@ map("n", "<leader>gb", "<cmd> G blame <CR>", { desc = "Blame fugitive" })
 map("n", "<leader>gh", "<cmd> leftabove vs | 0Gclog <CR>", { desc = "Git history of current file" })
 map("n", "<leader>gl", ":G log -50 ", { desc = "Git Log" })
 map("n", "<leader>gw", "<cmd> Gwrite <CR>", { desc = "Stage current file" })
+map("n", "<leader>gp", ":G switch main | G pull", { desc = "Git pull main" })
 
 --------------------------------- ui stuffs -------------------------------------
 

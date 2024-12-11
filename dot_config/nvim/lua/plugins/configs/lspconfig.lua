@@ -28,6 +28,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
 		map("n", "gD", vim.lsp.buf.declaration, "LSP declaration")
 		map("n", "gd", require("telescope.builtin").lsp_definitions, "LSP definition")
+		-- for Node.js
+		-- vim.keymap.set("n", "gd", "<C-]>", { remap = true, buffer = ev.buf, desc = "LSP definition" })
+
 		map("n", "gI", require("telescope.builtin").lsp_implementations, "LSP implementation") -- giだと標準のと被る
 		map("n", "gy", require("telescope.builtin").lsp_type_definitions, "LSP type definition")
 		map("n", "gr", require("telescope.builtin").lsp_references, "LSP references")
@@ -157,7 +160,7 @@ lspconfig.jsonls.setup({
 local servers = {
 	"html",
 	"cssls",
-	"tsserver",
+	"ts_ls",
 	"clangd",
 	"dockerls",
 	"docker_compose_language_service",
