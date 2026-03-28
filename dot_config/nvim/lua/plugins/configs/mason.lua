@@ -40,6 +40,7 @@ local ensure_installed = {
 	-- YAML
 	"yaml-language-server",
 	"ansible-language-server",
+	"ansible-lint",
 
 	-- JSON
 	"json-lsp",
@@ -56,12 +57,6 @@ local ensure_installed = {
 
 	-- Rust
 	"rust-analyzer",
-
-	-- C#
-	"csharp-language-server",
-
-	-- Makefile
-	"autotools-language-server",
 }
 
 -- custom command to install all mason binaries listed

@@ -169,8 +169,6 @@ local servers = {
 	"intelephense",
 	"rust_analyzer",
 	"eslint",
-	"autotools_ls",
-	"csharp_ls",
 }
 
 for _, lsp in ipairs(servers) do
