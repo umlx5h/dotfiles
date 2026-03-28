@@ -5,7 +5,6 @@ export GOPATH=$HOME/go
 # Set PATH
 typeset -U path PATH
 path=(
-	$HOME/.dotnet/tools
 	$HOME/.cargo/bin
 	$GOPATH/bin
 	$GOROOT/bin
