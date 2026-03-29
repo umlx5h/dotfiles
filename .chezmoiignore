@@ -40,6 +40,7 @@ ansible
 !.editorconfig
 !.config/
 !.config/nvim/**
+!.config/mise/**
 
 !.wezterm.lua
 

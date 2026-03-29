@@ -1,0 +1,65 @@
+[tools]
+go = "latest"
+node = "24"
+
+"aqua:BurntSushi/ripgrep" = "latest"
+"aqua:dandavison/delta" = "latest"
+"aqua:eza-community/eza" = "latest"
+"aqua:jesseduffield/lazygit" = "latest"
+"aqua:jqlang/jq" = "latest"
+"aqua:junegunn/fzf" = "latest"
+"aqua:sharkdp/bat" = "latest"
+"aqua:sharkdp/fd" = "latest"
+"aqua:twpayne/chezmoi" = "latest"
+
+"go:github.com/atotto/clipboard/cmd/gocopy" = "latest"
+"go:github.com/atotto/clipboard/cmd/gopaste" = "latest"
+
+{{- if or .isLinux .isMac }}
+
+ruby = "latest"
+rust = "latest"
+
+"aqua:JohnnyMorganz/StyLua" = "latest"
+"aqua:ahmetb/kubectx" = "latest"
+"aqua:ahmetb/kubectx/kubens" = "latest"
+"aqua:astral-sh/uv" = "latest"
+"aqua:codesenberg/bombardier" = "latest"
+"aqua:dominikh/go-tools/staticcheck" = "latest"
+"aqua:dundee/gdu" = "latest"
+"aqua:goreleaser/goreleaser" = "latest"
+"aqua:grafana/k6" = "latest"
+"aqua:jdx/usage" = "latest"
+"aqua:koalaman/shellcheck" = "latest"
+"aqua:kubernetes-sigs/krew" = "latest"
+"aqua:kubernetes/kubernetes/kubectl" = "1.35"
+"aqua:mvdan/gofumpt" = "latest"
+"aqua:mvdan/sh" = "latest"
+"aqua:nao1215/gup" = "latest"
+"aqua:stern/stern" = "latest"
+"aqua:tldr-pages/tlrc" = "latest"
+"aqua:tmux/tmux-builds" = "latest"
+"aqua:wagoodman/dive" = "latest"
+
+"github:orisano/dlayer" = "latest"
+"github:tkuchiki/alp" = "latest"
+"github:umlx5h/zsh-manpage-completion-generator" = "latest"
+
+"go:github.com/go-delve/delve/cmd/dlv" = "latest"
+"go:github.com/kisielk/errcheck" = "latest"
+"go:github.com/rakyll/hey" = "latest"
+
+"pipx:ansible-core" = "latest"
+"pipx:ansible-lint" = "latest"
+"pipx:neovim-remote" = "latest"
+
+{{- end }}
+
+[settings]
+auto_install = false
+exec_auto_install = false
+not_found_auto_install = false
+jobs = 1
+
+[settings.ruby]
+compile = false

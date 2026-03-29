@@ -38,6 +38,10 @@ set -g prefix C-q
 # C-q*2でC-qを送る
 bind-key C-q send-prefix
 
+# control variables to know where the tmux comes from
+set-environment -g TMUX_PARENT_TERM $TERM
+set-environment -g TMUX_PARENT_TERM_PROGRAM $TERM_PROGRAM
+
 # C-bのキーバインドを解除
 unbind C-b
 

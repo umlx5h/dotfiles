@@ -120,5 +120,4 @@ fi
 # My
 #
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-[ -f $HOME/.asdf/asdf.sh ] && source "$HOME/.asdf/asdf.sh"
+eval "$(fzf --bash)"

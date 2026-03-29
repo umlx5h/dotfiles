@@ -1,10 +1,18 @@
+function is_wezterm() {
+	[ "${TERM_PROGRAM:-}" = "WezTerm" ] || [ "${TMUX_PARENT_TERM_PROGRAM:-}" = "WezTerm" ]
+}
+
+function is_tmux() {
+	[ -n "${TMUX:-}" ]
+}
+
 function zsh_update_completions() {
 	/bin/rm -f $HOME/.zcompdump
 	/bin/rm -rf $HOME/.local/share/zsh/cmd_completions
 	mkdir -p $HOME/.local/share/zsh/cmd_completions
 
 	fish -c 'fish_update_completions'
-	zsh-manpage-completion-generator -clean
+	zsh-manpage-completion-generator -src $HOME/.cache/fish/generated_completions -clean
 
 	generate_cmd_completions_common
 	type generate_cmd_completions_work &>/dev/null && generate_cmd_completions_work
@@ -13,11 +21,9 @@ function zsh_update_completions() {
 }
 
 function generate_cmd_completions_common() {
+	mise completion zsh >$HOME/.local/share/zsh/cmd_completions/_mise
 	chezmoi completion zsh >$HOME/.local/share/zsh/cmd_completions/_chezmoi
 	kubectl completion zsh >$HOME/.local/share/zsh/cmd_completions/_kubectl
-	helm completion zsh >$HOME/.local/share/zsh/cmd_completions/_helm
-	alp completion zsh >$HOME/.local/share/zsh/cmd_completions/_alp
-	register-python-argcomplete my-python-app >$HOME/.local/share/zsh/cmd_completions/_ansible
 }
 
 function fif() {
@@ -105,12 +111,12 @@ function open-recent-project() {
 		project_name="${project_name}_config"
 	fi
 
-	if [[ -n "$TMUX" ]]; then
+	if is_tmux; then
 		tmux rename-window "$project_name"
 		# TODO: tmuxの中だとなぜかtab-idを指定しないと最初のタブが選択されてしまう
-		type wezterm &>/dev/null && wezterm cli set-tab-title --pane-id "$(wezterm cli list-clients | awk '{print $NF}' | tail -1)" "$project_name"
+		is_wezterm && wezterm cli set-tab-title --pane-id "$(wezterm cli list-clients | awk '{print $NF}' | tail -1)" "$project_name"
 	else
-		type wezterm &>/dev/null && wezterm cli set-tab-title "$project_name"
+		is_wezterm && wezterm cli set-tab-title "$project_name"
 	fi
 
 	cd "$dir"
@@ -151,6 +157,11 @@ function open-recent-project-tmux() {
 
 # weztermのタブでvimでプロジェクトを開く
 function open-recent-project-tab() {
+	if ! is_wezterm; then
+		echo "Not running in WezTerm"
+		return 1
+	fi
+
 	local dir=$(z | awk '{print $2}' | perl -pe "s|^${HOME}/|~/|" | fzf --prompt="Open project in session > " --tac)
 	dir="${dir/#\~/$HOME}"
 	if [[ -z $dir ]]; then
@@ -163,7 +174,7 @@ function open-recent-project-tab() {
 
 	local project_name="$(basename $dir)"
 
-	if [[ -n "$TMUX" ]]; then
+	if is_tmux; then
 		# TODO: tmuxの中だと--pane-idを指定しないと、新しいウィンドウを開いてしまうことがある
 		PANE_ID=$(wezterm cli spawn --cwd "$dir" --pane-id "$(wezterm cli list-clients | awk '{print $NF}' | tail -1)")
 	else
