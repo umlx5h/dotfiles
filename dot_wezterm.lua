@@ -12,7 +12,6 @@ end
 
 -- For debug
 -- config.exit_behavior = 'Hold'
-config.hide_tab_bar_if_only_one_tab = true
 config.color_scheme = "Snazzy"
 config.font_size = 11
 config.freetype_load_flags = "NO_HINTING"
@@ -30,7 +29,13 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.hide_mouse_cursor_when_typing = false
 end
 
--- config.window_decorations = 'RESIZE'
+-- Windows のネイティブタイトルバーを無効化し、integratedなものを使用
+config.hide_tab_bar_if_only_one_tab = false
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+config.window_frame = {
+  -- タイトルバーを大きく (from 10)
+  font_size = 12.0,
+}
 
 config.colors = {
 	cursor_fg = "#555555", -- カーソルがあたっている文字を見やすく
@@ -218,7 +223,7 @@ config.keys = {
 -- これを指定しないとWSLのシェル統合がうまくいかない (CWDを維持する機能がうまくいかない)
 -- default_cwd は設定していないが、効果がなかったため設定しない (シェル統合を有効にしたら問題なくなった)
 -- TODO: tmuxを経由すると今度はカレントディレクトリがmntになったので、tmuxでcwdを指定した
-config.default_domain = "WSL:Ubuntu-22.04"
+config.default_domain = "WSL:Ubuntu-24.04"
 
 -- WSL経由の時にタブ閉じるようにする
 -- TODO: WSL経由でtmuxを使っている場合は問題ないが、使ってない場合に確認が出ずに終了してしまう

@@ -18,6 +18,17 @@
 	pushf = push --force-with-lease --force-if-includes
 [commit]
 	cleanup = scissors
+	verbose = true
+[branch]
+	sort = -committerdate
+[merge]
+	conflictStyle = zdiff3
+[diff]
+	algorithm = histogram
+[log]
+	date = iso
+[rerere]
+	enabled = true
 [interactive]
 	diffFilter = delta --color-only
 [delta]

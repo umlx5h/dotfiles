@@ -41,6 +41,17 @@ holdup_key()
 
 /* ------------------------------- PDIC ------------------------------- */
 
+is_browser()
+{
+	if WinActive("ahk_class MozillaWindowClass") ; Firefox
+		return 1
+	if WinActive("ahk_exe msedge.exe") ; Edge
+		return 1
+	if WinActive("ahk_exe brave.exe") ; Brave
+		return 1
+	return 0
+}
+
 /* ポップアップ画面での操作 */
 #HotIf WinActive("ahk_class TPopupWindow.UnicodeClass")
 {
@@ -53,6 +64,14 @@ holdup_key()
 	MButton::Tab ; bookmark word
 }
 #HotIf
+
+/* ブラウザ以外でも 同じボタンで PopOCRでポップアップ */
+/* 不安定なので一旦無効化 */
+; #HotIf !is_browser()
+; {
+; 	Alt & RButton::Send("^+{RButton}")
+; }
+; #HotIf
 
 /* 単語を引いた時に同時に単語をコピーする */
 /*
@@ -72,26 +91,6 @@ NumLock::
 	}
 }
 */
-
-/* 左手トラックボール */
-NumLock:: Send("!{RButton}") ; 右クリック
-^NumLock:: Send("!^{RButton}") ; CTRL+右クリックでDokopop
-
-
-/* ------------------------------- Flyleaf ------------------------------- */
-
-/* ポップアップ画面での操作 */
-#HotIf MouseIsOver("FlyleafMod")
-{
-	MButton::RButton
-	RButton:: Send("{MButton}p")
-}
-#HotIf
-
-MouseIsOver(WinTitle) {
-	MouseGetPos(, , &Win)
-	return WinExist(WinTitle . " ahk_id " . Win)
-}
 
 /* ------------------------------- Emacs keybinding  ------------------------------- */
 
@@ -276,8 +275,8 @@ F14 & Tab::
 	; ~F14 & h:: Send("^+!h")
 	~F14 & i:: Send("^+!i")
 	; ~F14 & j:: Send("^+!j")
-	; ~F14 & k:: Send("^+!k")
-	~F14 & l:: Send("{Blind}l")
+	~F14 & k:: Send("^+!k")
+	; ~F14 & l:: Send("{Blind}l")
 	~F14 & m:: Send("{Blind}m")
 	; ~F14 & n:: Send("^+!n")
 	~F14 & o:: Send("^+!o")
@@ -303,12 +302,7 @@ F14 & Tab::
 	~F14 & f:: Send("{Blind^}{Right}")
 	~F14 & h:: Send("{Blind^}{BS}")
 	~F14 & j:: Send("{Blind^}{Enter}")
-	~F14 & k:: ; delete line after cursor
-	{
-		Send("{ShiftDown}{END}{ShiftUp}")
-		Sleep(10)
-		Send("^x")
-	}
+	~F14 & l:: Send("{Blind^}{Tab}") ; for Copilot
 }
 #HotIf
 

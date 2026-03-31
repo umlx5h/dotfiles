@@ -38,9 +38,9 @@ Set-Alias pbcopy gocopy
 Set-Alias pbpaste gopaste
 
 if ($IsWindows) {
-    Set-Alias tm trash
+	Set-Alias tm trash
 } else {
-    Set-Alias tm gtrash
+	Set-Alias tm gtrash
 }
 
 # ----- Modules before -----
