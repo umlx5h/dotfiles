@@ -31,6 +31,7 @@ ansible
 **
 
 !AppData/**
+!Documents/**
 !autohotkey/**
 !.vsvimrc
 !.ideavimrc
@@ -39,13 +40,16 @@ ansible
 !.gitignore_global
 !.editorconfig
 !.config/
-!.config/nvim/**
 !.config/mise/**
+!.config/nvim/**
+!.config/oh-my-posh/**
+!.config/powershell/**
 
 !.wezterm.lua
 
 {{- else }}
 AppData/**
+Documents/**
 autohotkey/**
 .vsvimrc
 .ideavimrc

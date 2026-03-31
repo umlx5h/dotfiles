@@ -21,7 +21,7 @@ function bcc() {
 # Alias
 #
 
-alias gm="gtrash put"
+alias tm="gtrash put"
 # rmはエイリアスで禁止にしておく
 alias rm="echo -e 'WARNING: Do not use rm directly'; false"
 
